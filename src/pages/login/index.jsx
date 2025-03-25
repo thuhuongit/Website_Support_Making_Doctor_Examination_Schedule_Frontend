@@ -29,7 +29,7 @@ const LoginForm = () => {
 
        // Chờ 1 giây để Toast hiển thị rồi chuyển trang
         setTimeout(() => {
-           navigate("/dashboard");
+           navigate("/Homepages");
          }, 1000);
       } else {
         toast.error("Sai email hoặc mật khẩu!", { position: "top-right" });

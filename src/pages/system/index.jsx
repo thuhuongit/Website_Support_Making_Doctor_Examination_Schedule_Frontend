@@ -11,7 +11,8 @@ Modal.setAppElement("#root");
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editUser, setEditUser] = useState(null); // Lưu user cần sửa
+  const [editUser, setEditUser] = useState(null); // Đúng: Lưu user cần chỉnh sửa
+  const [isEditMode, setIsEditMode] = useState(false); // Kiểm tra chế độ chỉnh sửa
   const [newUser, setNewUser] = useState({
     email: "",
     firstName: "",
@@ -20,8 +21,15 @@ const Dashboard = () => {
     phoneNumber: "",
     gender: "Male",
   })
+  const handleEditClick = (user) => {
+    setEditUser(user);       
+    setIsEditMode(true);     
+    setIsModalOpen(true);    
+  };
 
-    // 🔄 Load danh sách người dùng
+  
+
+    //  Load danh sách người dùng
     const fetchUsers = async () => {
       try {
         const response = await userService.getAllUsers("all");
@@ -37,57 +45,61 @@ const Dashboard = () => {
       fetchUsers();
     }, []);
   
-    // 🎯 Xử lý thay đổi input
+    //  Xử lý thay đổi input
     const handleInputChange = (e) => {
-      setNewUser({ 
-        ...newUser, 
-        [e.target.name]: e.target.value 
-      });
-    };
+      const { name, value } = e.target;
+      setNewUser(prev => ({
+          ...prev,
+          [name]: value ?? ""  // ✅ Đảm bảo luôn có giá trị
+      }));
+  };
   
-    // ✅ Thêm người dùng
+    // Thêm người dùng
     const handleSaveUser = async () => {
       console.log("User mới:", newUser);
-  
-      if (!newUser.email || !newUser.firstName || !newUser.lastName) {
+    
+      if (!newUser.email || !newUser.firstName || !newUser.lastName ) {
         alert("Vui lòng nhập đầy đủ thông tin!");
         return;
       }
-  
+    
       try {
-          console.log("Dữ liệu gửi API:", newUser); 
-          const response = await userService.createUser(newUser);
-          console.log("API response:", response); 
-  
-          if (response.errCode === 0) {
-              alert("Thêm người dùng thành công!");
-              setIsModalOpen(false);
-  
-              // Cập nhật danh sách ngay lập tức bằng cách thêm user mới vào đầu mảng
-              setUsers(prevUsers => [newUser, ...prevUsers]);
-  
-          } else {
-              alert("Lỗi từ server: " + response.message);
-          }
+        console.log("Dữ liệu gửi API:", newUser);
+        const response = await userService.createUser(newUser);
+        console.log("API response:", response);
+    
+        if (response.errCode === 0) {
+          alert("Thêm người dùng thành công!");
+          setIsModalOpen(false);
+    
+          // ✅ Cập nhật danh sách từ API thay vì chỉ thêm vào state
+          fetchUsers();  
+    
+        } else {
+          alert("Lỗi từ server: " + response.message);
+        }
       } catch (error) {
-          console.error("Lỗi khi thêm user:", error);
-          alert("Không thể thêm người dùng! Kiểm tra console.");
+        console.error("Lỗi khi thêm user:", error);
+        alert("Không thể thêm người dùng! Kiểm tra console.");
       }
-  
+    
       setNewUser({ email: "", firstName: "", lastName: "", address: "", phoneNumber: "", gender: "Male" });
-  };
+    };
+    
   
-    // ❌ Xóa người dùng
+    // Xóa người dùng
     const handleDeleteUser = async (userId) => {
       if (!window.confirm("Bạn có chắc chắn muốn xóa người dùng này?")) {
         return;
       }
-  
+    
       try {
         const response = await userService.deleteUser(userId);
         if (response.errCode === 0) {
           alert("Xóa người dùng thành công!");
-          fetchUsers(); // Lấy danh sách mới
+    
+          // Xóa user ngay trong state mà không cần fetch lại API
+          setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
         } else {
           alert("Lỗi từ server: " + response.message);
         }
@@ -96,40 +108,58 @@ const Dashboard = () => {
         alert("Không thể xóa người dùng!");
       }
     };
+
+
+    const handleEditInputChange = (e) => { 
+      console.log (e.target); 
+      const { name, value } = e.target;
+      setEditUser(prev => ({
+          ...prev,
+          [name]: value ?? ""  // ✅ Đảm bảo không bị undefined
+      }));
+  };
   
-    // ✏️ Chỉnh sửa người dùng
-    const handleEditClick = (user) => {
-      setEditUser(user);
-      setIsModalOpen(true);
-    };
+    
   
-    const handleEditInputChange = (e) => {
-      setEditUser({
-        ...editUser,
-        [e.target.name]: e.target.value
-      });
-    };
-  
-    const handleUpdateUser = async () => {
-      if (!editUser.firstName || !editUser.lastName) {
-        alert("Vui lòng nhập đầy đủ thông tin!");
-        return;
-      }
+    //  Chỉnh sửa người dùng
+    const handleEditUser = async () => {
+      // console.log("First Name:", firstName);
+      // console.log("Last Name:", lastName);
+      // console.log("Address:", address);
+      // console.log("Phone:", phonenumber);
+      // console.log("Gender:", gender);
+       console.log (editUser);
+      // if (!editUser.id || !editUser.firstName || !editUser.lastName || !editUser.phonenumber || !editUser.gender){
+      //     alert("Vui lòng nhập đầy đủ thông tin!");
+      //     return;
+      // }
   
       try {
-        const response = await userService.updateUser(editUser);
-        if (response.errCode === 0) {
-          alert("Cập nhật thành công!");
-          setIsModalOpen(false);
-          fetchUsers(); // Cập nhật danh sách từ API
-        } else {
-          alert("Lỗi từ server: " + response.message);
-        }
+          console.log("Gửi dữ liệu cập nhật:", editUser);
+          const response = await userService.updateUser(editUser);  // ✅ Đảm bảo gọi đúng hàm
+          console.log("Phản hồi API:", response);
+  
+          if (response.errCode === 0) {
+              alert("Cập nhật thành công!");
+              setIsModalOpen(false);
+              setIsEditMode(false);
+              fetchUsers();  // Cập nhật lại danh sách
+          } else {
+              alert("Lỗi từ server: " + response.message);
+          }
       } catch (error) {
-        console.error("Lỗi khi cập nhật user:", error);
-        alert("Không thể cập nhật người dùng!");
+          console.error("Lỗi khi cập nhật user:", error);
+          alert("Không thể cập nhật người dùng!");
       }
-    };
+  };
+  
+  
+    
+    
+  
+
+    
+
 
 
   return (
@@ -139,27 +169,30 @@ const Dashboard = () => {
         <button className="add-user-btn" onClick={() => setIsModalOpen(true)} ><i className="fa-solid fa-plus"></i> Add new users</button>
       </div>
       <Modal isOpen={isModalOpen} onRequestClose={() => setIsModalOpen(false)} className="modal-content" overlayClassName="modal-overlay">
-        <h2 className="text-xl font-bold mb-4">Add New User</h2>
+        <h2 className="text-xl font-bold mb-4">{isEditMode ? "Edit User" : "Add New User"}</h2>
 
-        <input type="text" name="email" placeholder="Email" value={newUser.email} onChange={handleInputChange} className="input-field" />
-      
+        <input type="text" name="email" placeholder="Email" value={isEditMode ? editUser?.email : newUser.email} onChange={isEditMode ? handleEditInputChange : handleInputChange} className="input-field" disabled={isEditMode} />
 
-        <input type="text" name="firstName" placeholder="First Name" value={newUser.firstName} onChange={handleInputChange} className="input-field" />
+        <input type="text" name="firstName" placeholder="First Name" value={isEditMode ? editUser?.firstName : newUser.firstName} onChange={isEditMode ? handleEditInputChange : handleInputChange} className="input-field" />
 
-        <input type="text" name="lastName" placeholder="Last Name" value={newUser.lastName} onChange={handleInputChange} className="input-field" />
+        <input type="text" name="lastName" placeholder="Last Name" value={isEditMode ? editUser?.lastName : newUser.lastName} onChange={isEditMode ? handleEditInputChange : handleInputChange} className="input-field" />
 
-        <input type="text" name="address" placeholder="Address" value={newUser.address} onChange={handleInputChange} className="input-field" />
+        <input type="text" name="address" placeholder="Address" value={isEditMode ? editUser?.address : newUser.address} onChange={isEditMode ? handleEditInputChange : handleInputChange} className="input-field" />
 
-        <input type="text" name="phoneNumber" placeholder="Phone Number" value={newUser.phoneNumber} onChange={handleInputChange} className="input-field" />
+        <input type="number" name="phoneNumber" placeholder="Phone Number" value={isEditMode ? editUser?.phoneNumber : newUser.phoneNumber} onChange={isEditMode ? handleEditInputChange : handleInputChange} className="input-field" />
 
-        <select name="gender" value={newUser.gender} onChange={handleInputChange} className="input-field">
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
+        <select name="gender" value={isEditMode ? editUser?.gender : newUser.gender} onChange={isEditMode ? handleEditInputChange : handleInputChange} className="input-field">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
         </select>
 
         <div className="modal-buttons">
-          <button className="save-btn" onClick={handleSaveUser}>Save</button>
-          <button className="close-btn" onClick={() => setIsModalOpen(false)}>Cancel</button>
+        {isEditMode ? (
+      <button className="save-btn" onClick={handleEditUser}>Update</button>
+    ) : (
+      <button className="save-btn" onClick={handleSaveUser}>Save</button>
+    )}
+    <button className="close-btn" onClick={() => setIsModalOpen(false)}>Cancel</button>
         </div>
       </Modal>
 
@@ -188,7 +221,7 @@ const Dashboard = () => {
                   <td>{user?.phoneNumber}</td>
                   <td>{user?.gender}</td>
                   <td>
-                    <button className="btn-edit"><i className="fa-solid fa-pencil"></i></button>
+                    <button type="button" onClick={() => handleEditClick(user)} className="btn-edit"><i className="fa-solid fa-pencil"></i></button>
                     <button  onClick={() => handleDeleteUser(user.id)} className="btn-delete"><i className="fa-solid fa-trash"></i></button>
                   </td>
                 </tr>

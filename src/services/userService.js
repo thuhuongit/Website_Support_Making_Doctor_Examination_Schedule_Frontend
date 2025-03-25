@@ -45,15 +45,41 @@ export const userService = {
             const response = await fetch(`${API_URL}/delete-user`, {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: userId }) // ✅ Gửi userId trong body
             });
-
+    
             const data = await response.json();
             console.log("📌 Delete User API response:", data);
-
+    
             return data;
         } catch (error) {
             console.error("❌ Delete user error:", error);
             return { errCode: 1, message: "Không thể xóa người dùng" };
         }
+    },
+
+
+
+    updateUser: async (userData) => {  
+        try {
+            console.log(`✏️ Gửi request cập nhật user ID: ${userData.id}`, userData);
+            const response = await fetch(`${API_URL}/edit-user`, { 
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userData)  // ✅ Gửi toàn bộ dữ liệu
+            });
+    
+            const data = await response.json();
+            console.log("📌 Update User API response:", data);
+    
+            return data;
+        } catch (error) {
+            console.error("❌ Update user error:", error);
+            return { errCode: 1, message: "Không thể cập nhật người dùng" };
+        }
     }
-};
+    
+    
+    
+    
+}
