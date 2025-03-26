@@ -1,0 +1,110 @@
+.specialties-slider {
+    margin: 0,5px auto;
+    width: 100%;
+    min-height: 350px;
+    background-color: aliceblue;
+    background: white;
+    padding-top: 55px; /* Dịch nội dung xuống */
+    overflow: hidden;
+}
+
+.specialties-slider h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    margin-left: 50px; /* Dịch chữ vào bên trong */
+}
+
+
+.specialties-slider .slick-slider {
+    margin-bottom: 50px; /* Giảm khoảng cách giữa 2 slider */
+  }
+
+.slick-prev, .slick-next {
+    width: 40px;  /* Kích thước nút */
+    height: 40px;
+    z-index: 10;  /* Đảm bảo nút hiển thị trên cùng */
+}
+.doctor-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  
+  .doctor-item img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%; /* Bo tròn hình ảnh */
+    object-fit: cover; /* Giữ tỷ lệ ảnh không méo */
+    border: 1px solid #ddd; /* Viền nhẹ */
+    display: block;
+  }
+  
+  .doctor-item p {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+
+  }
+  .doctor-name {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .doctor-desc {
+    font-size: 13px;
+    color: #626262; /* Màu chữ nhẹ hơn */
+    margin-top: 1px;
+  }
+  
+
+.slick-prev {
+    left: 10px !important;  /* Đưa nút prev vào trong */
+}
+
+.slick-next {
+    right: 10px !important; /* Đưa nút next vào trong */
+}
+
+
+ 
+.specialty-item {
+    padding: 10px;
+    text-align: center;
+}
+
+.specialty-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.specialty-item p {
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Custom arrows */
+.custom-next, .custom-prev {
+    font-size: 24px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 10;
+}
+
+.custom-next {
+    right: -30px;
+}
+
+.custom-prev {
+    left: -30px;
+}
