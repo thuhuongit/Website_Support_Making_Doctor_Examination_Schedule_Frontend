@@ -4,10 +4,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./SpecialtiesSlider.css";
 import { useTranslation } from "react-i18next";
-
+import { useNavigate } from "react-router-dom";
 
 const SpecialtiesSlider = () => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
   const settings = {
     dots: false, // Không hiển thị chấm nhỏ
     infinite: false,
@@ -27,7 +28,7 @@ const SpecialtiesSlider = () => {
     { title: t("Xét nghiệm"), img: "/xet-nghiem.jpg" },
   ];
   const hospitals = [
-    { title: "Bệnh viện Hữu nghị Việt Đức", img: "/1.png" },
+    { title: "Bệnh viện Hữu nghị Việt Đức", img: "/1.png", link: "/hospital/viet-duc" },
     { title: "Bệnh viện Chợ Rẫy", img: "/ray.png" },
     { title: "Tầm Soát Bệnh Để Sống Thọ Hơn", img: "/check.png" },
     { title: "Phòng khám Bệnh viện Đại học Y Dược 1", img: "/y.png" },
@@ -62,7 +63,7 @@ const SpecialtiesSlider = () => {
       <Slider {...settings}>
         {hospitals.map((item, index) => (
           
-          <div key={index} className="specialty-item">
+          <div key={index} className="specialty-item" onClick={() => navigate(item.link)}>
             <img src={item.img} alt={item.title} />
             <p>{item.title}</p>
           </div>
