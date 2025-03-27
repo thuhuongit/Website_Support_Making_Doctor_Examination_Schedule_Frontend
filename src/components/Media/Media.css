@@ -1,0 +1,43 @@
+.media-section {
+    background-color: #e6f7ff; /* Màu nền giống ảnh */
+    padding: 30px 0;
+    text-align: center;
+}
+.logo {
+    background: none; /* Xóa nền */
+    border-radius: 0; /* Không bo góc */
+    box-shadow: none; /* Xóa hiệu ứng bóng (nếu có) */
+}
+
+.media-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.media-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.media-video {
+    flex: 1;
+    max-width: 450px;
+    border-radius: 30px
+}
+
+.media-logos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+}
+
+.media-logo img {
+    width: 150px;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+
+

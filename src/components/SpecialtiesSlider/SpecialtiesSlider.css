@@ -4,7 +4,7 @@
     min-height: 350px;
     background-color: aliceblue;
     background: white;
-    padding-top: 55px; /* Dịch nội dung xuống */
+    padding-top: 65px; /* Dịch nội dung xuống */
     overflow: hidden;
 }
 
@@ -25,14 +25,14 @@
     z-index: 10;  /* Đảm bảo nút hiển thị trên cùng */
 }
 .doctor-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    width: 100%;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+}
   
   .doctor-item img {
     width: 200px;
@@ -41,6 +41,7 @@
     object-fit: cover; /* Giữ tỷ lệ ảnh không méo */
     border: 1px solid #ddd; /* Viền nhẹ */
     display: block;
+    margin: 0 auto;
   }
   
   .doctor-item p {
@@ -71,7 +72,17 @@
     right: 10px !important; /* Đưa nút next vào trong */
 }
 
+/* Đảm bảo slider căn giữa */
+.slick-slider {
+  display: flex;
+  justify-content: center;
+}
 
+/* Nếu hình + chữ vẫn chưa vào giữa, thử thêm cái này */
+.slick-slide > div {
+  display: flex;
+  justify-content: center;
+}
  
 .specialty-item {
     padding: 10px;

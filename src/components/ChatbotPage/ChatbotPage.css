@@ -1,0 +1,145 @@
+/* Tổng thể */
+.chatbot-container {
+    display: flex;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #ddd;
+    background: #fff;
+  }
+  
+  /* Sidebar bên trái */
+  .sidebar {
+    width: 300px;
+    background: #f8f9fa;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-right: 1px solid #ddd;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ee1e17;
+  }
+  
+  .logo img {
+    width: 30px;
+    margin-right: 10px;
+  }
+  
+  .new-chat-btn {
+    background: #2d89ef;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .chat-history {
+    font-weight: bold;
+  }
+  
+  .extra-info {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .extra-info a {
+    color: #2d89ef;
+    text-decoration: none;
+  }
+  
+  /* Khung chat AI bên phải */
+  .chat-area {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chat-title {
+    text-align: center;
+    font-size: 24px;
+    color: #2d89ef;
+    margin-bottom: 20px;
+  }
+  
+  /* Input chat */
+  .chat-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .chat-input button {
+    background: #2d89ef;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Danh sách câu hỏi gợi ý */
+  .suggested-questions {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .question {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    color: #2d89ef;
+    cursor: pointer;
+  }
+  
+  .question:last-child {
+    border-bottom: none;
+  }
+  
+  /* Khung chat */
+  .chat-box {
+    flex: 1;
+    overflow-y: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .chat-message {
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    max-width: 75%;
+  }
+  
+  .chat-message.user {
+    background: #2d89ef;
+    color: white;
+    text-align: right;
+    align-self: flex-end;
+  }
+  
+  /* Lưu ý */
+  .chat-footer {
+    font-size: 14px;
+    color: #666;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  

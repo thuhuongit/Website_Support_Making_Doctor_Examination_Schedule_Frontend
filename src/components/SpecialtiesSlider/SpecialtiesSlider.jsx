@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "./SpecialtiesSlider.css";
 import { useTranslation } from "react-i18next";
 
+
 const SpecialtiesSlider = () => {
     const { t } = useTranslation();
   const settings = {
@@ -44,8 +45,6 @@ const SpecialtiesSlider = () => {
     { title: "Thạc sĩ, Bác sĩ Trần Thị Mai Thy", img: "/7.jpg", desc: "Thầm kinh" },
   ];
 
-
-
   return (
     <div className="specialties-slider">
       <h2>{t("Chuyên khoa phổ biến")}</h2>
@@ -62,10 +61,12 @@ const SpecialtiesSlider = () => {
       <h2>{t("Cơ sở y tế nổi bật")}</h2>
       <Slider {...settings}>
         {hospitals.map((item, index) => (
+          
           <div key={index} className="specialty-item">
             <img src={item.img} alt={item.title} />
             <p>{item.title}</p>
           </div>
+         
         ))}
       </Slider>
 

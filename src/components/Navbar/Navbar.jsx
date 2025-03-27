@@ -4,10 +4,18 @@ import { useTranslation } from "react-i18next";
 import "../../i18n";
 import Banner from '../Banner/Banner';
 import SpecialtiesSlider from '../SpecialtiesSlider/SpecialtiesSlider'
+import Media from '../Media/Media';
+import Footer from '../Footer/Footer';
+import { useNavigate } from "react-router-dom";
+
+
+
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
   const [activeLang, setActiveLang] = useState("vi"); // Mặc định là tiếng Việt
+  const [menuOpen, setMenuOpen] = useState(false); // State để mở menu
+  const navigate = useNavigate();
 
   // Hàm đổi ngôn ngữ
   const changeLanguage = (lng) => {
@@ -26,10 +34,23 @@ const Navbar = () => {
 
   return (
     <div className="header-container">
+      <div class="ai-assistant" onClick={() => navigate("/chat")} style={{ cursor: "pointer" }} >
+          <img src="/chatbot.png" alt="Trợ lý AI" />
+          <span>Trợ lý AI</span>
+      </div>
+
+    
+
       <nav className="navbar">
         {/* Logo */}
         <div className="logo">
-          <i className="fa-solid fa-bars"></i>
+        <button 
+            className="menu-btn" 
+            onClick={() => setMenuOpen(!menuOpen)}
+            
+          > <i className="fa-solid fa-bars"></i>
+
+          </button>
           <img src="/logo.png" alt="BookingCare" />
           <span className="logo-text">BookingCare</span>
         </div>
@@ -68,9 +89,48 @@ const Navbar = () => {
           </div>
         </div>
 
+      
+
+
+       {/* Menu dropdown */}
+       <div className={`dropdown-menu ${menuOpen ? 'show' : ''}`}>
+        <ul>
+          <li><a href="#">Trang chủ</a></li>
+          <li><a href="#">Cẩm nang</a></li>
+          <li><a href="#">Liên hệ hợp tác</a></li>
+          <li><a href="#">Sức khỏe doanh nghiệp</a></li>
+          <li><a href="#">Chuyển đổi số Phòng khám</a></li>
+          <li><a href="#">Tuyển dụng</a></li>
+          <li><a href="#">Dành cho bệnh nhân</a></li>
+          <li><a href="#">Dành cho bác sĩ</a></li>
+          <li><a href="#">Vai trò của BookingCare</a></li>
+          <li><a href="#">Liên hệ</a></li>
+          <li><a href="#">Câu hỏi thường gặp</a></li>
+          <li><a href="#">Điều khoản sử dụng</a></li>
+        </ul>
+      </div>
+      
       </nav>
+      
+
+      
+      
+
+      
+
+
+
+
       <Banner />
       <SpecialtiesSlider />
+      <Media/>
+      <Footer/>
+      
+
+      
+
+      
+  
     </div>
   );
 };
