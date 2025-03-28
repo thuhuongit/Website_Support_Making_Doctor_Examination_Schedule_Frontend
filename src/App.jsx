@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar/Navbar";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
 import ChatbotPage from "./components/ChatbotPage/ChatbotPage";
-import Hospital from "./components/Hospital/Hospital1";
+import Hospital from "./components/Hospital/Hospital"
 
 
 

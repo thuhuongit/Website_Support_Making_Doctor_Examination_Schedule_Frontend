@@ -29,11 +29,11 @@ const SpecialtiesSlider = () => {
   ];
   const hospitals = [
     { title: "Bệnh viện Hữu nghị Việt Đức", img: "/1.png", link: "/hospital/viet-duc" },
-    { title: "Bệnh viện Chợ Rẫy", img: "/ray.png" },
-    { title: "Tầm Soát Bệnh Để Sống Thọ Hơn", img: "/check.png" },
-    { title: "Phòng khám Bệnh viện Đại học Y Dược 1", img: "/y.png" },
-    { title: "Bệnh viện Ung bướu Hưng Việt", img: "/viet.png" },
-    { title: "Hệ thống y tế MEDLATEC", img: "/ha.jpg" },
+    { title: "Bệnh viện Chợ Rẫy", img: "/ray.png", link: "/hospital/cho-ray" },
+    { title: "Tầm Soát Bệnh Để Sống Thọ Hơn", img: "/check.png", link: "/hospital/doctor-check" },
+    { title: "Phòng khám Bệnh viện Đại học Y Dược 1", img: "/y.png", link: "/hospital/y-duoc" },
+    { title: "Bệnh viện Ung bướu Hưng Việt", img: "/viet.png", link: "/hospital/ung-buou" },
+    { title: "Hệ thống y tế MEDLATEC", img: "/ha.jpg", link: "/hospital/medlatec" },
   ];
 
 
