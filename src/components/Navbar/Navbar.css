@@ -112,7 +112,7 @@ button {
 .logo {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     font-weight: bold;
     color: #d82c20;
     font-size: 100px;
@@ -126,8 +126,11 @@ button {
 }
 
 .logo img {
-    width: 100px;
+    width: 500px;
     height: auto;
+}
+.logo-text{
+    font-size: 30px;
 }
 
 /* Phần menu ở giữa */

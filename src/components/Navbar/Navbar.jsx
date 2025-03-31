@@ -73,7 +73,7 @@ const Navbar = () => {
           > <i className="fa-solid fa-bars"></i>
 
           </button>
-          <img src="/logo.png" alt="BookingCare"  onClick={() => navigate("/")} />
+          <img className="logo-img" src="/logo.png" alt="BookingCare"/>
           <span className="logo-text">BookingCare</span>
         </div>
 

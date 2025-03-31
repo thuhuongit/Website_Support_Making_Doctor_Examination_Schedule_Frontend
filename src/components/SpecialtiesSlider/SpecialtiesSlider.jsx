@@ -39,10 +39,10 @@ const SpecialtiesSlider = ({type}) => {
 
   const doctor = [
     { title: "Tiến sĩ, Bác sĩ chuyên khoa II Lê Quốc Việt", img: "/2.png", desc: "Cơ Xương Khớp, Nội khoa", link: "/doctor/le-quoc-viet"},
-    { title: "Tiến sĩ, Bác sĩ Chuyên khoa II Lã Thị Bưởi", img: "/3.jpg", desc: "Sức khỏa tâm thần" },
-    { title: "Bác sĩ Chuyên khoa II Võ Văn Mẫn", img: "/4.jpg", desc: "Cơ Xương Khớp, Chấn thương chỉnh hình" },
-    { title: "Thạc sĩ, Bác sĩ Nguyễn Thị Thanh Nhàn", img: "/5.png", desc: "Thần kinh" },
-    { title: "Thạc sĩ, Bác sĩ Nguyễn Văn Nghị", img: "/6.png", desc: "Tiểu đường - Nội tiết, Ung bướu, Tuyến giáp"},
+    { title: "Tiến sĩ, Bác sĩ Chuyên khoa II Lã Thị Bưởi", img: "/3.jpg", desc: "Sức khỏa tâm thần", link: "/doctor/la-thi-buoi" },
+    { title: "Bác sĩ Chuyên khoa II Võ Văn Mẫn", img: "/4.jpg", desc: "Cơ Xương Khớp, Chấn thương chỉnh hình", link: "/doctor/vo-van-man" },
+    { title: "Thạc sĩ, Bác sĩ Nguyễn Thị Thanh Nhàn", img: "/5.png", desc: "Thần kinh", link: "/doctor/nguyen-thi-thanh-nhan" },
+    { title: "Thạc sĩ, Bác sĩ Nguyễn Văn Nghị", img: "/6.png", desc: "Tiểu đường - Nội tiết, Ung bướu, Tuyến giáp", link: "/doctor/nguyen-van-nghi"},
     { title: "Thạc sĩ, Bác sĩ Trần Thị Mai Thy", img: "/7.jpg", desc: "Thầm kinh" },
   ];
 
