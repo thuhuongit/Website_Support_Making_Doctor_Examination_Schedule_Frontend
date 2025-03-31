@@ -96,7 +96,7 @@ const Dashboard = () => {
     // Xóa người dùng
     const handleDeleteUser = async (userId) => {
       Swal.fire({
-        title: "Bạn có chắc chắn?",
+        title: "Bạn có chắc chắn muốn xóa?",
         text: "Hành động này không thể hoàn tác!",
         icon: "warning",
         showCancelButton: true,
