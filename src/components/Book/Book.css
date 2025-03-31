@@ -1,0 +1,92 @@
+.book-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+    align-items: center;
+    overflow-y: auto; /* Cuộn toàn bộ nếu nội dung dài */
+}
+
+/* Thanh tìm kiếm cố định phía trên */
+.book-header {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+    flex-shrink: 0; /* Không co lại */
+}
+.book-header input {
+    flex: 1;
+    max-width: 1001000px;
+    padding: 12px; /* Tăng padding cho dễ bấm */
+    border-radius: 20px; /* Bo tròn hơn */
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    font-size: 16px; /* Tăng kích thước chữ */
+    outline: none; /* Bỏ viền mặc định */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hiệu ứng khi focus */
+.book-header input:focus {
+    border-color: #3a86ff; /* Đổi màu viền khi focus */
+    box-shadow: 0 0 5px rgba(58, 134, 255, 0.5); /* Đổ bóng nhẹ */
+    background-color: white;
+}
+
+/* Chỉ danh sách có thể cuộn */
+.book-list {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+
+.book-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 950px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    transition: background 0.3s;
+}
+
+.book-item:hover {
+    background: #f9f9f9;
+}
+
+.book-item img {
+    width: 200px;
+    height: 150px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.book-info {
+    flex: 1;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    padding: 30px 0;
+    font-size: 14px;
+  }

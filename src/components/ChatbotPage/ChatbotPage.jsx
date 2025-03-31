@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "./ChatbotPage.css";
+import { useNavigate } from "react-router-dom";
 
 const ChatbotPage = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
+  const navigate = useNavigate();
 
   const handleSend = () => {
     if (input.trim() === "") return;
@@ -15,7 +17,7 @@ const ChatbotPage = () => {
     <div className="chatbot-container">
       {/* Sidebar bên trái */}
       <div className="sidebar">
-        <div className="logo">
+        <div className="logo" onClick={() => navigate("/")}>
           <img src="/logo.png" alt="BookingCare" />
           <span>BookingCare</span>
         </div>

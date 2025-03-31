@@ -4,7 +4,6 @@
     text-align: center;
 }
 .logo {
-    background: none; /* Xóa nền */
     border-radius: 0; /* Không bo góc */
     box-shadow: none; /* Xóa hiệu ứng bóng (nếu có) */
 }
@@ -30,8 +29,13 @@
 .media-logos {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2px;
+    gap: 8px;
+    cursor: pointer;
 }
+.media-logo:hover {
+    background: #f9f9f9;
+  
+  }
 
 .media-logo img {
     width: 150px;

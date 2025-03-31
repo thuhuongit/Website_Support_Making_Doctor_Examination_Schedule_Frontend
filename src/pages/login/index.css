@@ -8,7 +8,7 @@
 }
 
 body {
-  background-image: url("/12.jpg");
+  background-image: url("/nen2.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -41,21 +41,16 @@ body {
 .input-field {
   width: 100%;
   padding: 12px 40px;
-  border: none; /* Xóa viền đen */
-  border-radius: 25px;
+  border-radius: 25px; /* Bo góc đúng */
   background: rgba(255, 255, 255, 0.3);
   color: rgb(3, 3, 3);
   outline: none;
   font-size: 16px;
-  transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  
+  transition: border-color 0.3s ease-in-out, background 0.3s ease-in-out;
+}
 
-}
-.input-field:focus {
-  border: 2px solid #3b82f6; /* Viền xanh khi nhấn vào */
-  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5); /* Hiệu ứng phát sáng nhẹ */
-  background: rgba(255, 255, 255, 0.5); /* Làm sáng nền một chút */
-}
+
+
 
 .input-field::placeholder {
   color: 0 0 8px rgba(59, 130, 246, 0.5);

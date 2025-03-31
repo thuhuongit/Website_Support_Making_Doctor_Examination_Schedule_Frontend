@@ -1,0 +1,72 @@
+.doctor-container {
+  max-width: 100%;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.doctor-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.doctor-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.doctor-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.doctor-experience,
+.doctor-location {
+  font-size: 16px;
+  color: #555;
+}
+
+.schedule-title {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.schedule-button {
+  padding: 10px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.schedule-button:hover {
+  background: #d9d9d9;
+}
+
+.selected {
+  background: #007bff;
+  color: white;
+}
+
+.selected-time {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #007bff;
+  font-weight: bold;
+}

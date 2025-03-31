@@ -1,10 +1,11 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./Hospital.css"; 
 import Footer from "../Footer/Footer";
 
 
 const HospitalDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const hospitalData = {
     "viet-duc": {

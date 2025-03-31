@@ -112,20 +112,21 @@ button {
 .logo {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 5px;
     font-weight: bold;
     color: #d82c20;
-    font-size: 25px;
+    font-size: 100px;
+    cursor: pointer;
     
 }
 
 .logo i {
-    font-size: 30px;
+    font-size: 27px;
     color: #948786;
 }
 
 .logo img {
-    width: 45px;
+    width: 100px;
     height: auto;
 }
 
@@ -203,4 +204,8 @@ button {
     color: white;
     border-color: #7b61da;
 }
-
+.highlight {
+    background-color: red !important;
+    transition: background-color 0.5s ease-in-out;
+  }
+  

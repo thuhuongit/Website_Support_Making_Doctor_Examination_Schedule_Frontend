@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from "react";
 import './Navbar.css';
 import { useTranslation } from "react-i18next";
 import "../../i18n";
@@ -16,6 +16,28 @@ const Navbar = () => {
   const [activeLang, setActiveLang] = useState("vi"); // Mặc định là tiếng Việt
   const [menuOpen, setMenuOpen] = useState(false); // State để mở menu
   const navigate = useNavigate();
+  const [highlighted, setHighlighted] = useState(null);
+
+    // Tạo ref cho phần "Chuyên khoa phổ biến"
+    const specialtiesRef = useRef(null);
+    const hospitalsRef = useRef(null);
+    const doctorsRef = useRef(null);
+    const packagesRef = useRef(null);
+
+      // Hàm cuộn xuống khi nhấn vào menu "Chuyên khoa"
+      const scrollToSection = (ref) => {
+        if (ref.current) {
+          ref.current.scrollIntoView({ behavior: "smooth" });
+      
+          setHighlighted(ref); // Đặt highlight cho section hiện tại
+      
+          setTimeout(() => {
+            setHighlighted(null); // Xóa highlight sau 1.5 giây
+          }, 1500);
+        }
+      };
+      
+      
 
   // Hàm đổi ngôn ngữ
   const changeLanguage = (lng) => {
@@ -43,7 +65,7 @@ const Navbar = () => {
 
       <nav className="navbar">
         {/* Logo */}
-        <div className="logo">
+        <div className="logo" onClick={() => navigate("/")}>
         <button 
             className="menu-btn" 
             onClick={() => setMenuOpen(!menuOpen)}
@@ -51,16 +73,16 @@ const Navbar = () => {
           > <i className="fa-solid fa-bars"></i>
 
           </button>
-          <img src="/logo.png" alt="BookingCare" />
+          <img src="/logo.png" alt="BookingCare"  onClick={() => navigate("/")} />
           <span className="logo-text">BookingCare</span>
         </div>
 
         {/* Menu giữa */}
         <ul className="nav-links">
-          <li>{t("Chuyên khoa")}<br /><span>{t("Tìm bác sĩ theo chuyên khoa")}</span></li>
-          <li>{t("Cơ sở y tế")}<br /><span>{t("Chọn bệnh viện phòng khám")}</span></li>
-          <li>{t("Bác sĩ")}<br /><span>{t("Chọn bác sĩ giỏi")}</span></li>
-          <li>{t("Gói khám")}<br /><span>{t("Khám sức khỏe tổng quát")}</span></li>
+          <li onClick={() => scrollToSection(specialtiesRef)}>{t("Chuyên khoa")}<br /><span>{t("Tìm bác sĩ theo chuyên khoa")}</span></li>
+          <li onClick={() => scrollToSection(hospitalsRef)}>{t("Cơ sở y tế")}<br /><span>{t("Chọn bệnh viện phòng khám")}</span></li>
+          <li onClick={() => scrollToSection(doctorsRef)} >{t("Bác sĩ")}<br /><span>{t("Chọn bác sĩ giỏi")}</span></li>
+          <li onClick={() => scrollToSection(packagesRef)}>{t("Gói khám")}<br /><span>{t("Khám sức khỏe tổng quát")}</span></li>
         </ul>
 
         {/* Phần bên phải: Hỗ trợ + Đổi ngôn ngữ */}
@@ -95,7 +117,7 @@ const Navbar = () => {
        {/* Menu dropdown */}
        <div className={`dropdown-menu ${menuOpen ? 'show' : ''}`}>
         <ul>
-          <li><a href="#">Trang chủ</a></li>
+          <li onClick={() => navigate("/")}><a href="#">Trang chủ</a></li>
           <li><a href="#">Cẩm nang</a></li>
           <li><a href="#">Liên hệ hợp tác</a></li>
           <li><a href="#">Sức khỏe doanh nghiệp</a></li>
@@ -113,23 +135,33 @@ const Navbar = () => {
       </nav>
       
 
-      
-      
-
-      
-
-
 
 
       <Banner />
-      <SpecialtiesSlider />
+        {/* Chuyên khoa phổ biến */}
+<div ref={specialtiesRef} className={`specialties-section ${highlighted === specialtiesRef ? "highlight" : ""}`}>
+  <SpecialtiesSlider type="specialties" />
+</div>
+
+{/* Cơ sở y tế */}
+<div ref={hospitalsRef} className={`specialties-section ${highlighted === specialtiesRef ? "highlight" : ""}`}>
+  <SpecialtiesSlider type="hospitals" />
+</div>
+
+{/* Bác sĩ nổi bật */}
+<div ref={doctorsRef} className={`specialties-section ${highlighted === specialtiesRef ? "highlight" : ""}`}>
+  <SpecialtiesSlider type="doctors" />
+</div>
+
+{/* Gói khám */}
+<div ref={packagesRef} className={`specialties-section ${highlighted === specialtiesRef ? "highlight" : ""}`}>
+  <SpecialtiesSlider type="healPackage" />
+</div>
+
       <Media/>
       <Footer/>
       
-
-      
-
-      
+ 
   
     </div>
   );

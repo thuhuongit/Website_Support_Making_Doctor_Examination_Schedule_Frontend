@@ -6,7 +6,9 @@ import Navbar from "./components/Navbar/Navbar";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
 import ChatbotPage from "./components/ChatbotPage/ChatbotPage";
-import Hospital from "./components/Hospital/Hospital"
+import Hospital from "./components/Hospital/Hospital";
+import Doctor from "./components/Doctor/DoctorDetail";
+import Book from "./components/Book/Book"
 
 
 
@@ -23,6 +25,8 @@ function App() {
           <Route path="/chat" element={<ChatbotPage />} />
           <Route path="/" element={<Navbar />} />
           <Route path="/hospital/:id" element={<Hospital/>} />
+          <Route path="/doctor/:id" element={<Doctor/>} />
+          <Route path="/dat-kham/:id" element={<Book/>} />
           
         </Routes>
       </Router>

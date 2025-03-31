@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { userService } from "../../services/userService";  // Import API userService
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Modal from "react-modal";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
 
 
 
@@ -18,14 +21,20 @@ const Dashboard = () => {
     firstName: "",
     lastName: "",
     address: "",
-    phoneNumber: "",
-    gender: "Male",
   })
   const handleEditClick = (user) => {
     setEditUser(user);       
     setIsEditMode(true);     
     setIsModalOpen(true);    
   };
+  const handleEditInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditUser(prev => ({
+      ...prev,
+      [name]: value ?? "" // Đảm bảo luôn có giá trị
+    }));
+  };
+  
 
   
 
@@ -50,7 +59,7 @@ const Dashboard = () => {
       const { name, value } = e.target;
       setNewUser(prev => ({
           ...prev,
-          [name]: value ?? ""  // ✅ Đảm bảo luôn có giá trị
+          [name]: value ?? ""  //  Đảm bảo luôn có giá trị
       }));
   };
   
@@ -58,8 +67,8 @@ const Dashboard = () => {
     const handleSaveUser = async () => {
       console.log("User mới:", newUser);
     
-      if (!newUser.email || !newUser.firstName || !newUser.lastName ) {
-        alert("Vui lòng nhập đầy đủ thông tin!");
+      if (!newUser.email || !newUser.firstName || !newUser.lastName) {
+        toast.error("⚠ Vui lòng nhập đầy đủ thông tin!", { position: "top-right" });
         return;
       }
     
@@ -69,90 +78,76 @@ const Dashboard = () => {
         console.log("API response:", response);
     
         if (response.errCode === 0) {
-          alert("Thêm người dùng thành công!");
+          toast.success(" Thêm người dùng thành công!", { position: "top-right" });
           setIsModalOpen(false);
-    
-          // ✅ Cập nhật danh sách từ API thay vì chỉ thêm vào state
           fetchUsers();  
-    
         } else {
-          alert("Lỗi từ server: " + response.message);
+          toast.error(" " + response.message, { position: "top-right" });
         }
       } catch (error) {
         console.error("Lỗi khi thêm user:", error);
-        alert("Không thể thêm người dùng! Kiểm tra console.");
+        toast.error(" Không thể thêm người dùng!", { position: "top-right" });
       }
     
-      setNewUser({ email: "", firstName: "", lastName: "", address: "", phoneNumber: "", gender: "Male" });
+      setNewUser({ email: "", firstName: "", lastName: "", address: "" });
     };
     
   
     // Xóa người dùng
     const handleDeleteUser = async (userId) => {
-      if (!window.confirm("Bạn có chắc chắn muốn xóa người dùng này?")) {
-        return;
-      }
-    
-      try {
-        const response = await userService.deleteUser(userId);
-        if (response.errCode === 0) {
-          alert("Xóa người dùng thành công!");
-    
-          // Xóa user ngay trong state mà không cần fetch lại API
-          setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
-        } else {
-          alert("Lỗi từ server: " + response.message);
+      Swal.fire({
+        title: "Bạn có chắc chắn?",
+        text: "Hành động này không thể hoàn tác!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Xóa",
+        cancelButtonText: "Hủy",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const response = await userService.deleteUser(userId);
+            if (response.errCode === 0) {
+              toast.success("Xóa người dùng thành công!", { position: "top-right" });
+              setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
+            } else {
+              toast.error(response.message, { position: "top-right" });
+            }
+          } catch (error) {
+            console.error("Lỗi khi xóa user:", error);
+            toast.error("Không thể xóa người dùng!", { position: "top-right" });
+          }
         }
-      } catch (error) {
-        console.error("Lỗi khi xóa user:", error);
-        alert("Không thể xóa người dùng!");
-      }
+      });
     };
-
-
-    const handleEditInputChange = (e) => { 
-      console.log (e.target); 
-      const { name, value } = e.target;
-      setEditUser(prev => ({
-          ...prev,
-          [name]: value ?? ""  // ✅ Đảm bảo không bị undefined
-      }));
-  };
+    
   
     
   
     //  Chỉnh sửa người dùng
     const handleEditUser = async () => {
-      // console.log("First Name:", firstName);
-      // console.log("Last Name:", lastName);
-      // console.log("Address:", address);
-      // console.log("Phone:", phonenumber);
-      // console.log("Gender:", gender);
-       console.log (editUser);
-      // if (!editUser.id || !editUser.firstName || !editUser.lastName || !editUser.phonenumber || !editUser.gender){
-      //     alert("Vui lòng nhập đầy đủ thông tin!");
-      //     return;
-      // }
-  
+      console.log(editUser);
+    
       try {
-          console.log("Gửi dữ liệu cập nhật:", editUser);
-          const response = await userService.updateUser(editUser);  // ✅ Đảm bảo gọi đúng hàm
-          console.log("Phản hồi API:", response);
-  
-          if (response.errCode === 0) {
-              alert("Cập nhật thành công!");
-              setIsModalOpen(false);
-              setIsEditMode(false);
-              fetchUsers();  // Cập nhật lại danh sách
-          } else {
-              alert("Lỗi từ server: " + response.message);
-          }
+        console.log("Gửi dữ liệu cập nhật:", editUser);
+        const response = await userService.updateUser(editUser);
+        console.log("Phản hồi API:", response);
+    
+        if (response.errCode === 0) {
+          toast.success(" Cập nhật người dùng thành công!", { position: "top-right" });
+          setIsModalOpen(false);
+          setIsEditMode(false);
+          fetchUsers();
+        } else {
+          toast.error(" " + response.message, { position: "top-right" });
+        }
       } catch (error) {
-          console.error("Lỗi khi cập nhật user:", error);
-          alert("Không thể cập nhật người dùng!");
+        console.error("Lỗi khi cập nhật user:", error);
+        toast.error("⚠ Không thể cập nhật người dùng!", { position: "top-right" });
       }
-  };
-  
+    };
+    
   
     
     
@@ -178,13 +173,13 @@ const Dashboard = () => {
         <input type="text" name="lastName" placeholder="Last Name" value={isEditMode ? editUser?.lastName : newUser.lastName} onChange={isEditMode ? handleEditInputChange : handleInputChange} className="input-field" />
 
         <input type="text" name="address" placeholder="Address" value={isEditMode ? editUser?.address : newUser.address} onChange={isEditMode ? handleEditInputChange : handleInputChange} className="input-field" />
-
+{/* 
         <input type="number" name="phoneNumber" placeholder="Phone Number" value={isEditMode ? editUser?.phoneNumber : newUser.phoneNumber} onChange={isEditMode ? handleEditInputChange : handleInputChange} className="input-field" />
 
         <select name="gender" value={isEditMode ? editUser?.gender : newUser.gender} onChange={isEditMode ? handleEditInputChange : handleInputChange} className="input-field">
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
-        </select>
+        </select> */}
 
         <div className="modal-buttons">
         {isEditMode ? (
@@ -205,8 +200,6 @@ const Dashboard = () => {
               <th>Firstname</th>
               <th>Lastname</th>
               <th>Address</th>
-              <th>PhoneNumber</th>
-              <th>Gender</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -218,8 +211,6 @@ const Dashboard = () => {
                   <td>{user?.firstName}</td>
                   <td>{user?.lastName}</td>
                   <td>{user?.address}</td>
-                  <td>{user?.phoneNumber}</td>
-                  <td>{user?.gender}</td>
                   <td>
                     <button type="button" onClick={() => handleEditClick(user)} className="btn-edit"><i className="fa-solid fa-pencil"></i></button>
                     <button  onClick={() => handleDeleteUser(user.id)} className="btn-delete"><i className="fa-solid fa-trash"></i></button>

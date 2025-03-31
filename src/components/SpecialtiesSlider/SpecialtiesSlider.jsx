@@ -6,7 +6,7 @@ import "./SpecialtiesSlider.css";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-const SpecialtiesSlider = () => {
+const SpecialtiesSlider = ({type}) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
   const settings = {
@@ -38,7 +38,7 @@ const SpecialtiesSlider = () => {
 
 
   const doctor = [
-    { title: "Tiến sĩ, Bác sĩ chuyên khoa II Lê Quốc Việt", img: "/2.png", desc: "Cơ Xương Khớp, Nội khoa" },
+    { title: "Tiến sĩ, Bác sĩ chuyên khoa II Lê Quốc Việt", img: "/2.png", desc: "Cơ Xương Khớp, Nội khoa", link: "/doctor/le-quoc-viet"},
     { title: "Tiến sĩ, Bác sĩ Chuyên khoa II Lã Thị Bưởi", img: "/3.jpg", desc: "Sức khỏa tâm thần" },
     { title: "Bác sĩ Chuyên khoa II Võ Văn Mẫn", img: "/4.jpg", desc: "Cơ Xương Khớp, Chấn thương chỉnh hình" },
     { title: "Thạc sĩ, Bác sĩ Nguyễn Thị Thanh Nhàn", img: "/5.png", desc: "Thần kinh" },
@@ -46,47 +46,74 @@ const SpecialtiesSlider = () => {
     { title: "Thạc sĩ, Bác sĩ Trần Thị Mai Thy", img: "/7.jpg", desc: "Thầm kinh" },
   ];
 
+  const healPackage = [
+    { title: "Gói khám tổng quát", img: "/ói.png", link: "/package/general-checkup" },
+    { title: "Gói khám tim mạch", img: "/goi2.png", link: "/package/cardiology-checkup" },
+    { title: "Gói khám tiểu đường", img: "/goi3.png", link: "/package/diabetes-checkup" },
+    { title: "Gói khám ung thư", img: "/ói.png", link: "/package/cancer-screening" },
+    { title: "Gói khám sức khỏe định kỳ", img: "/ói.png", link: "/package/regular-health" },
+  ];
+
+  
+
   return (
     <div className="specialties-slider">
-      <h2>{t("Chuyên khoa phổ biến")}</h2>
-      <Slider {...settings}>
-        {specialties.map((item, index) => (
-          <div key={index} className="specialty-item">
-            <img src={item.img} alt={item.title} />
-            <p>{item.title}</p>
-          </div>
-        ))}
-      </Slider>
+    {type === "specialties" && (
+      <>
+        <h2>{t("Chuyên khoa phổ biến")}</h2>
+        <Slider {...settings}>
+          {specialties.map((item, index) => (
+            <div key={index} className="specialty-item">
+              <img src={item.img} alt={item.title} />
+              <p>{item.title}</p>
+            </div>
+          ))}
+        </Slider>
+      </>
+    )}
 
+    {type === "hospitals" && (
+      <>
+        <h2>{t("Cơ sở y tế nổi bật")}</h2>
+        <Slider {...settings}>
+          {hospitals.map((item, index) => (
+            <div key={index} className="specialty-item" onClick={() => navigate(item.link)}>
+              <img src={item.img} alt={item.title} />
+              <p>{item.title}</p>
+            </div>
+          ))}
+        </Slider>
+      </>
+    )}
 
-      <h2>{t("Cơ sở y tế nổi bật")}</h2>
-      <Slider {...settings}>
-        {hospitals.map((item, index) => (
-          
-          <div key={index} className="specialty-item" onClick={() => navigate(item.link)}>
-            <img src={item.img} alt={item.title} />
-            <p>{item.title}</p>
-          </div>
-         
-        ))}
-      </Slider>
-
-
-      <h2>{t("Bác sĩ nổi bật")}</h2>
-      <Slider {...settings}>
-        {doctor.map((item, index) => (
-          <div key={index} className="doctor-item">
-            <img src={item.img} alt={item.title} />
-            <p className="doctor-name">{item.title}</p>
-            <p className="doctor-desc">{item.desc}</p>
-
-            
-          </div>
-        ))}
-      </Slider>
-
-
-    </div>
+    {type === "doctors" && (
+      <>
+        <h2>{t("Bác sĩ nổi bật")}</h2>
+        <Slider {...settings}>
+          {doctor.map((item, index) => (
+            <div key={index} className="doctor-item" onClick={() => navigate(item.link)}>
+              <img src={item.img} alt={item.title} />
+              <p className="doctor-name">{item.title}</p>
+              <p className="doctor-desc">{item.desc}</p>
+            </div>
+          ))}
+        </Slider>
+      </>
+    )}
+    {type === "healPackage" && (
+      <>
+        <h2>{t("Gói khám bệnh")}</h2>
+        <Slider {...settings}>
+          {healPackage.map((item, index) => (
+            <div key={index} className="specialty-item" onClick={() => navigate(item.link)}>
+              <img src={item.img} alt={item.title} />
+              <p>{item.title}</p>
+            </div>
+          ))}
+        </Slider>
+      </>
+    )}
+  </div>
   );
 };
 
