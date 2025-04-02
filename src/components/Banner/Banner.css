@@ -50,7 +50,7 @@
     position: relative;
     z-index: 2; /* Đưa nó lên trên nền trắng */
     display: flex;
-    justify-content: center;
+    justify-content: 20px;
     flex-wrap: wrap;
     align-items: center;
     gap: 20px;

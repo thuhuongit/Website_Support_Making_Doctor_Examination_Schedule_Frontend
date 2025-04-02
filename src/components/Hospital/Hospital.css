@@ -1,6 +1,7 @@
 .hospital-container {
   width: 100%;
   background: #ffffff;
+  background-color: white;
   z-index: 10;
 }
 

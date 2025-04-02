@@ -1,0 +1,59 @@
+/* Container chính */
+.container {
+    display: flex;
+    flex-direction: column; /* Để nội dung xếp dọc */
+    height: 100vh;
+    background: white;
+    background-color: white;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 100%; /* Chiếm toàn bộ chiều ngang */
+    background: #1976d2;
+    color: white;
+    padding: 15px;
+    display: flex;
+    flex-direction: row; /* Đặt các mục menu nằm ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    position: relative; /* Cần thiết để căn chỉnh phần tử con (login-btn) */
+  }
+  
+  /* Các item menu */
+  .menuItem {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  /* Dropdown */
+  .dropdown {
+    display: none;
+    position: absolute;
+    background: #1565c0;
+    padding: 10px;
+  }
+  
+  .dropdownActive {
+    display: block;
+  }
+  
+  .dropdownItem {
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  /* Nút login */
+  .login-btn {
+    position: absolute;
+    right: 20px; /* Căn bên phải */
+    font-size: 24px;
+    cursor: pointer;
+    margin-left: auto; /* Tự động đẩy nút login ra ngoài cùng bên phải */
+  }
+  
+  /* Nội dung chính */
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  
