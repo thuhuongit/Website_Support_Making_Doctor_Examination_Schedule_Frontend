@@ -5,13 +5,14 @@ import Modal from "react-modal";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
+import "./Header.css";
 
 
 
 
 Modal.setAppElement("#root");
 
-const Dashboard = () => {
+const Header = () => {
   const [users, setUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editUser, setEditUser] = useState(null); // Đúng: Lưu user cần chỉnh sửa
@@ -230,4 +231,4 @@ const Dashboard = () => {
 };
 
 
-export default Dashboard;
+export default Header;
