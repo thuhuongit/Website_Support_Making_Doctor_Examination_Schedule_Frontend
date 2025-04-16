@@ -1,74 +1,73 @@
-.doctor-container {
-  max-width: 100%;
-  max-height: 100%;
-  margin: auto;
+/* DoctorDetailPage.css */
+
+.doctor-detail-container {
+  background: #fafafa;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
-  background: #fff;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 10;
 }
 
-.doctor-info {
+.doctor-intro {
   display: flex;
-  align-items: center;
   gap: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 20px;
 }
 
-.doctor-image {
-  width: 100px;
-  height: 100px;
+.doctor-avatar {
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
 }
 
+.doctor-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .doctor-name {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
 }
 
-.doctor-experience,
-.doctor-location {
+.doctor-position {
   font-size: 16px;
-  color: #555;
+  color: #666;
 }
 
-.schedule-title {
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
 }
 
-.schedule-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 10px;
+@media (min-width: 1024px) {
+  .main-content {
+    flex-direction: row;
+  }
+
+  .left-content {
+    flex: 1;
+  }
+
+  .right-content {
+    width: 350px;
+  }
 }
 
-.schedule-button {
-  padding: 10px;
-  background: #f0f0f0;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background 0.3s;
+.doctor-description {
+  background-color: #fafafa;
+  padding: 20px;
+  border-radius: 8px;
+  line-height: 1.6;
 }
 
-.schedule-button:hover {
-  background: #d9d9d9;
-}
-
-.selected {
-  background: #007bff;
-  color: white;
-}
-
-.selected-time {
-  margin-top: 15px;
-  font-size: 16px;
-  color: #007bff;
-  font-weight: bold;
+.doctor-schedule, .doctor-extra-info {
+  background-color: #f1f5f9;
+  padding: 16px;
+  margin-bottom: 20px;
+  border-radius: 8px;
 }

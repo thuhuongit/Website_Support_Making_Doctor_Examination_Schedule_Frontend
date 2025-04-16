@@ -7,49 +7,40 @@ const DoctorDetail = () => {
   const { id } = useParams();
   const [selectedTime, setSelectedTime] = useState(null);
 
-  const doctorData = {
-    "nguyen-ngoc-thanh": {
-      name: "Bác sĩ Chuyên khoa I Nguyễn Ngọc Thành",
-      experience: "Gần 20 năm kinh nghiệm khám và điều trị về Suy giãn tĩnh mạch",
-      location: "Hà Nội",
-      schedule: [
-        "09:30 - 10:00", "10:00 - 10:30", "10:30 - 11:00",
-        "11:00 - 11:30", "11:30 - 12:00", "13:30 - 14:00",
-        "14:00 - 14:30", "14:30 - 15:00", "15:00 - 15:30",
-        "16:00 - 16:30", "16:30 - 17:00"
-      ],
-    },
-  };
-
-  const doctor = doctorData[id] || doctorData["nguyen-ngoc-thanh"];
+  
 
   return (
     
-    <div className="doctor-container">
+    <div className="doctor-detail-container">
+  <div className="doctor-intro">
+    <img src="/avatar.jpg" className="doctor-avatar" />
+    <div className="doctor-info">
+      <div className="doctor-name">BS. Nguyễn Văn A</div>
+      <div className="doctor-position">Chuyên khoa Nội tổng quát</div>
+    </div>
+  </div>
 
-      <div className="doctor-info">
-        <img src="/doctor.png" alt="Bác sĩ" className="doctor-image" />
-        <div>
-          <h2 className="doctor-name">{doctor.name}</h2>
-          <p className="doctor-experience">{doctor.experience}</p>
-          <p className="doctor-location"><strong>Địa điểm:</strong> {doctor.location}</p>
-        </div>
+  <div className="main-content">
+    <div className="left-content">
+      <div className="doctor-description">
+        {/* Render HTML từ backend */}
+        <div dangerouslySetInnerHTML={{ __html: "<p>Bác sĩ có hơn 10 năm kinh nghiệm...</p>" }} />
       </div>
-      <h3 className="schedule-title">LỊCH KHÁM</h3>
-      <div className="schedule-grid">
-        {doctor.schedule.map((time, index) => (
-          <button
-            key={index}
-            className={`schedule-button ${selectedTime === time ? "selected" : ""}`}
-            onClick={() => setSelectedTime(time)}
-          >
-            {time}
-          </button>
-        ))}
+    </div>
+
+    <div className="right-content">
+      <div className="doctor-schedule">
+        {/* Component lịch khám */}
+        Chọn lịch khám tại đây
       </div>
-      {selectedTime && (
-        <p className="selected-time">Bạn đã chọn: {selectedTime}</p>
-      )}
+
+      <div className="doctor-extra-info">
+        {/* Component thông tin thêm */}
+        Địa chỉ, giá khám, hình thức thanh toán
+      </div>
+    </div>
+  </div>
+
 
 
 

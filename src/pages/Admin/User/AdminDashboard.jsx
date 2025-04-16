@@ -2,18 +2,21 @@ import { FaUpload, FaEdit, FaTrash } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import "./AdminDashboard.css";
 import axiosInstance from "../../../util/axios";
+import Swal from 'sweetalert2';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Sidebar = () => (
   <div className="sidebar">
     <div className="user-info">
       <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="avatar" />
       <div>
-        <p><strong>Admin Admin</strong></p>
+        <p><strong>Xin chào, Admin!</strong></p>
         <p className="text-xs text-gray-500">ADMIN</p>
       </div>
     </div>
     <nav>
-    <div>Dashboard</div>
+      <div>Dashboard</div>
       <div className="active">Manage User</div>
       <div>Manage Doctor</div>
       <div>Manage Health Examination Plan</div>
@@ -36,7 +39,7 @@ const ManageUser = () => {
     position: 'Bác sĩ',
   });
 
-  const [users, setUsers] = useState([]); // Example for users list, you would typically fetch this from your backend.
+  const [users, setUsers] = useState([]); 
 
   useEffect(() => {
     fetchUsers();
@@ -46,31 +49,35 @@ const ManageUser = () => {
     axiosInstance.get("http://localhost:8081/api/get-all-users?id=all")
       .then(res => {
         console.log("Users data: ", res.data.users);  // Kiểm tra dữ liệu trả về
-        const userList = res.data.users || []; // fallback về mảng rỗng nếu null
+        const userList = res.data.users || []; 
         setUsers(userList);
       })
       .catch(err => {
         console.error("Error fetching users: ", err);
+        toast.error("Không thể lấy danh sách người dùng!", { position: "top-right" });
       });
   };
-  
 
-
-  
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    if (!formData.email || !formData.password || !formData.firstName || !formData.lastName) {
+      toast.error("⚠ Vui lòng nhập đầy đủ thông tin!", { position: "top-right" });
+      return;
+    }
+
     try {
       const res = await axiosInstance.post("http://localhost:8081/api/create-new-user", formData);
-      
+
       if (res.data && res.data.errCode === 0) {
-        alert("Tạo người dùng thành công!");
+        toast.success("Tạo người dùng thành công!", { position: "top-right" });
         setFormData({
           email: '',
           password: '',
@@ -82,43 +89,49 @@ const ManageUser = () => {
           role: 'Bệnh nhân',
           position: 'Bác sĩ',
         });
-  
-        // Fetch lại danh sách người dùng sau khi tạo thành công
-        fetchUsers();
+
+        fetchUsers(); 
       } else {
-        alert("Lỗi: " + res.data.errMessage);
+        toast.error("Lỗi: " + res.data.errMessage, { position: "top-right" });
       }
     } catch (error) {
       console.error(error);
-      alert("Đã có lỗi xảy ra khi tạo người dùng.");
+      toast.error("Đã có lỗi xảy ra khi tạo người dùng.", { position: "top-right" });
     }
   };
-  
-
- 
-  
 
   const handleDelete = async (userId) => {
-    try {
-      // Gọi API để xóa người dùng
-      const response = await axiosInstance.delete("http://localhost:8081/api/delete-user", {
-        data: { id: userId }
-      });
-  
-      if (response.data.errCode === 0) {
-        alert("User deleted successfully");
-        fetchUsers(); // Lấy lại danh sách người dùng sau khi xóa
-      } else {
-        alert("Error: " + response.data.errMessage);
+
+    const result = await Swal.fire({
+      title: "Bạn có chắc chắn muốn xóa?",
+      text: "Hành động này không thể hoàn tác!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Xóa",
+      cancelButtonText: "Hủy",
+    });
+
+    
+    if (result.isConfirmed) {
+      try {
+        const response = await axiosInstance.delete("http://localhost:8081/api/delete-user", {
+          data: { id: userId }
+        });
+
+        if (response.data.errCode === 0) {
+          toast.success("Xóa người dùng thành công!", { position: "top-right" });
+          fetchUsers(); 
+        } else {
+          toast.error("Lỗi khi xóa người dùng: " + response.data.errMessage, { position: "top-right" });
+        }
+      } catch (error) {
+        console.error("Lỗi khi xóa:", error);
+        toast.error("Không thể xóa người dùng!", { position: "top-right" });
       }
-    } catch (error) {
-      console.error("Error deleting user:", error);
-      alert("An error occurred while deleting the user.");
     }
   };
-  
-
-  
 
   return (
     <div className="flex h-screen">
@@ -188,64 +201,54 @@ const ManageUser = () => {
             <option>None</option>
           </select>
 
-          <label>
-            <FaUpload style={{ display: "inline-block", marginRight: "6px" }} />
-            <input type="file" style={{ display: "none" }} />
-            Tải ảnh
-          </label>
+          
 
           <div></div>
           <button type="submit">Lưu người dùng</button>
         </form>
 
         <table className="user-table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>FirstName</th>
-      <th>Address</th>
-      <th>Phone</th> 
-      <th>Gender</th> 
-      <th>Role</th> 
-      <th>Actions</th> 
-    </tr>
-  </thead>
-  <tbody>
-    {users.length === 0 ? (
-      <tr>
-        <td colSpan="9" className="text-center">Không có người dùng nào.</td>
-      </tr>
-    ) : (
-      users.map((u) => (
-        <tr key={u.id}>
-          <td>{u.firstName} {u.lastName}</td>
-          <td>{u.email}</td>
-          <td>{u.firstName}</td>
-          <td>{u.address}</td>
-          <td>{u.phone}</td> 
-          <td>{u.gender === 0 ? "Nam" : u.gender === 1 ? "Nữ" : "Khác"}</td> 
-          <td>
-  {console.log('User Role:', u.roleId)}  {/* Log giá trị roleId trả về */}
-  {
-    u.roleId === '1' ? 'Admin' : 
-    u.roleId === '2' ? 'Bác sĩ' : 
-    u.roleId === '3' ? 'Bệnh nhân' : 
-    'Unknown Role'
-  }
-</td>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>FirstName</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Gender</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.length === 0 ? (
+              <tr>
+                <td colSpan="9" className="text-center">Không có người dùng nào.</td>
+              </tr>
+            ) : (
+              users.map((u) => (
+                <tr key={u.id}>
+                  <td>{u.firstName} {u.lastName}</td>
+                  <td>{u.email}</td>
+                  <td>{u.firstName}</td>
+                  <td>{u.address}</td>
+                  <td>{u.phone}</td>
+                  <td>{u.gender === 0 ? "Nam" : u.gender === 1 ? "Nữ" : "Khác"}</td>
+                  <td>
+                    {u.roleId === '1' ? 'Admin' : u.roleId === '2' ? 'Bác sĩ' : u.roleId === '3' ? 'Bệnh nhân' : 'Unknown Role'}
+                  </td>
+                  <td>
+                    <button onClick={() => handleDelete(u.id)} className="btn-delete">
+                      <FaTrash />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
 
-          <td>
-            <button onClick={() => handleDelete(u.id)} className="btn-delete">
-              <i className="fa-solid fa-trash"></i>
-            </button>
-          </td>
-        </tr>
-      ))
-    )}
-  </tbody>
-</table>
-
+        <ToastContainer />
       </div>
     </div>
   );
