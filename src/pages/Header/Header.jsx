@@ -175,7 +175,7 @@ const Header = () => {
 
         <input type="text" name="address" placeholder="Address" value={isEditMode ? editUser?.address : newUser.address} onChange={isEditMode ? handleEditInputChange : handleInputChange} className="input-field" />
 {/* 
-        <input type="number" name="phoneNumber" placeholder="Phone Number" value={isEditMode ? editUser?.phoneNumber : newUser.phoneNumber} onChange={isEditMode ? handleEditInputChange : handleInputChange} className="input-field" />
+        <input type="number" name="phone" placeholder="Phone Number" value={isEditMode ? editUser?.phone : newUser.phone} onChange={isEditMode ? handleEditInputChange : handleInputChange} className="input-field" />
 
         <select name="gender" value={isEditMode ? editUser?.gender : newUser.gender} onChange={isEditMode ? handleEditInputChange : handleInputChange} className="input-field">
                 <option value="Male">Male</option>

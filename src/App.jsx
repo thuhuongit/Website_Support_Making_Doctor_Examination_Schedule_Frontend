@@ -9,7 +9,7 @@ import ChatbotPage from "./components/ChatbotPage/ChatbotPage";
 import Hospital from "./components/Hospital/Hospital";
 import Doctor from "./components/Doctor/DoctorDetail";
 import Book from "./components/Book/Book"
-import AdminDashboard from './pages/Admin/AdminDashboard';
+import AdminDashboard from './pages/Admin/User/AdminDashboard';
 
 
 
