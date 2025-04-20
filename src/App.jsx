@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import LoginForm from "./pages/login/index";
 import { ToastContainer } from "react-toastify";
 import Header from "./pages/Header/Header";

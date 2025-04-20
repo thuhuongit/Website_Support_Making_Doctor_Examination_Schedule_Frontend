@@ -55,9 +55,16 @@
 /* Form */
 .user-form {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* Mỗi trường chiếm 1 cột */
   gap: 16px;
   margin-bottom: 24px;
+}
+
+/* Nếu bạn muốn chúng nằm ngang hơn, có thể thử với flexbox */
+.user-form {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;  /* Cho phép phần tử xuống dòng khi hết không gian */
 }
 
 .user-form input,

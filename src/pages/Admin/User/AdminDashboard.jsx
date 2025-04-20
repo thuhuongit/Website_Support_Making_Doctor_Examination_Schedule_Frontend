@@ -5,6 +5,9 @@ import axiosInstance from "../../../util/axios";
 import Swal from 'sweetalert2';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
 
 const Sidebar = () => (
   <div className="sidebar">
@@ -26,7 +29,9 @@ const Sidebar = () => (
   </div>
 );
 
-const ManageUser = () => {
+const ManageUser = (type) => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
