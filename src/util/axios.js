@@ -31,5 +31,53 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+const getScheduleByDate = async (doctorId, selectedDate) => {
+  try {
+    const response = await axios.get(`/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${selectedDate}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching schedule:', error);
+  }
+};
+
+// Gửi yêu cầu đặt lịch hẹn
+const bookAppointment = async (appointmentData) => {
+  try {
+    const response = await axios.post('/api/patient-book-appointment', appointmentData);
+    return response.data;
+  } catch (error) {
+    console.error('Error booking appointment:', error);
+  }
+};
+
+// Lấy danh sách bệnh nhân của bác sĩ
+const getListPatientForDoctor = async (doctorId) => {
+  try {
+    const response = await axios.get(`/api/get-list-patient-for-doctor?doctorId=${doctorId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching patient list:', error);
+  }
+};
+
+// Gửi thông tin điều trị hoặc thuốc cho bệnh nhân
+const sendRemedy = async (remedyData) => {
+  try {
+    const response = await axios.post('/api/send-remedy', remedyData);
+    return response.data;
+  } catch (error) {
+    console.error('Error sending remedy:', error);
+  }
+};
+
+// Hủy lịch hẹn
+const cancelBooking = async (appointmentId) => {
+  try {
+    const response = await axios.post('/api/cancel-booking', { appointmentId });
+    return response.data;
+  } catch (error) {
+    console.error('Error canceling booking:', error);
+  }
+};
 
 export default axiosInstance;

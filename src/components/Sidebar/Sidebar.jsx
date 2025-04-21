@@ -1,23 +1,38 @@
-import './Sidebar.css';
+import { Link, useLocation } from "react-router-dom";
+import "./Sidebar.css";
 
-const Sidebar = () => (
-  <div className="sidebar">
-    <div className="sidebar-user">
-      <img src="/avatar.png" alt="Avatar" className="avatar" />
-      <div>
-        <p className="username">Admin Admin</p>
-        <p className="role">ADMIN</p>
+const Sidebar = () => {
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname.includes(path);
+
+  return (
+    <div className="sidebar">
+       <div className="user-info">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="avatar" />
+        <div>
+        <p><strong>Xin chào, Admin!</strong></p>
+        <p className="text-xs text-gray-500">ADMIN</p>
       </div>
+      </div>
+      <ul>
+        <li className={isActive("/admin") ? "active" : ""}>
+          <Link to="/admin">Dashboard</Link>
+        </li>
+        <li className={isActive("/admin/users") ? "active" : ""}>
+          <Link to="/admin/users">Manage User</Link>
+        </li>
+        <li className={isActive("/admin/users") ? "active" : ""}>
+          <Link to="/admin/plan">Manage Health Exam Plan</Link>
+        </li>
+        <li className={isActive("/admin/users") ? "active" : ""}>
+          <Link to="/admin/managedoctor">Manage Doctor</Link>
+        </li>
+
+        {/* Thêm link khác tại đây */}
+      </ul>
     </div>
-    <ul className="menu">
-      <li>Dashboard</li>
-      <li>Manage User</li>
-      <li>Manage Doctor</li>
-      <li className="active">Manage Health Examination Plan</li>
-      <li>Manage Clinic</li>
-      <li>Manage Specialty</li>
-    </ul>
-  </div>
-);
+  );
+};
 
 export default Sidebar;

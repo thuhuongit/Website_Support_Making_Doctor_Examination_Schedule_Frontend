@@ -24,36 +24,8 @@ function DoctorSchedule() {
   return (
     <div className="doctor-schedule">
 
-      {/* Navbar */}
-      <nav className="navbar">
-        {/* Logo */}
-        <div className="logo" onClick={() => navigate("/")}>
-          
-          <img className="logo-img" src="/logo.png" alt="BookingCare"/>
-          <span className="logo-text">BookingCare</span>
-        </div>
-
-        {/* Menu giữa */}
-        <ul className={`nav-links ${menuOpen ? "open" : ""}`}>
-          <li>{t("Chuyên khoa")}<br /><span>{t("Tìm bác sĩ theo chuyên khoa")}</span></li>
-          <li>{t("Cơ sở y tế")}<br /><span>{t("Chọn bệnh viện phòng khám")}</span></li>
-          <li>{t("Bác sĩ")}<br /><span>{t("Chọn bác sĩ giỏi")}</span></li>
-          <li>{t("Gói khám")}<br /><span>{t("Khám sức khỏe tổng quát")}</span></li>
-        </ul>
-
-        {/* Bên phải */}
-        <div className="navbar-right">
-          <div className="navbar-support">
-            <button>
-              <i className="fa-solid fa-phone-volume"></i> {t("Hỗ trợ")}
-            </button>
-          </div>
-          <div className="language-switch">
-            <button className="active-lang">🇻🇳</button>
-            <button>🇺🇸</button>
-          </div>
-        </div>
-      </nav>
+      
+      
 
       {/* Header thông tin bác sĩ */}
       <div className="header">

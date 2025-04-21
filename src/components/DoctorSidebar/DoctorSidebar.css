@@ -1,0 +1,102 @@
+.doctor-layout {
+    display: flex;
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background: #f7f7f7;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+    height: 100vh;
+  }
+  
+  .profile {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+  
+  .name {
+    font-weight: bold;
+    margin-top: 10px;
+    color: black;
+  }
+  
+  .role {
+    font-size: 12px;
+    color: gray;
+  }
+  
+  .nav ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .nav li {
+    padding: 10px 0;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .nav li.active {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .doctor-main {
+    flex: 1;
+    padding: 30px;
+  }
+  
+  .doctor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .date-picker {
+    padding: 6px;
+    font-size: 14px;
+  }
+  
+  .patient-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .patient-table th,
+  .patient-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .btn {
+    margin: 0 3px;
+    padding: 4px 8px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  .btn.confirm {
+    background-color: orange;
+  }
+  
+  .btn.prescription {
+    background-color: goldenrod;
+  }
+  
+  .btn.cancel {
+    background-color: red;
+  }
+  

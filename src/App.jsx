@@ -9,7 +9,12 @@ import ChatbotPage from "./components/ChatbotPage/ChatbotPage";
 import Hospital from "./components/Hospital/Hospital";
 import Doctor from "./components/Doctor/DoctorDetail";
 import Book from "./components/Book/Book"
-import AdminDashboard from './pages/Admin/User/AdminDashboard';
+
+
+import AdminLayout from "./pages/Admin/layout/AdminLayout";
+import ManageUser from './pages/Admin/User/ManageUser';
+import DoctorDashboard from "./pages/Doctor/DoctorDashboard";
+import RequireDoctor from "./components/Auth/RequireDoctor";
 
 
 
@@ -27,15 +32,24 @@ function App() {
 
         <Routes>
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          
-          
           <Route path="/header" element={<Header />} />
           <Route path="/chat" element={<ChatbotPage />} />
           <Route path="/" element={<Navbar />} />
           <Route path="/hospital/:id" element={<Hospital/>} />
           <Route path="/doctor/:id" element={<Doctor/>} />
           <Route path="/dat-kham/:id" element={<Book/>} />
+          <Route path="/doctor-dashboard"element={<DoctorDashboard />}/>
+
+
+
+          <Route path="/admin" element={<AdminLayout />}>
+          
+             <Route path="users" element={<ManageUser />} />
+             
+
+          </Route>
+
+
           
         </Routes>
       </Router>
