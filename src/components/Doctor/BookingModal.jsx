@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "./DoctorDetail.css";
 import axiosInstance from "../../util/axios";
-import { toast } from 'react-toastify';  // Import thư viện thông báo
 
-function BookingModal({ time, onClose, doctorId }) {
+function BookingModal({ time, onClose, doctorId, onSuccess }) {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -13,8 +12,8 @@ function BookingModal({ time, onClose, doctorId }) {
     gender: 'Nam',
     date: '',
   });
-  const [loading, setLoading] = useState(false);  // Thêm loading state
-  const [error, setError] = useState(null);  // Thêm state để lưu lỗi
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,26 +21,37 @@ function BookingModal({ time, onClose, doctorId }) {
   };
 
   const handleSubmit = async () => {
-    setLoading(true);  // Bắt đầu gửi yêu cầu
-    setError(null);  // Reset lỗi trước khi gửi yêu cầu
-
+    setLoading(true);
+    setError(null);
+  
     try {
       const response = await axiosInstance.post('http://localhost:8081/api/patient-book-appointment', {
         doctorId,
-        time,  // dùng time được truyền từ props
-        ...formData
+        timeType: time,                    // ✅ Đổi từ time thành timeType
+        date: formData.date,
+        fullName: formData.name,           // ✅ Đổi từ name thành fullName
+        email: formData.email,
+        address: formData.address,
+        selectedGender: formData.gender,   // ✅ Đổi từ gender thành selectedGender
+        reason: formData.reason,
       });
-
-      toast.success("Đặt lịch thành công!");  // Hiển thị thông báo thành công
-      onClose();
+  
+      console.log("Booking response:", response.data); // ✅ BỎ NGAY SAU GỌI API
+  
+      if (response.status === 200 && response.data.errCode === 0) {
+        onSuccess(); // hoặc hiện thông báo thành công
+      } else {
+        setError(response.data.errMessage || "Có lỗi xảy ra.");
+      }
     } catch (err) {
       console.error(err);
-      setError("Có lỗi xảy ra, vui lòng thử lại.");  // Lưu lỗi vào state
-      toast.error("Có lỗi xảy ra, vui lòng thử lại.");  // Hiển thị thông báo lỗi
+      setError("Có lỗi xảy ra, vui lòng thử lại.");
     } finally {
-      setLoading(false);  // Kết thúc việc gửi yêu cầu
+      setLoading(false);
     }
   };
+  
+  
 
   return (
     <div className="modal-overlay">
@@ -68,13 +78,13 @@ function BookingModal({ time, onClose, doctorId }) {
           </select>
         </div>
 
-        {error && <div className="error-message">{error}</div>} {/* Hiển thị thông báo lỗi nếu có */}
+        {error && <div className="error-message">{error}</div>}
 
         <div className="modal-footer">
           <button 
             className="confirm-btn" 
             onClick={handleSubmit} 
-            disabled={loading}  // Disable button khi đang gửi yêu cầu
+            disabled={loading}
           >
             {loading ? 'Đang xử lý...' : 'Xác nhận'}
           </button>

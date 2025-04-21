@@ -33,7 +33,7 @@ axiosInstance.interceptors.response.use(
 );
 const getScheduleByDate = async (doctorId, selectedDate) => {
   try {
-    const response = await axios.get(`/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${selectedDate}`);
+    const response = await axios.get(`http://localhost:8081/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${selectedDate}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching schedule:', error);
@@ -43,7 +43,7 @@ const getScheduleByDate = async (doctorId, selectedDate) => {
 // Gửi yêu cầu đặt lịch hẹn
 const bookAppointment = async (appointmentData) => {
   try {
-    const response = await axios.post('/api/patient-book-appointment', appointmentData);
+    const response = await axios.post('http://localhost:8081/api/patient-book-appointment', appointmentData);
     return response.data;
   } catch (error) {
     console.error('Error booking appointment:', error);
@@ -53,7 +53,7 @@ const bookAppointment = async (appointmentData) => {
 // Lấy danh sách bệnh nhân của bác sĩ
 const getListPatientForDoctor = async (doctorId) => {
   try {
-    const response = await axios.get(`/api/get-list-patient-for-doctor?doctorId=${doctorId}`);
+    const response = await axios.get(`http://localhost:8081/api/get-list-patient-for-doctor`);
     return response.data;
   } catch (error) {
     console.error('Error fetching patient list:', error);
@@ -73,7 +73,7 @@ const sendRemedy = async (remedyData) => {
 // Hủy lịch hẹn
 const cancelBooking = async (appointmentId) => {
   try {
-    const response = await axios.post('/api/cancel-booking', { appointmentId });
+    const response = await axios.post('http://localhost:8081/api/cancel-booking', { appointmentId });
     return response.data;
   } catch (error) {
     console.error('Error canceling booking:', error);
