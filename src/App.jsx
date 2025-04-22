@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginForm from "./pages/login/index";
 import { ToastContainer } from "react-toastify";
 import Header from "./pages/Header/Header";
@@ -14,7 +14,8 @@ import Book from "./components/Book/Book"
 import AdminLayout from "./pages/Admin/layout/AdminLayout";
 import ManageUser from './pages/Admin/User/ManageUser';
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard";
-import RequireDoctor from "./components/Auth/RequireDoctor";
+import ConfirmationPage from "./components/ConfigPage/ConfirmationPage";
+
 
 
 
@@ -39,6 +40,7 @@ function App() {
           <Route path="/doctor/:id" element={<Doctor/>} />
           <Route path="/dat-kham/:id" element={<Book/>} />
           <Route path="/doctor-dashboard"element={<DoctorDashboard />}/>
+          <Route path="/verify-booking" element={<ConfirmationPage />} />
 
 
 
@@ -48,6 +50,12 @@ function App() {
              
 
           </Route>
+         
+
+
+
+
+
 
 
           

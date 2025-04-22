@@ -1,42 +1,51 @@
 import React, { useState, useEffect } from "react";
-import axiosInstance from "../../util/axios"
+import axiosInstance from "../../util/axios";
 import DoctorSidebar from "../../components/DoctorSidebar/DoctorSidebar";
 import "./Doctor.css";
 
 const DoctorDashboard = () => {
   const [appointments, setAppointments] = useState([]);
-  const [selectedDate, setSelectedDate] = useState("");  // State for selected date
-  const [doctorId, setDoctorId] = useState("123"); // Replace with actual doctorId if required
+  const [selectedDate, setSelectedDate] = useState("");
+  const [doctorId, setDoctorId] = useState("1"); // Lấy từ localStorage hoặc context nếu có
 
   useEffect(() => {
-    if (selectedDate) {
+    if (selectedDate && doctorId) {
       fetchAppointments(selectedDate);
     }
-  }, [selectedDate]);  // Fetch appointments when date is selected
+  }, [selectedDate]);
 
   const fetchAppointments = (date) => {
-    axiosInstance
-      .get(`http://localhost:8081/api/get-list-patient-for-doctor`)
-      .then((response) => setAppointments(response.data))
-      .catch((error) => console.log(error));
+    if (doctorId && date) {
+      axiosInstance
+        .get("http://localhost:8081/api/get-list-patient-for-doctor", {
+          params: {
+            doctorId: doctorId,  // Truyền doctorId
+            date: date,  // Truyền selectedDate
+          },
+        })
+        .then((response) => setAppointments(response.data.data || []))
+        .catch((error) => console.log(error));
+    }
   };
+  
+  
 
-  const confirmAppointment = (id) => {
+  const confirmAppointment = (bookingId) => {
     axiosInstance
-      .post(`http://localhost:8081/api/send-remedy`, { appointmentId: id })
-      .then((response) => {
+      .post(`http://localhost:8081/api/send-remedy`, { appointmentId: bookingId }) // đảm bảo backend đang nhận đúng key
+      .then(() => {
         alert("Đã xác nhận lịch khám");
-        fetchAppointments(selectedDate);  // Refresh appointments after confirming
+        fetchAppointments(selectedDate);
       })
       .catch((error) => console.log(error));
   };
 
-  const cancelAppointment = (id) => {
+  const cancelAppointment = (bookingId) => {
     axiosInstance
-      .post(`http://localhost:8081/api/cancel-booking`, { appointmentId: id })
-      .then((response) => {
-        alert("Đã hủy lịch khám");
-        fetchAppointments(selectedDate);  // Refresh appointments after cancelling
+      .post(`http://localhost:8081/api/cancel-booking`, { appointmentId: bookingId }) // đảm bảo backend đang nhận đúng key
+      .then(() => {
+        alert("Đã huỷ lịch khám");
+        fetchAppointments(selectedDate);
       })
       .catch((error) => console.log(error));
   };
@@ -60,24 +69,24 @@ const DoctorDashboard = () => {
           <thead>
             <tr>
               <th>STT</th>
-              <th>Thời gian</th>
-              <th>Họ và tên</th>
-              <th>Địa chỉ</th>
-              <th>Số điện thoại</th>
-              <th>Giới tính</th>
-              <th>Actions</th>
+              <th>email</th>
+              <th>firstName</th>
+              <th>address</th>
+              <th>gender</th>
+              <th>phone</th>
+              <th>Hành động</th>
             </tr>
           </thead>
           <tbody>
             {appointments.length > 0 ? (
               appointments.map((appt, index) => (
-                <tr key={appt.id}>
+                <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{appt.time}</td>
-                  <td>{appt.name}</td>
-                  <td>{appt.address}</td>
-                  <td>{appt.phone}</td>
-                  <td>{appt.gender}</td>
+                  <td>{appt.timeTypeDataPatient?.valueVi || "--"}</td>
+                  <td>{appt.patientData?.firstName || "--"}</td>
+                  <td>{appt.patientData?.address || "--"}</td>
+                  <td>{appt.patientData?.phone || "--"}</td>
+                  <td>{appt.patientData?.genderData?.valueVi || "--"}</td>
                   <td>
                     <button
                       className="btn confirm"

@@ -1,0 +1,107 @@
+/* Chạy font chữ đẹp */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f9fafb;
+    color: #333;
+    background: #f9fafb;
+  }
+  
+  /* Phần xác nhận chính */
+  .confirmation-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  /* Thêm bóng đổ và bo tròn cho box */
+  .confirmation-box {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .confirmation-box.success {
+    border: 2px solid #10B981;
+    background-color: #f0fdf4;
+  }
+  
+  .confirmation-box h2 {
+    font-size: 24px;
+    color: #4CAF50;
+    margin: 20px 0;
+  }
+  
+  .confirmation-box .loading {
+    font-size: 18px;
+    color: #777;
+    font-weight: bold;
+  }
+  
+  /* Icon */
+  .confirmation-box svg {
+    margin-bottom: 20px;
+  }
+  
+  /* Chỉnh các nút */
+  .action-buttons button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px 0;
+    transition: all 0.3s ease;
+    min-width: 150px;
+  }
+  
+  .action-buttons button:first-child {
+    background-color: #10B981;
+    color: white;
+    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
+  }
+  
+  .action-buttons button:first-child:hover {
+    background-color: #0f9e6f;
+    transform: translateY(-2px);
+  }
+  
+  .action-buttons button:last-child {
+    background-color: #f8f8f8;
+    color: #333;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .action-buttons button:last-child:hover {
+    background-color: #e5e5e5;
+    transform: translateY(-2px);
+  }
+  
+  /* Hiệu ứng hover cho box */
+  .confirmation-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Loading state */
+  .loading {
+    font-size: 18px;
+    color: #FF9800;
+    font-weight: bold;
+    animation: blink 1s infinite;
+  }
+  
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  

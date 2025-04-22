@@ -23,23 +23,26 @@ function BookingModal({ time, onClose, doctorId, onSuccess }) {
   const handleSubmit = async () => {
     setLoading(true);
     setError(null);
-  
+
+    // In ra các thông tin người dùng nhập vào console
+    console.log("Form Data Submitted: ", formData);  // Đoạn này sẽ in thông tin form ra console
+
     try {
-      const response = await axiosInstance.post('http://localhost:8081/api/patient-book-appointment', {
-        doctorId,
-        timeType: time,                    // ✅ Đổi từ time thành timeType
-        date: formData.date,
-        fullName: formData.name,           // ✅ Đổi từ name thành fullName
-        email: formData.email,
-        address: formData.address,
-        selectedGender: formData.gender,   // ✅ Đổi từ gender thành selectedGender
-        reason: formData.reason,
+      const response = await axiosInstance.post('/patient-book-appointment', {
+        doctorId: doctorId,                     // ID bác sĩ
+        timeType: time,               // Thời gian khám
+        date: formData.date,          // Ngày khám
+        fullName: formData.name,      // Họ tên bệnh nhân
+        email: formData.email,        // Email bệnh nhân
+        address: formData.address,    // Địa chỉ liên lạc
+        selectedGender: formData.gender, // Giới tính
+        reason: formData.reason,      // Lý do khám
       });
-  
-      console.log("Booking response:", response.data); // ✅ BỎ NGAY SAU GỌI API
-  
+
+      console.log("Booking response:", response.data); 
+
       if (response.status === 200 && response.data.errCode === 0) {
-        onSuccess(); // hoặc hiện thông báo thành công
+        onSuccess(); // Callback để xử lý thông báo thành công
       } else {
         setError(response.data.errMessage || "Có lỗi xảy ra.");
       }
@@ -50,8 +53,6 @@ function BookingModal({ time, onClose, doctorId, onSuccess }) {
       setLoading(false);
     }
   };
-  
-  
 
   return (
     <div className="modal-overlay">

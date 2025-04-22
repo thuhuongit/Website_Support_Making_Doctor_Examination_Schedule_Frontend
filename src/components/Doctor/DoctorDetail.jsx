@@ -81,7 +81,7 @@ function DoctorSchedule() {
         <BookingModal
           time={selectedTime}
           onClose={() => setShowModal(false)}
-          onSuccess={handleBookingSuccess} // ✅ Truyền onSuccess
+          onSuccess={handleBookingSuccess} // Truyền onSuccess
           doctorId={1} // nếu bạn có id bác sĩ thật thì truyền từ props
         />
       )}
