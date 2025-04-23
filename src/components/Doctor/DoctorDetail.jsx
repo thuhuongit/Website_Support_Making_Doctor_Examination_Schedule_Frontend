@@ -14,7 +14,7 @@ function DoctorSchedule() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedTime, setSelectedTime] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [bookingSuccess, setBookingSuccess] = useState(false); // ✅ Thêm trạng thái thành công
+  const [bookingSuccess, setBookingSuccess] = useState(false); // Thêm trạng thái thành công
 
   const handleTimeClick = (slot) => {
     setSelectedTime(slot);
@@ -61,13 +61,13 @@ function DoctorSchedule() {
         <div className="info">
           <h2>Tiến sĩ, Huỳnh Quốc Cường</h2>
           <p>Bác sĩ đầu ngành chuyên khoa Tâm thần, Bệnh viện Bạch Mai. Nguyên Viện trưởng Viện Sức khỏe Tâm thần quốc gia.</p>
-          <p className="note">Lưu ý: Bác sĩ chỉ nhận tư vấn từ xa trong giai đoạn dịch COVID-19.</p>
+          <p className="note">Lưu ý: Bác sĩ có nhận tư vấn từ xa.</p>
         </div>
       </div>
 
       {/* Lịch khám */}
       <div className="schedule-section">
-        <h3>Hôm nay - 20/11</h3>
+        <h3>Hôm nay - 23/04</h3>
         <div className="slots">
           {timeSlots.map((slot, index) => (
             <button className="slot-button" key={index} onClick={() => handleTimeClick(slot)}>{slot}</button>
@@ -81,15 +81,15 @@ function DoctorSchedule() {
         <BookingModal
           time={selectedTime}
           onClose={() => setShowModal(false)}
-          onSuccess={handleBookingSuccess} // Truyền onSuccess
-          doctorId={1} // nếu bạn có id bác sĩ thật thì truyền từ props
+          onSuccess={handleBookingSuccess} 
+          doctorId={1} 
         />
       )}
 
       {/* Bảng nhỏ thông báo thành công */}
       {bookingSuccess && (
         <div className="booking-success-popup">
-          <p>Đặt lịch thành công!</p>
+          <p>Bạn đã đặt lịch thành công - Vui lòng xác nhận email!</p>
         </div>
       )}
 

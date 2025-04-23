@@ -11,7 +11,6 @@ const DoctorSidebar = () => {
       </div>
       <nav className="nav">
         <ul>
-          
           <li className="active">Manage Doctor's Patient</li>
         </ul>
       </nav>

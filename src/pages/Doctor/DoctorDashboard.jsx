@@ -19,8 +19,8 @@ const DoctorDashboard = () => {
       axiosInstance
         .get("http://localhost:8081/api/get-list-patient-for-doctor", {
           params: {
-            doctorId: doctorId,  // Truyền doctorId
-            date: date,  // Truyền selectedDate
+            doctorId: doctorId,  
+            date: date,  
           },
         })
         .then((response) => setAppointments(response.data.data || []))
@@ -32,7 +32,7 @@ const DoctorDashboard = () => {
 
   const confirmAppointment = (bookingId) => {
     axiosInstance
-      .post(`http://localhost:8081/api/send-remedy`, { appointmentId: bookingId }) // đảm bảo backend đang nhận đúng key
+      .post(`http://localhost:8081/api/send-remedy`, { appointmentId: bookingId }) 
       .then(() => {
         alert("Đã xác nhận lịch khám");
         fetchAppointments(selectedDate);
@@ -42,7 +42,7 @@ const DoctorDashboard = () => {
 
   const cancelAppointment = (bookingId) => {
     axiosInstance
-      .post(`http://localhost:8081/api/cancel-booking`, { appointmentId: bookingId }) // đảm bảo backend đang nhận đúng key
+      .post(`http://localhost:8081/api/cancel-booking`, { appointmentId: bookingId }) 
       .then(() => {
         alert("Đã huỷ lịch khám");
         fetchAppointments(selectedDate);

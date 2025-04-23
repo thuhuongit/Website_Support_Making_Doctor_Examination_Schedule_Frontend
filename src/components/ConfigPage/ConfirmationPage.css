@@ -1,4 +1,4 @@
-/* Chạy font chữ đẹp */
+
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #f9fafb;
@@ -6,7 +6,7 @@ body {
     background: #f9fafb;
   }
   
-  /* Phần xác nhận chính */
+ 
   .confirmation-page {
     display: flex;
     justify-content: center;
@@ -15,7 +15,7 @@ body {
     text-align: center;
   }
   
-  /* Thêm bóng đổ và bo tròn cho box */
+ 
   .confirmation-box {
     background-color: #ffffff;
     border-radius: 12px;
@@ -44,12 +44,12 @@ body {
     font-weight: bold;
   }
   
-  /* Icon */
+  
   .confirmation-box svg {
     margin-bottom: 20px;
   }
   
-  /* Chỉnh các nút */
+  
   .action-buttons button {
     padding: 12px 24px;
     border: none;
@@ -85,13 +85,13 @@ body {
     transform: translateY(-2px);
   }
   
-  /* Hiệu ứng hover cho box */
+  
   .confirmation-box:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   }
   
-  /* Loading state */
+
   .loading {
     font-size: 18px;
     color: #FF9800;

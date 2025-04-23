@@ -9,7 +9,7 @@ function BookingModal({ time, onClose, doctorId, onSuccess }) {
     email: '',
     address: '',
     reason: '',
-    gender: 'Nam',
+    gender: 'Nam/Nữ',
     date: '',
   });
   const [loading, setLoading] = useState(false);
@@ -25,11 +25,11 @@ function BookingModal({ time, onClose, doctorId, onSuccess }) {
     setError(null);
 
     // In ra các thông tin người dùng nhập vào console
-    console.log("Form Data Submitted: ", formData);  // Đoạn này sẽ in thông tin form ra console
+    console.log("Form Data Submitted: ", formData);  
 
     try {
       const response = await axiosInstance.post('/patient-book-appointment', {
-        doctorId: doctorId,                     // ID bác sĩ
+        doctorId: doctorId,            // ID bác sĩ
         timeType: time,               // Thời gian khám
         date: formData.date,          // Ngày khám
         fullName: formData.name,      // Họ tên bệnh nhân
@@ -64,7 +64,7 @@ function BookingModal({ time, onClose, doctorId, onSuccess }) {
 
         <div className="modal-body">
           <p><strong>Tiến sĩ, Huỳnh Quốc Cường</strong></p>
-          <p>{time} - 20/11/2024</p>
+          <p>{time} - 23/04/2025</p>
           <p>Miễn phí đặt lịch</p>
 
           <input type="text" placeholder="Họ và tên" name="name" value={formData.name} onChange={handleChange} />

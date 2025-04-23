@@ -26,7 +26,7 @@ import ConfirmationPage from "./components/ConfigPage/ConfirmationPage";
 function App() {
   const user = JSON.parse(localStorage.getItem('user'));
   return (
-    <I18nextProvider i18n={i18n}> {/* Thêm Provider để hỗ trợ i18n */}
+    <I18nextProvider i18n={i18n}> 
       <Router>
         <ToastContainer autoClose={3000} />
 
@@ -43,12 +43,10 @@ function App() {
           <Route path="/verify-booking" element={<ConfirmationPage />} />
 
 
-
           <Route path="/admin" element={<AdminLayout />}>
           
              <Route path="users" element={<ManageUser />} />
              
-
           </Route>
          
 

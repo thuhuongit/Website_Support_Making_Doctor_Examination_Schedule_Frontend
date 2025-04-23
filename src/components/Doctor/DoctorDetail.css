@@ -1,8 +1,8 @@
-/* Giao diện tổng */
+
 .doctor-schedule {
   width: 100%;
   height: 100%;
-  margin: 0 auto;               /* Bỏ khoảng trắng phía trên */
+  margin: 0 auto;              
   padding: 25px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
@@ -226,7 +226,7 @@
   margin: 5px 0;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .doctor-schedule {
     padding: 90px 15px 15px;

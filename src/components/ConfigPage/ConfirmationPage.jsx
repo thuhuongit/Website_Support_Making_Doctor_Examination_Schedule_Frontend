@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axiosInstance from "../../util/axios";
-import { CheckCircle2 } from "lucide-react"; // icon
+import { CheckCircle2 } from "lucide-react"; 
 import "./ConfirmationPage.css";
 
 const ConfirmationPage = () => {
@@ -22,19 +22,19 @@ const ConfirmationPage = () => {
             setConfirmationMessage("Đặt lịch khám thành công!");
             setStatus("success");
           } else {
-            // Chỉ hiển thị thành công, không xử lý lỗi
+            
             setConfirmationMessage("Đặt lịch khám không thành công.");
-            setStatus("success"); // Lý do: bạn muốn chỉ hiển thị "thành công"
+            setStatus("success"); 
           }
         })
         .catch(() => {
-          // Không làm gì cả khi có lỗi
-          setConfirmationMessage(""); // Hoặc bạn có thể để trống
-          setStatus("success"); // Để nó hiển thị như thành công
+          
+          setConfirmationMessage(""); 
+          setStatus("success"); 
         });
     } else {
       setConfirmationMessage("Thiếu thông tin xác nhận.");
-      setStatus("success"); // Hiển thị như là thành công
+      setStatus("success"); 
     }
   }, [token, doctorId]);
 
