@@ -15,7 +15,9 @@ import AdminLayout from "./pages/Admin/layout/AdminLayout";
 import ManageUser from './pages/Admin/User/ManageUser';
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard";
 import ConfirmationPage from "./components/ConfigPage/ConfirmationPage";
-
+import ManagePlan from "./pages/Admin/Plan/ManagePlan";
+import ManageDoctor from "./pages/Admin/Managedoctor/ManageDoctoe";
+import Dashboard from "./pages/Admin/Dashboard/Dashboard";
 
 
 
@@ -44,8 +46,12 @@ function App() {
 
 
           <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
           
              <Route path="users" element={<ManageUser />} />
+             <Route path="plan" element={<ManagePlan />} />
+             <Route path="managedoctor" element={<ManageDoctor />} />
+
              
           </Route>
          

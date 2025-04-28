@@ -4,10 +4,12 @@ import "./Sidebar.css";
 const Sidebar = () => {
   const location = useLocation();
 
-  const isActive = (path) => location.pathname.includes(path);
+  // const isActive = (path) => location.pathname.includes(path);
+  const isActive = (path) => location.pathname === path;
 
-  return (
-    <div className="sidebar">
+
+  return ( 
+    <div className="sidebar" style={{ backgroundColor: '#ffffff' }}>
        <div className="user-info">
       <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="avatar" />
         <div>
@@ -22,14 +24,13 @@ const Sidebar = () => {
         <li className={isActive("/admin/users") ? "active" : ""}>
           <Link to="/admin/users">Manage User</Link>
         </li>
-        <li className={isActive("/admin/users") ? "active" : ""}>
+        <li className={isActive("/admin/plan") ? "active" : ""}>
           <Link to="/admin/plan">Manage Health Exam Plan</Link>
         </li>
-        <li className={isActive("/admin/users") ? "active" : ""}>
+        <li className={isActive("/admin/managedoctor") ? "active" : ""}>
           <Link to="/admin/managedoctor">Manage Doctor</Link>
         </li>
 
-        {/* Thêm link khác tại đây */}
       </ul>
     </div>
   );
