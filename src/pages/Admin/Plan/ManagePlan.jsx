@@ -1,5 +1,9 @@
 import './ManagePlan.css';
 import { useState } from 'react';
+import axiosInstance from "../../../util/axios";
+import { toast, ToastContainer } from 'react-toastify'; // Import toast
+import 'react-toastify/dist/ReactToastify.css'; // Import Toast styles
+import Swal from "sweetalert2";
 
 const times = [
   "8:00 - 9:00",
@@ -12,8 +16,16 @@ const times = [
   "16:00 - 17:00",
 ];
 
+const transformedTimes = times.map(time => {
+  return { time, maxNumber: 10 }; // Convert string to object
+});
+
+console.log(transformedTimes);
+
 function ManageSchedule() {
   const [selectedTimes, setSelectedTimes] = useState([]);
+  const [selectedDoctor, setSelectedDoctor] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
 
   const toggleTime = (time) => {
     if (selectedTimes.includes(time)) {
@@ -23,14 +35,75 @@ function ManageSchedule() {
     }
   };
 
+  const handleSaveSchedule = async () => {
+    if (!selectedDoctor || !selectedDate || selectedTimes.length === 0) {
+      toast.error("Vui lòng chọn đủ thông tin: bác sĩ, ngày và giờ khám.");
+      return;
+    }
+  
+    let dateToSend = selectedDate;
+    if (!(selectedDate instanceof Date)) {
+      dateToSend = new Date(selectedDate);
+    }
+  
+    if (isNaN(dateToSend)) {
+      toast.error("Ngày không hợp lệ.");
+      return;
+    }
+  
+    const scheduleData = {
+      doctorId: selectedDoctor,
+      date: dateToSend.toISOString(),
+      arrSchedule: selectedTimes,
+    };
+  
+    console.log("Data to send:", scheduleData);
+  
+    try {
+      const response = await axiosInstance.post('http://localhost:8081/api/bulk-create-schedule', scheduleData);
+  
+      console.log("API Response:", response);
+  
+      if (response.data.errCode === 0) {
+        // Hiển thị thông báo thành công
+        toast.success("Lịch khám đã được lưu thành công!");
+  
+        // Reset trạng thái sau khi lưu thành công
+        setSelectedDoctor("");  // Reset bác sĩ
+        setSelectedDate("");    // Reset ngày
+        setSelectedTimes([]);   // Reset các giờ đã chọn
+  
+        // Log để chắc chắn quá trình thành công
+        console.log("Schedule saved successfully.");
+      } else {
+        // Nếu có lỗi, hiển thị thông báo lỗi
+        toast.error(response.data.errMessage);
+      }
+    } catch (error) {
+      console.error("Error saving schedule:", error);
+      toast.error("Có lỗi xảy ra khi lưu lịch khám.");
+    }
+  };
+  
   return (
     <div className="schedule-container">
       <h2 className="title">QUẢN LÝ KẾ HOẠCH KHÁM BỆNH CỦA BÁC SĨ</h2>
       <div className="controls">
-        <select className="doctor-select">
-          <option>Nguyễn Duy Khánh</option>
+        <select 
+          className="doctor-select"
+          value={selectedDoctor}
+          onChange={(e) => setSelectedDoctor(e.target.value)}
+        >
+          <option value="">Chọn bác sĩ</option>
+          <option value="Nguyễn Duy Khánh">Nguyễn Duy Khánh</option>
+          
         </select>
-        <input type="date" className="date-input" />
+        <input 
+          type="date" 
+          className="date-input" 
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+        />
       </div>
       <div className="time-slots">
         {times.map((time) => (
@@ -43,7 +116,14 @@ function ManageSchedule() {
           </button>
         ))}
       </div>
-      <button className="save-button">Lưu thông tin</button>
+      <button className="save-button" onClick={handleSaveSchedule}>Lưu thông tin</button>
+      <ToastContainer
+        position="top-right" 
+        autoClose={5000} 
+        hideProgressBar={true} 
+        closeOnClick 
+        pauseOnHover 
+      />
     </div>
   );
 }
