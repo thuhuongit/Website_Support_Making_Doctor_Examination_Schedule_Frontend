@@ -74,7 +74,6 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess }) {
           <input type="email" placeholder="Địa chỉ email" name="email" value={formData.email} onChange={handleChange} />
           <input type="text" placeholder="Địa chỉ liên lạc" name="address" value={formData.address} onChange={handleChange} />
           <input type="text" placeholder="Lý do khám" name="reason" value={formData.reason} onChange={handleChange} />
-          
           <select name="gender" value={formData.gender} onChange={handleChange}>
             <option value="Nam">Nam</option>
             <option value="Nữ">Nữ</option>
