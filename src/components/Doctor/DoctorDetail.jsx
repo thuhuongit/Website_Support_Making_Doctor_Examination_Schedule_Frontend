@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../util/axios";
 import "./DoctorDetail.css";
 import Footer from "../Footer/Footer";
 import BookingModal from "./BookingModal";
@@ -14,18 +15,48 @@ function DoctorSchedule() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedTime, setSelectedTime] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [bookingSuccess, setBookingSuccess] = useState(false); // Thêm trạng thái thành công
+  const [bookingSuccess, setBookingSuccess] = useState(false);
+  const [availableTimes, setAvailableTimes] = useState([]);
+  const [selectedDoctor, setSelectedDoctor] = useState(1);
+  const [selectedDate, setSelectedDate] = useState('');
+
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      if (selectedDoctor && selectedDate) {
+        try {
+          const res = await axiosInstance.get("http://localhost:8082/api/get-schedule-doctor-by-date", {
+            params: {
+              doctorId: selectedDoctor,
+              date: selectedDate,
+            },
+          });
+
+          if (res.data.errCode === 0) {
+            const serverTimes = res.data.data.map((item) => item.timeType);
+            setAvailableTimes(serverTimes);
+          } else {
+            setAvailableTimes([]);
+          }
+        } catch (error) {
+          console.error("Lỗi khi lấy lịch khám:", error);
+          setAvailableTimes([]);
+        }
+      }
+    };
+
+    fetchSchedule();
+  }, [selectedDoctor, selectedDate]);
 
   const handleTimeClick = (slot) => {
-    setSelectedTime(slot);
-    setShowModal(true);
+    if (availableTimes.includes(slot)) {
+      setSelectedTime(slot);
+      setShowModal(true);
+    }
   };
 
   const handleBookingSuccess = () => {
     setShowModal(false);
     setBookingSuccess(true);
-
-    // Auto đóng thông báo sau 3s
     setTimeout(() => setBookingSuccess(false), 3000);
   };
 
@@ -35,7 +66,7 @@ function DoctorSchedule() {
     <div className="doctor-schedule">
       <nav className="navbar">
         <div className="logo" onClick={() => navigate("/")}>
-          <img className="logo-img" src="/logo.png" alt="BookingCare"/>
+          <img className="logo-img" src="/logo.png" alt="BookingCare" />
           <span className="logo-text">BookingCare</span>
         </div>
         <ul className={`nav-links ${menuOpen ? "open" : ""}`}>
@@ -55,7 +86,6 @@ function DoctorSchedule() {
         </div>
       </nav>
 
-      {/* Header thông tin bác sĩ */}
       <div className="header">
         <img src="/2.png" alt="Doctor" />
         <div className="info">
@@ -65,35 +95,48 @@ function DoctorSchedule() {
         </div>
       </div>
 
-      {/* Lịch khám */}
       <div className="schedule-section">
-        <h3>Hôm nay - 23/04</h3>
+        <label htmlFor="datePicker">Chọn ngày khám:</label>
+        <input
+          id="datePicker"
+          type="date"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+          className="date-picker"
+        />
+
+        <h3>Lịch khám theo ngày</h3>
         <div className="slots">
           {timeSlots.map((slot, index) => (
-            <button className="slot-button" key={index} onClick={() => handleTimeClick(slot)}>{slot}</button>
+            <button
+              key={index}
+              className={`slot-button ${availableTimes.includes(slot) ? "available" : "unavailable"}`}
+              onClick={() => handleTimeClick(slot)}
+              disabled={!availableTimes.includes(slot)}
+            >
+              {slot}
+            </button>
           ))}
         </div>
         <div className="note">Chọn giờ và đặt (miễn phí)</div>
       </div>
 
-      {/* Modal đặt lịch */}
       {showModal && (
         <BookingModal
           time={selectedTime}
           onClose={() => setShowModal(false)}
-          onSuccess={handleBookingSuccess} 
-          doctorId={1} 
+          onSuccess={handleBookingSuccess}
+          doctorId={selectedDoctor}
+          date={selectedDate}
         />
       )}
 
-      {/* Bảng nhỏ thông báo thành công */}
       {bookingSuccess && (
         <div className="booking-success-popup">
           <p>Bạn đã đặt lịch thành công - Vui lòng xác nhận email!</p>
         </div>
       )}
 
-      {/* Thông tin chi tiết */}
       <div className="details">
         <h4>1. Tiến sĩ, Huỳnh Quốc Cường</h4>
         <ul>
@@ -108,7 +151,8 @@ function DoctorSchedule() {
           <li>Chủ trì các đề tài nghiên cứu, giảng dạy tại Đại học Y Hà Nội</li>
         </ul>
       </div>
-      <Footer/>
+
+      <Footer />
     </div>
   );
 }

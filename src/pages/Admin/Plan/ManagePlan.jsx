@@ -24,7 +24,7 @@ console.log(transformedTimes);
 
 function ManageSchedule() {
   const [selectedTimes, setSelectedTimes] = useState([]);
-  const [selectedDoctor, setSelectedDoctor] = useState("");
+  const [selectedDoctor, setSelectedDoctor] = useState(""); // doctorId
   const [selectedDate, setSelectedDate] = useState("");
 
   const toggleTime = (time) => {
@@ -51,16 +51,17 @@ function ManageSchedule() {
       return;
     }
   
+    const isoDateOnly = dateToSend.toISOString().split('T')[0]; 
     const scheduleData = {
-      doctorId: selectedDoctor,
-      date: dateToSend.toISOString(),
+      doctorId: selectedDoctor, 
+      date: isoDateOnly, 
       arrSchedule: selectedTimes,
     };
   
     console.log("Data to send:", scheduleData);
   
     try {
-      const response = await axiosInstance.post('http://localhost:8081/api/bulk-create-schedule', scheduleData);
+      const response = await axiosInstance.post('http://localhost:8082/api/bulk-create-schedule', scheduleData);
   
       console.log("API Response:", response);
   
@@ -92,11 +93,11 @@ function ManageSchedule() {
         <select 
           className="doctor-select"
           value={selectedDoctor}
-          onChange={(e) => setSelectedDoctor(e.target.value)}
+          onChange={(e) => setSelectedDoctor(e.target.value)} // Lưu doctorId
         >
           <option value="">Chọn bác sĩ</option>
-          <option value="Nguyễn Duy Khánh">Nguyễn Duy Khánh</option>
-          
+          <option value="1">Nguyễn Duy Khánh</option> {/* DoctorId là 1 */}
+          {/* Thêm các bác sĩ khác với doctorId tương ứng */}
         </select>
         <input 
           type="date" 

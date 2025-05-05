@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import "./DoctorDetail.css";
 import axiosInstance from "../../util/axios";
 
-function BookingModal({ time, onClose, doctorId, onSuccess }) {
+function BookingModal({ time, date, onClose, doctorId, onSuccess }) {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
     address: '',
     reason: '',
-    gender: 'Nam/Nữ',
-    date: '',
+    gender: 'Nam',
   });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -24,25 +24,24 @@ function BookingModal({ time, onClose, doctorId, onSuccess }) {
     setLoading(true);
     setError(null);
 
-    // In ra các thông tin người dùng nhập vào console
-    console.log("Form Data Submitted: ", formData);  
+    console.log("Form Data Submitted: ", formData);
 
     try {
-      const response = await axiosInstance.post('/patient-book-appointment', {
-        doctorId: doctorId,            // ID bác sĩ
-        timeType: time,               // Thời gian khám
-        date: formData.date,          // Ngày khám
-        fullName: formData.name,      // Họ tên bệnh nhân
-        email: formData.email,        // Email bệnh nhân
-        address: formData.address,    // Địa chỉ liên lạc
-        selectedGender: formData.gender, // Giới tính
-        reason: formData.reason,      // Lý do khám
+      const response = await axiosInstance.post('http://localhost:8082/api/patient-book-appointment', {
+        doctorId: doctorId,
+        timeType: time,
+        date: date,
+        fullName: formData.name,
+        email: formData.email,
+        address: formData.address,
+        selectedGender: formData.gender,
+        reason: formData.reason,
       });
 
-      console.log("Booking response:", response.data); 
+      console.log("Booking response:", response.data);
 
       if (response.status === 200 && response.data.errCode === 0) {
-        onSuccess(); // Callback để xử lý thông báo thành công
+        onSuccess(); // thành công
       } else {
         setError(response.data.errMessage || "Có lỗi xảy ra.");
       }
@@ -54,6 +53,9 @@ function BookingModal({ time, onClose, doctorId, onSuccess }) {
     }
   };
 
+  // Format lại ngày yyyy-mm-dd => dd/mm/yyyy
+  const formattedDate = date?.split("-").reverse().join("/");
+
   return (
     <div className="modal-overlay">
       <div className="modal">
@@ -64,7 +66,7 @@ function BookingModal({ time, onClose, doctorId, onSuccess }) {
 
         <div className="modal-body">
           <p><strong>Tiến sĩ, Huỳnh Quốc Cường</strong></p>
-          <p>{time} - 23/04/2025</p>
+          <p><strong>{time}</strong> - <strong>{formattedDate}</strong></p>
           <p>Miễn phí đặt lịch</p>
 
           <input type="text" placeholder="Họ và tên" name="name" value={formData.name} onChange={handleChange} />
@@ -72,7 +74,7 @@ function BookingModal({ time, onClose, doctorId, onSuccess }) {
           <input type="email" placeholder="Địa chỉ email" name="email" value={formData.email} onChange={handleChange} />
           <input type="text" placeholder="Địa chỉ liên lạc" name="address" value={formData.address} onChange={handleChange} />
           <input type="text" placeholder="Lý do khám" name="reason" value={formData.reason} onChange={handleChange} />
-          <input type="date" name="date" value={formData.date} onChange={handleChange} />
+          
           <select name="gender" value={formData.gender} onChange={handleChange}>
             <option value="Nam">Nam</option>
             <option value="Nữ">Nữ</option>
@@ -82,11 +84,7 @@ function BookingModal({ time, onClose, doctorId, onSuccess }) {
         {error && <div className="error-message">{error}</div>}
 
         <div className="modal-footer">
-          <button 
-            className="confirm-btn" 
-            onClick={handleSubmit} 
-            disabled={loading}
-          >
+          <button className="confirm-btn" onClick={handleSubmit} disabled={loading}>
             {loading ? 'Đang xử lý...' : 'Xác nhận'}
           </button>
           <button className="cancel-btn" onClick={onClose}>Hủy</button>
