@@ -17,36 +17,41 @@ const DoctorDashboard = () => {
   const fetchAppointments = (date) => {
     if (doctorId && date) {
       axiosInstance
-        .get("http://localhost:8082/api/get-all-users?id=all", {
+        .get("http://localhost:8082/api/get-list-patient-for-doctor", {
           params: {
-            doctorId: doctorId,  
-            date: date,  
+            doctorId: doctorId,
+            date: date,
           },
         })
         .then((response) => setAppointments(response.data.data || []))
         .catch((error) => console.log(error));
     }
   };
-  //http://localhost:8082/api/get-list-patient-for-doctor
-  
-  
 
-  const confirmAppointment = (bookingId) => {
+  const confirmAppointment = (appointment) => {
     axiosInstance
-      .post(`http://localhost:8082/api/send-remedy`, { appointmentId: bookingId }) 
+      .post("http://localhost:8082/api/send-remedy", {
+        doctorId: appointment.doctorId,
+        patientId: appointment.patientId,
+        timeType: appointment.timeType,
+        date: appointment.date,
+      })
       .then(() => {
         alert("Đã xác nhận lịch khám");
         fetchAppointments(selectedDate);
       })
       .catch((error) => console.log(error));
   };
+  
 
   const cancelAppointment = (bookingId) => {
     axiosInstance
-      .post(`http://localhost:8082/api/cancel-booking`, { appointmentId: bookingId }) 
+      .post(`http://localhost:8082/api/cancel-booking`, { appointmentId: bookingId })
       .then(() => {
+        // Cập nhật lại danh sách cuộc hẹn sau khi huỷ
+        const updatedAppointments = appointments.filter((appt) => appt.id !== bookingId);
+        setAppointments(updatedAppointments);
         alert("Đã huỷ lịch khám");
-        fetchAppointments(selectedDate);
       })
       .catch((error) => console.log(error));
   };
@@ -54,7 +59,6 @@ const DoctorDashboard = () => {
   return (
     <div className="doctor-layout">
       <DoctorSidebar />
-
       <div className="doctor-main">
         <div className="doctor-header">
           <h2>QUẢN LÝ BỆNH NHÂN KHÁM BỆNH</h2>
@@ -73,8 +77,7 @@ const DoctorDashboard = () => {
               <th>email</th>
               <th>firstName</th>
               <th>address</th>
-              <th>gender</th>
-              <th>phone</th>
+              <th>Giờ khám</th>
               <th>Hành động</th>
             </tr>
           </thead>
@@ -83,18 +86,18 @@ const DoctorDashboard = () => {
               appointments.map((appt, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{appt.timeTypeDataPatient?.valueVi || "--"}</td>
+                  <td>{appt.patientData?.email || "--"}</td>
                   <td>{appt.patientData?.firstName || "--"}</td>
                   <td>{appt.patientData?.address || "--"}</td>
-                  <td>{appt.patientData?.phone || "--"}</td>
-                  <td>{appt.patientData?.genderData?.valueVi || "--"}</td>
+                  <td>{appt.timeType || "--"}</td> {/* Hiển thị giờ khám */}
                   <td>
-                    <button
-                      className="btn confirm"
-                      onClick={() => confirmAppointment(appt.id)}
-                    >
-                      Xác nhận
-                    </button>
+                  <button
+  className="btn confirm"
+  onClick={() => confirmAppointment(appt)} // truyền toàn bộ appointment
+>
+  Xác nhận
+</button>
+
                     <button
                       className="btn cancel"
                       onClick={() => cancelAppointment(appt.id)}
@@ -106,7 +109,7 @@ const DoctorDashboard = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="7">Không có lịch khám cho ngày này.</td>
+                <td colSpan="8">Không có lịch khám cho ngày này.</td>
               </tr>
             )}
           </tbody>

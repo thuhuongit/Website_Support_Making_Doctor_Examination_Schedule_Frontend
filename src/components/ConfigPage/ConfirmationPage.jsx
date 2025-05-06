@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom"; // Dùng useNavigate thay vì window.location.href
 import axiosInstance from "../../util/axios";
 import { CheckCircle2 } from "lucide-react"; 
 import "./ConfirmationPage.css";
 
 const ConfirmationPage = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // Khai báo navigate
   const [confirmationMessage, setConfirmationMessage] = useState("");
-  const [status, setStatus] = useState("loading"); // "loading", "success"
+  const [status, setStatus] = useState("loading"); // "loading", "success", "error"
 
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get("token");
@@ -16,25 +17,24 @@ const ConfirmationPage = () => {
   useEffect(() => {
     if (token && doctorId) {
       axiosInstance
-        .post("/api/verify-book-appointment", { token, doctorId })
+        .post("http://localhost:8082/api/verify-book-appointment", { token, doctorId })
         .then((response) => {
           if (response.data.errCode === 0) {
             setConfirmationMessage("Đặt lịch khám thành công!");
             setStatus("success");
           } else {
-            
-            setConfirmationMessage("Đặt lịch khám không thành công.");
-            setStatus("success"); 
+            setConfirmationMessage(response.data.errMessage || "Đặt lịch khám không thành công.");
+            setStatus("error");
           }
         })
-        .catch(() => {
-          
-          setConfirmationMessage(""); 
-          setStatus("success"); 
+        .catch((error) => {
+          console.error("Error occurred:", error);
+          setConfirmationMessage("Đã có lỗi xảy ra, vui lòng thử lại.");
+          setStatus("error");
         });
     } else {
       setConfirmationMessage("Thiếu thông tin xác nhận.");
-      setStatus("success"); 
+      setStatus("error");
     }
   }, [token, doctorId]);
 
@@ -48,8 +48,8 @@ const ConfirmationPage = () => {
         <CheckCircle2 size={64} color="#10B981" />
         <h2>{confirmationMessage}</h2>
         <div className="action-buttons">
-          <button onClick={() => window.location.href = "/"}>Trang chủ</button>
-          <button onClick={() => window.location.href = "/"}>Đặt lịch mới</button>
+          <button onClick={() => navigate("/")}>Trang chủ</button> {/* Sử dụng navigate */}
+          <button onClick={() => navigate("/")} >Đặt lịch mới</button> {/* Sử dụng navigate */}
         </div>
       </div>
     </div>
