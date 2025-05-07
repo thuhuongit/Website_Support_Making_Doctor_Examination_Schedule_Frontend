@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../util/axios";
 import DoctorSidebar from "../../components/DoctorSidebar/DoctorSidebar";
+import { toast, ToastContainer } from "react-toastify"; // Import React Toastify
+import "react-toastify/dist/ReactToastify.css"; // Import CSS của Toastify
 import "./Doctor.css";
 
 const DoctorDashboard = () => {
@@ -37,23 +39,57 @@ const DoctorDashboard = () => {
         date: appointment.date,
       })
       .then(() => {
-        alert("Đã xác nhận lịch khám");
+        toast.success("Đã xác nhận lịch khám", {
+          position: "top-right", // Đặt thông báo ở góc trên bên phải
+          autoClose: 5000, // Thời gian tự động đóng
+          hideProgressBar: false, // Hiển thị thanh tiến trình
+          closeOnClick: true, // Cho phép đóng thông báo bằng click
+          pauseOnHover: true, // Tạm dừng khi hover chuột
+          draggable: true, // Cho phép kéo thông báo
+          progress: undefined,
+        });
         fetchAppointments(selectedDate);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error("Lỗi khi xác nhận lịch khám", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      });
   };
-  
 
   const cancelAppointment = (bookingId) => {
     axiosInstance
       .post(`http://localhost:8082/api/cancel-booking`, { appointmentId: bookingId })
       .then(() => {
-        // Cập nhật lại danh sách cuộc hẹn sau khi huỷ
         const updatedAppointments = appointments.filter((appt) => appt.id !== bookingId);
         setAppointments(updatedAppointments);
-        alert("Đã huỷ lịch khám");
+        toast.success("Đã huỷ lịch khám", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error("Lỗi khi huỷ lịch khám", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      });
   };
 
   return (
@@ -91,12 +127,12 @@ const DoctorDashboard = () => {
                   <td>{appt.patientData?.address || "--"}</td>
                   <td>{appt.timeType || "--"}</td> {/* Hiển thị giờ khám */}
                   <td>
-                  <button
-  className="btn confirm"
-  onClick={() => confirmAppointment(appt)} // truyền toàn bộ appointment
->
-  Xác nhận
-</button>
+                    <button
+                      className="btn confirm"
+                      onClick={() => confirmAppointment(appt)} // truyền toàn bộ appointment
+                    >
+                      Xác nhận
+                    </button>
 
                     <button
                       className="btn cancel"
@@ -115,6 +151,7 @@ const DoctorDashboard = () => {
           </tbody>
         </table>
       </div>
+      <ToastContainer /> {/* Thêm container để hiển thị các thông báo */}
     </div>
   );
 };
