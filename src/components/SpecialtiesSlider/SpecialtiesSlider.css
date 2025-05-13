@@ -1,5 +1,5 @@
 .specialties-slider {
-    margin: 0,5px auto;
+    margin: 0.5px auto;
     width: 100%;
     min-height: 350px;
     background-color: aliceblue;
@@ -96,19 +96,21 @@
   display: flex;
   justify-content: center;
 }
+
  
 .specialty-item {
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
+  width: 250px; /* hoặc chiều rộng cụ thể */
+  margin: 0 10px;
 }
 
+
 .specialty-item img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 8px;
-    cursor: pointer;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid red; /* Đường viền đỏ test */
 }
 
 .specialty-item p {
@@ -135,3 +137,10 @@
     left: -30px;
 }
 
+
+.specialties-slider-frame {
+  border: 2px solid #ddd; /* Thêm đường viền cho khung */
+  padding: 20px;           /* Khoảng cách bên trong khung */
+  border-radius: 10px;     /* Bo góc cho khung */
+  background-color: #f9f9f9; /* Màu nền khung */
+}

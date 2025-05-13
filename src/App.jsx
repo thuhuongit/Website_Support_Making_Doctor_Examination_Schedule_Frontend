@@ -18,6 +18,7 @@ import ConfirmationPage from "./components/ConfigPage/ConfirmationPage";
 import ManagePlan from "./pages/Admin/Plan/ManagePlan";
 import ManageDoctor from "./pages/Admin/Managedoctor/ManageDoctoe";
 import Dashboard from "./pages/Admin/Dashboard/Dashboard";
+import ManageSpecialist from "./pages/Admin/Specialist/Specialist"; 
 
 
 
@@ -51,6 +52,7 @@ function App() {
              <Route path="users" element={<ManageUser />} />
              <Route path="plan" element={<ManagePlan />} />
              <Route path="managedoctor" element={<ManageDoctor />} />
+             <Route path="managespecialist" element={<ManageSpecialist />} />
 
              
           </Route>

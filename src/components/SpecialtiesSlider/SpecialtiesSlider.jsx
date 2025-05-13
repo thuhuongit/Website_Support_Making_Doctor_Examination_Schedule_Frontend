@@ -1,32 +1,54 @@
-import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./SpecialtiesSlider.css";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../util/axios";
 
-const SpecialtiesSlider = ({type}) => {
-    const { t } = useTranslation();
-    const navigate = useNavigate();
+const SpecialtiesSlider = ({ type }) => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  // Khai báo state để lưu dữ liệu chuyên khoa
+  const [specialtiesData, setSpecialtiesData] = useState([]);
+  const [hospitalsData, setHospitalsData] = useState([]);
+  const [doctorsData, setDoctorsData] = useState([]);
+  const [healPackageData, setHealPackageData] = useState([]);
+
+  // Cấu hình slider
   const settings = {
-    dots: false, // Không hiển thị chấm nhỏ
+    dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 4, // Số ảnh hiển thị cùng lúc
+    slidesToShow: 4,
     slidesToScroll: 1,
-    nextArrow: <SampleNextArrow />, // Tùy chỉnh nút "Next"
-    prevArrow: <SamplePrevArrow />, // Tùy chỉnh nút "Back"
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
   };
 
-  const specialties = [
-    { title: t("Sản Phụ khoa"), img: "/kham-phu-khoa.jpg" },
-    { title: t("Siêu âm thai"), img: "/sieu-am-thai.jpg" },
-    { title: t("Nhi khoa"), img: "/nhi-khoa.jpg" },
-    { title: t("Da liễu"), img: "/da-lieu.jpg" },
-    { title: t("Tim mạch"), img: "/tim-mach.jpg" },
-    { title: t("Xét nghiệm"), img: "/xet-nghiem.jpg" },
-  ];
+  // Gọi API khi component mount hoặc type thay đổi
+  useEffect(() => {
+    console.log("Type:", type); // 
+    const fetchData = async () => {
+      try {
+        if (type === "specialties") {
+         const res = await axiosInstance.get("http://localhost:8082/api/get-specialty");
+         console.log("Fetched specialties:", res.data); 
+          if (res.data && res.data.errCode === 0) {
+           setSpecialtiesData(res.data.data);
+           console.log("Specialties data set:", res.data.data); 
+  }
+}
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu:", error);
+      }
+    };
+    fetchData();
+  }, [type]);
+
+  
   const hospitals = [
     { title: "Bệnh viện Hữu nghị Việt Đức", img: "/1.png", link: "/hospital/viet-duc" },
     { title: "Bệnh viện Chợ Rẫy", img: "/ray.png", link: "/hospital/cho-ray" },
@@ -58,19 +80,24 @@ const SpecialtiesSlider = ({type}) => {
 
   return (
     <div className="specialties-slider">
-    {type === "specialties" && (
-      <>
-        <h2>{t("Chuyên khoa phổ biến")}</h2>
-        <Slider {...settings}>
-          {specialties.map((item, index) => (
-            <div key={index} className="specialty-item">
-              <img src={item.img} alt={item.title} />
-              <p>{item.title}</p>
-            </div>
-          ))}
-        </Slider>
-      </>
-    )}
+     {type === "specialties" && (
+        <>
+          <h2>{t("Chuyên khoa phổ biến")}</h2>
+           <div className="specialties-slider-frame">
+          <Slider {...settings}>
+            {specialtiesData.map((item, index) => (
+              <div key={index} className="specialty-item">
+                <img
+                  src={`http://localhost:8082${item.image}`}
+                  alt={item.name}
+                />
+                <p>{item.name}</p>
+              </div>
+            ))}
+          </Slider>
+          </div>
+        </>
+      )}
 
     {type === "hospitals" && (
       <>
@@ -128,5 +155,4 @@ const SamplePrevArrow = (props) => {
   const { className, onClick } = props;
   return <div className={`${className} custom-prev`} onClick={onClick} />;
 };
-
 export default SpecialtiesSlider;
