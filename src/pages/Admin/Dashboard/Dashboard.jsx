@@ -15,7 +15,7 @@ const Dashboard = () => {
     { name: 'Huỳnh Đức', value: 400 },
     { name: 'Trần Sơn', value: 280 },
     { name: 'Nguyễn Hằng', value: 150 },
-    { name: 'Huỳnh Đeo', value: 70 },
+    { name: 'Huỳnh', value: 70 },
   ];
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];

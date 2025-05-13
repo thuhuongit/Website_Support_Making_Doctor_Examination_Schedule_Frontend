@@ -28,7 +28,7 @@ const SpecialtiesSlider = ({ type }) => {
     prevArrow: <SamplePrevArrow />,
   };
 
-  // Gọi API khi component mount hoặc type thay đổi
+ 
   useEffect(() => {
     console.log("Type:", type); // 
     const fetchData = async () => {
@@ -84,17 +84,23 @@ const SpecialtiesSlider = ({ type }) => {
         <>
           <h2>{t("Chuyên khoa phổ biến")}</h2>
            <div className="specialties-slider-frame">
-          <Slider {...settings}>
+          
             {specialtiesData.map((item, index) => (
               <div key={index} className="specialty-item">
+                {/* <img
+  className="object-contain max-w-full max-h-full transition-transform duration-700 hover:scale-110"
+    src={`http://localhost:8082/uploads/${item.image}`}
+  alt="SpecialtyImage"
+/> */}
+
                 <img
-                  src={`http://localhost:8082${item.image}`}
+                  src={`http://localhost:8082/${item.image}`}
                   alt={item.name}
                 />
                 <p>{item.name}</p>
               </div>
             ))}
-          </Slider>
+          
           </div>
         </>
       )}
