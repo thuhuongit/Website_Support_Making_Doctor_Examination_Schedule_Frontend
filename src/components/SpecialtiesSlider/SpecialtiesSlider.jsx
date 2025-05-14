@@ -81,29 +81,27 @@ const SpecialtiesSlider = ({ type }) => {
   return (
     <div className="specialties-slider">
      {type === "specialties" && (
-        <>
-          <h2>{t("Chuyên khoa phổ biến")}</h2>
-           <div className="specialties-slider-frame">
-          
-            {specialtiesData.map((item, index) => (
-              <div key={index} className="specialty-item">
-                {/* <img
-  className="object-contain max-w-full max-h-full transition-transform duration-700 hover:scale-110"
-    src={`http://localhost:8082/uploads/${item.image}`}
-  alt="SpecialtyImage"
-/> */}
-
-                <img
-                  src={`http://localhost:8082/${item.image}`}
-                  alt={item.name}
-                />
-                <p>{item.name}</p>
-              </div>
-            ))}
-          
-          </div>
-        </>
-      )}
+  <>
+    <div className="slider-header">
+      <h2>{t("Chuyên khoa phổ biến")}</h2>
+      <button className="view-more-btn" onClick={() => navigate("/specialties")}>
+        {t("Xem thêm")}
+      </button>
+    </div>
+    <Slider {...settings}>
+      {specialtiesData.map((item, index) => (
+        <div
+          key={index}
+          className="specialty-item"
+          onClick={() => navigate(`/specialty/${item.id || item.name}`)}
+        >
+          <img src={`http://localhost:8082/${item.image}`} alt={item.name} />
+          <p>{item.name}</p>
+        </div>
+      ))}
+    </Slider>
+  </>
+)}
 
     {type === "hospitals" && (
       <>

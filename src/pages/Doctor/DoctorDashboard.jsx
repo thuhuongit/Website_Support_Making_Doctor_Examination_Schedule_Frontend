@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../util/axios";
 import DoctorSidebar from "../../components/DoctorSidebar/DoctorSidebar";
-import { toast, ToastContainer } from "react-toastify"; // Import React Toastify
-import "react-toastify/dist/ReactToastify.css"; // Import CSS của Toastify
+import { toast, ToastContainer } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css";
 import "./Doctor.css";
 
 const DoctorDashboard = () => {
   const [appointments, setAppointments] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
-  const [doctorId, setDoctorId] = useState("1"); // Lấy từ localStorage hoặc context nếu có
+  const [doctorId, setDoctorId] = useState("1"); 
 
   useEffect(() => {
     if (selectedDate && doctorId) {
@@ -29,7 +29,23 @@ const DoctorDashboard = () => {
         .catch((error) => console.log(error));
     }
   };
+  const getStatusLabel = (statusId) => {
+    switch (statusId) {
+      case "S1":
+        return "Đã đặt";
+      case "S2":
+        return "Đã xác nhận";
+      case "S3":
+        return "Đã khám";
+      case "S4":
+        return "Đã huỷ";
+      default:
+        return "Không rõ";
+    }
+  };
 
+
+// Xác nhận lịch hẹn khi khám xong chuyển về S3S3
   const confirmAppointment = (appointment) => {
     axiosInstance
       .post("http://localhost:8082/api/send-remedy", {
@@ -39,6 +55,10 @@ const DoctorDashboard = () => {
         date: appointment.date,
       })
       .then(() => {
+         const updatedAppointments = appointments.map((apptItem) =>
+         apptItem.id === appointment.id ? { ...apptItem, statusId: "S2" } : apptItem
+       );
+        setAppointments(updatedAppointments);
         toast.success("Đã xác nhận lịch khám", {
           position: "top-right", // Đặt thông báo ở góc trên bên phải
           autoClose: 5000, // Thời gian tự động đóng
@@ -48,7 +68,6 @@ const DoctorDashboard = () => {
           draggable: true, // Cho phép kéo thông báo
           progress: undefined,
         });
-        fetchAppointments(selectedDate);
       })
       .catch((error) => {
         toast.error("Lỗi khi xác nhận lịch khám", {
@@ -63,12 +82,17 @@ const DoctorDashboard = () => {
       });
   };
 
+// Hủy lịch hẹn khi bệnh nhân không đêsn khám S4 
   const cancelAppointment = (bookingId) => {
     axiosInstance
       .post(`http://localhost:8082/api/cancel-booking`, { appointmentId: bookingId })
       .then(() => {
-        const updatedAppointments = appointments.filter((appt) => appt.id !== bookingId);
-        setAppointments(updatedAppointments);
+        // const updatedAppointments = appointments.filter((appt) => appt.id !== bookingId);
+        // setAppointments(updatedAppointments);
+        const updatedAppointments = appointments.map((appt) =>
+        appt.id === bookingId ? { ...appt, statusId: "S4" } : appt
+      );
+      setAppointments(updatedAppointments);
         toast.success("Đã huỷ lịch khám", {
           position: "top-right",
           autoClose: 5000,
@@ -110,6 +134,7 @@ const DoctorDashboard = () => {
           <thead>
             <tr>
               <th>STT</th>
+              <th>Trạng thái</th>
               <th>email</th>
               <th>firstName</th>
               <th>address</th>
@@ -122,14 +147,18 @@ const DoctorDashboard = () => {
               appointments.map((appt, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
+                  <td><span className={`status-badge ${appt.statusId}`}>
+                      {getStatusLabel(appt.statusId)}
+                      </span>
+                 </td>
                   <td>{appt.patientData?.email || "--"}</td>
                   <td>{appt.patientData?.firstName || "--"}</td>
                   <td>{appt.patientData?.address || "--"}</td>
-                  <td>{appt.timeType || "--"}</td> {/* Hiển thị giờ khám */}
+                  <td>{appt.timeType || "--"}</td> 
                   <td>
                     <button
                       className="btn confirm"
-                      onClick={() => confirmAppointment(appt)} // truyền toàn bộ appointment
+                      onClick={() => confirmAppointment(appt)}
                     >
                       Xác nhận
                     </button>
@@ -151,7 +180,7 @@ const DoctorDashboard = () => {
           </tbody>
         </table>
       </div>
-      <ToastContainer /> {/* Thêm container để hiển thị các thông báo */}
+      <ToastContainer /> 
     </div>
   );
 };

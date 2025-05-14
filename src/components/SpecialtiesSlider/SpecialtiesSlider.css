@@ -1,36 +1,86 @@
+/* Container chính của slider */
 .specialties-slider {
+    position: relative;
+    z-index: 100;
     margin: 0.5px auto;
     width: 100%;
     min-height: 350px;
-    background-color: aliceblue;
-    background: white;
-    padding-top: 65px; /* Dịch nội dung xuống */
+    background-color: white;
+    padding-top: 65px;
     overflow: hidden;
     margin-bottom: 0;
-    padding-bottom: 0;
-
 }
 
+/* Tiêu đề của slider */
 .specialties-slider h2 {
     font-size: 24px;
     margin-bottom: 15px;
-    margin-left: 50px; /* Dịch chữ vào bên trong */
+    margin-left: 50px; /* Dịch vào bên trong */
 }
 
-
+/* Cấu hình cho slider */
 .specialties-slider .slick-slider {
-    margin-bottom: 50px; /* Giảm khoảng cách giữa 2 slider */
-  }
+    margin-bottom: 50px; /* Khoảng cách giữa các slider */
+}
 
+/* Các nút điều hướng slider */
 .slick-prev, .slick-next {
-    width: 40px;  /* Kích thước nút */
+    width: 40px;
     height: 40px;
-    z-index: 10;  /* Đảm bảo nút hiển thị trên cùng */
+    z-index: 10;
+    font-size: 20px; /* Tùy chỉnh kích thước */
 }
-.specialty-item:hover {
-  background: #f9f9f9;
 
+/* Các phần tử trong slider (specialty-item) */
+.specialty-item {
+    width: 250px; /* Kích thước mỗi item trong slider */
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
 }
+
+.specialty-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid red; /* Đường viền đỏ test */
+}
+
+/* Hiển thị thông tin dưới mỗi ảnh */
+.specialty-item p {
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Hiệu ứng hover cho các item */
+.specialty-item:hover {
+    background: #f9f9f9;
+}
+
+/* Slider căn giữa */
+.slick-slide > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Các nút điều hướng custom */
+.custom-next, .custom-prev {
+    font-size: 24px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 10;
+}
+
 .doctor-item {
   display: flex;
   flex-direction: column;
@@ -75,60 +125,6 @@
     background: #f9f9f9;
   
   }
-
-
-.slick-prev {
-    left: 10px !important;  /* Đưa nút prev vào trong */
-}
-
-.slick-next {
-    right: 10px !important; /* Đưa nút next vào trong */
-}
-
-/* Đảm bảo slider căn giữa */
-.slick-slider {
-  display: flex;
-  justify-content: center;
-}
-
-/* Nếu hình + chữ vẫn chưa vào giữa, thử thêm cái này */
-.slick-slide > div {
-  display: flex;
-  justify-content: center;
-}
-
- 
-.specialty-item {
-  width: 250px; /* hoặc chiều rộng cụ thể */
-  margin: 0 10px;
-}
-
-
-.specialty-item img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 8px;
-  cursor: pointer;
-  border: 2px solid red; /* Đường viền đỏ test */
-}
-
-.specialty-item p {
-    margin-top: 8px;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-/* Custom arrows */
-.custom-next, .custom-prev {
-    font-size: 24px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    z-index: 10;
-}
-
 .custom-next {
     right: -30px;
 }
@@ -137,10 +133,32 @@
     left: -30px;
 }
 
-
+/* Khung chứa slider */
 .specialties-slider-frame {
-  border: 2px solid #ddd; /* Thêm đường viền cho khung */
-  padding: 20px;           /* Khoảng cách bên trong khung */
-  border-radius: 10px;     /* Bo góc cho khung */
-  background-color: #f9f9f9; /* Màu nền khung */
+    border: 2px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+/* Header của slider (có nút "Xem thêm") */
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+/* Nút "Xem thêm" */
+.view-more-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.view-more-btn:hover {
+    background-color: #0056b3;
 }
