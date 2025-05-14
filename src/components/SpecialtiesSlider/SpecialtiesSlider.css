@@ -15,7 +15,7 @@
 .specialties-slider h2 {
     font-size: 24px;
     margin-bottom: 15px;
-    margin-left: 50px; /* Dịch vào bên trong */
+    margin-left: 50px; 
 }
 
 /* Cấu hình cho slider */
@@ -28,12 +28,12 @@
     width: 40px;
     height: 40px;
     z-index: 10;
-    font-size: 20px; /* Tùy chỉnh kích thước */
+    font-size: 20px; 
 }
 
 /* Các phần tử trong slider (specialty-item) */
 .specialty-item {
-    width: 250px; /* Kích thước mỗi item trong slider */
+    width: 250px; 
     margin: 0 10px;
     display: flex;
     flex-direction: column;
@@ -49,7 +49,7 @@
     object-fit: cover;
     border-radius: 8px;
     cursor: pointer;
-    border: 2px solid red; /* Đường viền đỏ test */
+    border: 2px solid red; 
 }
 
 /* Hiển thị thông tin dưới mỗi ảnh */
@@ -149,16 +149,25 @@
     padding: 0 10px;
 }
 
-/* Nút "Xem thêm" */
+/* Nút "Xem thêm" với màu nền giống nền slider */
 .view-more-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
+    background-color: #DAF3F6; 
+    color: #34929E; 
     padding: 6px 12px;
     border-radius: 4px;
     cursor: pointer;
+    transition: all 0.3s ease; 
 }
 
+/* Hiệu ứng hover cho nút "Xem thêm" */
 .view-more-btn:hover {
-    background-color: #0056b3;
+    background-color: #007bff;  
+    color: white;  
+    border-color: #0056b3;  
+}
+
+/* Hiệu ứng focus cho nút "Xem thêm" khi người dùng nhấn */
+.view-more-btn:focus {
+    outline: none; 
+    box-shadow: 0 0 5px 2px rgba(0, 123, 255, 0.5); 
 }

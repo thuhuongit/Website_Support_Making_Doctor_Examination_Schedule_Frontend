@@ -20,6 +20,7 @@ import ManageDoctor from "./pages/Admin/Managedoctor/ManageDoctoe";
 import Dashboard from "./pages/Admin/Dashboard/Dashboard";
 import ManageSpecialist from "./pages/Admin/Specialist/Specialist"; 
 
+import SpecialtiesPage from "./components/SpecialtiesPage/SpecialtiesPage";
 
 
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="/dat-kham/:id" element={<Book/>} />
           <Route path="/doctor-dashboard"element={<DoctorDashboard />}/>
           <Route path="/verify-booking" element={<ConfirmationPage />} />
+          <Route path="/specialties" element={<SpecialtiesPage />} />
 
 
           <Route path="/admin" element={<AdminLayout />}>

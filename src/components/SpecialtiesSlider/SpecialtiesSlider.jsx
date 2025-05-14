@@ -13,6 +13,7 @@ const SpecialtiesSlider = ({ type }) => {
 
   // Khai báo state để lưu dữ liệu chuyên khoa
   const [specialtiesData, setSpecialtiesData] = useState([]);
+  const [showAllSpecialties, setShowAllSpecialties] = useState(false); // hiển thị tất cả các chuyên khoa 
   const [hospitalsData, setHospitalsData] = useState([]);
   const [doctorsData, setDoctorsData] = useState([]);
   const [healPackageData, setHealPackageData] = useState([]);
@@ -30,7 +31,7 @@ const SpecialtiesSlider = ({ type }) => {
 
  
   useEffect(() => {
-    console.log("Type:", type); // 
+    console.log("Type:", type); // hiển thị dữ liệu dưới db đưa lên console 
     const fetchData = async () => {
       try {
         if (type === "specialties") {
@@ -47,6 +48,13 @@ const SpecialtiesSlider = ({ type }) => {
     };
     fetchData();
   }, [type]);
+
+  const handleShowAllClick = () => {
+    setShowAllSpecialties(true); // Nút xem thêm 
+  };
+
+  // Nếu không bấm Xem thêm thì chỉ hiển thị 3 chuyên khoa đầu tiên
+  const displayedSpecialties = showAllSpecialties ? specialtiesData : specialtiesData.slice(0, 3);
 
   
   const hospitals = [
