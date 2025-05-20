@@ -37,7 +37,7 @@ const Specialist = () => {
     
     try {
       const response = await axiosInstance.post(
-        "http://localhost:8082/api/create-new-specialty",
+        "http://localhost:8083/api/create-new-specialty",
         formData,
         {
           headers: {

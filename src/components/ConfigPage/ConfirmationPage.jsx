@@ -17,7 +17,7 @@ const ConfirmationPage = () => {
   useEffect(() => {
     if (token && doctorId) {
       axiosInstance
-        .post("http://localhost:8082/api/verify-book-appointment", { token, doctorId })
+        .post("http://localhost:8083/api/verify-book-appointment", { token, doctorId })
         .then((response) => {
           if (response.data.errCode === 0) {
             setConfirmationMessage("Đặt lịch khám thành công!");

@@ -35,7 +35,7 @@ const SpecialtiesSlider = ({ type }) => {
     const fetchData = async () => {
       try {
         if (type === "specialties") {
-         const res = await axiosInstance.get("http://localhost:8082/api/get-specialty");
+         const res = await axiosInstance.get("http://localhost:8083/api/get-specialty");
          console.log("Fetched specialties:", res.data); 
           if (res.data && res.data.errCode === 0) {
            setSpecialtiesData(res.data.data);
@@ -103,7 +103,7 @@ const SpecialtiesSlider = ({ type }) => {
           className="specialty-item"
           onClick={() => navigate(`/specialty/${item.id || item.name}`)}
         >
-          <img src={`http://localhost:8082/${item.image}`} alt={item.name} />
+          <img src={`http://localhost:8083/${item.image}`} alt={item.name} />
           <p>{item.name}</p>
         </div>
       ))}

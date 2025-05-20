@@ -15,7 +15,7 @@ const SpecialtiesPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axiosInstance.get("http://localhost:8082/api/get-specialty");
+        const res = await axiosInstance.get("http://localhost:8083/api/get-specialty");
         console.log("Fetched specialties:", res.data);
         if (res.data && res.data.errCode === 0) {
           setSpecialties(res.data.data); // ✅ đúng tên hàm set
@@ -62,7 +62,7 @@ const SpecialtiesPage = () => {
               onClick={() => navigate(`/detail-specialty/${item.id}`)}
             >
               <img
-                src={`http://localhost:8082/${item.image}`} // ✅ dùng đúng URL nếu backend trả path
+                src={`http://localhost:8083/${item.image}`} 
                 alt={item.name}
               />
               <p>{item.name}</p>

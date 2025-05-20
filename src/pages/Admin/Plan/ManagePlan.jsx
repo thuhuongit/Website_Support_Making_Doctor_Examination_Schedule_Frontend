@@ -61,7 +61,7 @@ function ManageSchedule() {
     console.log("Data to send:", scheduleData);
   
     try {
-      const response = await axiosInstance.post('http://localhost:8082/api/bulk-create-schedule', scheduleData);
+      const response = await axiosInstance.post('http://localhost:8083/api/bulk-create-schedule', scheduleData);
   
       console.log("API Response:", response);
   

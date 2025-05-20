@@ -19,7 +19,7 @@ const DoctorDashboard = () => {
   const fetchAppointments = (date) => {
     if (doctorId && date) {
       axiosInstance
-        .get("http://localhost:8082/api/get-list-patient-for-doctor", {
+        .get("http://localhost:8083/api/get-list-patient-for-doctor", {
           params: {
             doctorId: doctorId,
             date: date,
@@ -48,7 +48,7 @@ const DoctorDashboard = () => {
 // Xác nhận lịch hẹn khi khám xong chuyển về S3S3
   const confirmAppointment = (appointment) => {
     axiosInstance
-      .post("http://localhost:8082/api/send-remedy", {
+      .post("http://localhost:8083/api/send-remedy", {
         doctorId: appointment.doctorId,
         patientId: appointment.patientId,
         timeType: appointment.timeType,
@@ -85,7 +85,7 @@ const DoctorDashboard = () => {
 // Hủy lịch hẹn khi bệnh nhân không đêsn khám S4 
   const cancelAppointment = (bookingId) => {
     axiosInstance
-      .post(`http://localhost:8082/api/cancel-booking`, { appointmentId: bookingId })
+      .post(`http://localhost:8083/api/cancel-booking`, { appointmentId: bookingId })
       .then(() => {
         // const updatedAppointments = appointments.filter((appt) => appt.id !== bookingId);
         // setAppointments(updatedAppointments);

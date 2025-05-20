@@ -27,7 +27,7 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess }) {
     console.log("Form Data Submitted: ", formData);
 
     try {
-      const response = await axiosInstance.post('http://localhost:8082/api/patient-book-appointment', {
+      const response = await axiosInstance.post('http://localhost:8083/api/patient-book-appointment', {
         doctorId: doctorId,
         timeType: time,
         date: date,

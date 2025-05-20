@@ -24,7 +24,7 @@ function DoctorSchedule() {
     const fetchSchedule = async () => {
       if (selectedDoctor && selectedDate) {
         try {
-          const res = await axiosInstance.get("http://localhost:8082/api/get-schedule-doctor-by-date", {
+          const res = await axiosInstance.get("http://localhost:8083/api/get-schedule-doctor-by-date", {
             params: {
               doctorId: selectedDoctor,
               date: selectedDate,

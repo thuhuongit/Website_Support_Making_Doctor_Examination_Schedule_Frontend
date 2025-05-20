@@ -27,7 +27,7 @@ const ManageUser = () => {
 
   const fetchUsers = () => {
     axiosInstance
-      .get("http://localhost:8082/api/get-all-users?id=all")
+      .get("http://localhost:8083/api/get-all-users?id=all")
       .then((res) => {
         setUsers(res.data.users || []);
       })
@@ -59,7 +59,7 @@ const ManageUser = () => {
 
     try {
       const res = await axiosInstance.post(
-        "http://localhost:8082/api/create-new-user",
+        "http://localhost:8083/api/create-new-user",
         formData
       );
 
@@ -107,7 +107,7 @@ const ManageUser = () => {
     if (result.isConfirmed) {
       try {
         const response = await axiosInstance.delete(
-          "http://localhost:8082/api/delete-user",
+          "http://localhost:8083/api/delete-user",
           {
             data: { id: userId },
           }

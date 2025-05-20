@@ -1,4 +1,4 @@
-export const API_URL = "http://localhost:8082/api";
+export const API_URL = "http://localhost:8083/api";
 
 export const userService = {
     getAllUsers: async (inputId) => {
