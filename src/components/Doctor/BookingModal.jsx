@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./DoctorDetail.css";
 import axiosInstance from "../../util/axios";
 
-function BookingModal({ time, date, onClose, doctorId, onSuccess }) {
+function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -24,8 +24,6 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess }) {
     setLoading(true);
     setError(null);
 
-    console.log("Form Data Submitted: ", formData);
-
     try {
       const response = await axiosInstance.post('http://localhost:8083/api/patient-book-appointment', {
         doctorId: doctorId,
@@ -37,8 +35,6 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess }) {
         selectedGender: formData.gender,
         reason: formData.reason,
       });
-
-      console.log("Booking response:", response.data);
 
       if (response.status === 200 && response.data.errCode === 0) {
         onSuccess(); // thành công
@@ -53,7 +49,6 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess }) {
     }
   };
 
-  // Format lại ngày yyyy-mm-dd => dd/mm/yyyy
   const formattedDate = date?.split("-").reverse().join("/");
 
   return (
@@ -65,9 +60,17 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess }) {
         </div>
 
         <div className="modal-body">
-          <p><strong>Tiến sĩ, Huỳnh Quốc Cường</strong></p>
-          <p><strong>{time}</strong> - <strong>{formattedDate}</strong></p>
-          <p>Miễn phí đặt lịch</p>
+          {doctorInfo && (
+            <>
+              <p>
+                <strong>
+                  {doctorInfo.positionData?.valueVi} {doctorInfo.firstName} {doctorInfo.lastName}
+                </strong>
+              </p>
+              <p><strong>{time}</strong> - <strong>{formattedDate}</strong></p>
+              <p>Miễn phí đặt lịch</p>
+            </>
+          )}
 
           <input type="text" placeholder="Họ và tên" name="name" value={formData.name} onChange={handleChange} />
           <input type="text" placeholder="Số điện thoại" name="phone" value={formData.phone} onChange={handleChange} />

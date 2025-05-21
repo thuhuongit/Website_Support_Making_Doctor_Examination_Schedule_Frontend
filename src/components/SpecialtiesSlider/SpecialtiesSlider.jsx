@@ -13,9 +13,9 @@ const SpecialtiesSlider = ({ type }) => {
 
   // Khai báo state để lưu dữ liệu chuyên khoa
   const [specialtiesData, setSpecialtiesData] = useState([]);
-  const [showAllSpecialties, setShowAllSpecialties] = useState(false); // hiển thị tất cả các chuyên khoa 
+  const [showAllSpecialties, setShowAllSpecialties] = useState(false);
   const [hospitalsData, setHospitalsData] = useState([]);
-  const [doctorsData, setDoctorsData] = useState([]);
+  const [doctors, setDoctors] = useState([]);
   const [healPackageData, setHealPackageData] = useState([]);
 
   // Cấu hình slider
@@ -30,8 +30,9 @@ const SpecialtiesSlider = ({ type }) => {
   };
 
  
+  //Chuyên khoa phổ biến 
   useEffect(() => {
-    console.log("Type:", type); // hiển thị dữ liệu dưới db đưa lên console 
+    console.log("Type:", type);
     const fetchData = async () => {
       try {
         if (type === "specialties") {
@@ -50,10 +51,9 @@ const SpecialtiesSlider = ({ type }) => {
   }, [type]);
 
   const handleShowAllClick = () => {
-    setShowAllSpecialties(true); // Nút xem thêm 
+    setShowAllSpecialties(true);
   };
 
-  // Nếu không bấm Xem thêm thì chỉ hiển thị 3 chuyên khoa đầu tiên
   const displayedSpecialties = showAllSpecialties ? specialtiesData : specialtiesData.slice(0, 3);
 
   
@@ -67,14 +67,26 @@ const SpecialtiesSlider = ({ type }) => {
   ];
 
 
-  const doctor = [
-    { title: "Tiến sĩ, Bác sĩ chuyên khoa II Lê Quốc Việt", img: "/2.png", desc: "Cơ Xương Khớp, Nội khoa", link: "/doctor/le-quoc-viet"},
-    { title: "Tiến sĩ, Bác sĩ Chuyên khoa II Lã Thị Bưởi", img: "/3.jpg", desc: "Sức khỏa tâm thần", link: "/doctor/la-thi-buoi" },
-    { title: "Bác sĩ Chuyên khoa II Võ Văn Mẫn", img: "/4.jpg", desc: "Cơ Xương Khớp, Chấn thương chỉnh hình", link: "/doctor/vo-van-man" },
-    { title: "Thạc sĩ, Bác sĩ Nguyễn Thị Thanh Nhàn", img: "/5.png", desc: "Thần kinh", link: "/doctor/nguyen-thi-thanh-nhan" },
-    { title: "Thạc sĩ, Bác sĩ Nguyễn Văn Nghị", img: "/6.png", desc: "Tiểu đường - Nội tiết, Ung bướu, Tuyến giáp", link: "/doctor/nguyen-van-nghi"},
-    { title: "Thạc sĩ, Bác sĩ Trần Thị Mai Thy", img: "/7.jpg", desc: "Thầm kinh" },
-  ];
+  // Bác sĩ nổi bật 
+  useEffect(() => {
+    if (type === "doctors") {
+      // Gọi API lấy 4 bác sĩ nổi bật
+      axiosInstance
+         .get("http://localhost:8083/api/top-doctor-home")
+         .then((res) => {
+           console.log("API response:", res.data);
+           if (res.data && res.data.data) {
+              setDoctors(res.data.data);
+       }
+  })
+
+        .catch((err) => {
+          console.error("Lỗi khi lấy bác sĩ:", err);
+        });
+    }
+  }, [type]);
+
+
 
   const healPackage = [
     { title: "Gói khám tổng quát", img: "/ói.png", link: "/package/general-checkup" },
@@ -88,6 +100,7 @@ const SpecialtiesSlider = ({ type }) => {
 
   return (
     <div className="specialties-slider">
+
      {type === "specialties" && (
   <>
     <div className="slider-header">
@@ -125,20 +138,38 @@ const SpecialtiesSlider = ({ type }) => {
       </>
     )}
 
-    {type === "doctors" && (
-      <>
-        <h2>{t("Bác sĩ nổi bật")}</h2>
-        <Slider {...settings}>
-          {doctor.map((item, index) => (
-            <div key={index} className="doctor-item" onClick={() => navigate(item.link)}>
-              <img src={item.img} alt={item.title} />
-              <p className="doctor-name">{item.title}</p>
-              <p className="doctor-desc">{item.desc}</p>
-            </div>
-          ))}
-        </Slider>
-      </>
-    )}
+{type === "doctors" && (
+        <>
+          <h2>{t("Bác sĩ nổi bật")}</h2>
+          <Slider {...settings}>
+            {doctors.map((doctor) => (
+              <div
+                key={doctor.id}
+                className="doctor-item"
+                onClick={() => navigate(`/doctor/${doctor.id}`)}
+                style={{ cursor: "pointer" }}
+              >
+                {typeof doctor.image === "string" && doctor.image !== "" && (
+                  <img
+                    src={`http://localhost:8083${doctor.image}`}
+                    alt={`${doctor.positionData?.valueVi || ""} ${doctor.lastName || ""}`}
+                  />
+                )}
+
+                <p className="doctor-name">
+                  {doctor.positionData?.valueVi} {doctor.lastName}
+                </p>
+                <p className="doctor-desc">
+                  {doctor.Doctor_Infor?.Specialty?.name || "Chưa có chuyên khoa"}
+                </p>
+              </div>
+            ))}
+          </Slider>
+        </>
+      )}
+
+
+
     {type === "healPackage" && (
       <>
         <h2>{t("Gói khám bệnh")}</h2>

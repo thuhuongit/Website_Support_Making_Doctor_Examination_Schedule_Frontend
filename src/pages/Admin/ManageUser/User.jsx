@@ -156,7 +156,7 @@ const User = () => {
 
   return (
     <div className="user-form-container">
-      <h3>Thêm mới người dùng</h3>
+      <h2>Thêm mới người dùng</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-row">
           <input

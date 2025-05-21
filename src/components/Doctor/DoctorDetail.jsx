@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axiosInstance from "../../util/axios";
 import "./DoctorDetail.css";
 import Footer from "../Footer/Footer";
@@ -11,41 +11,67 @@ const timeSlots = [
 ];
 
 function DoctorSchedule() {
-  const navigate = useNavigate();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { id } = useParams(); // lấy doctorId từ URL
+  const [selectedDate, setSelectedDate] = useState("");
+  const [availableTimes, setAvailableTimes] = useState([]);
+  const [doctorDetail, setDoctorDetail] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState(false);
-  const [availableTimes, setAvailableTimes] = useState([]);
-  const [selectedDoctor, setSelectedDoctor] = useState(1);
-  const [selectedDate, setSelectedDate] = useState('');
 
+  const doctorId = Number(id); // convert sang number để gọi API
+
+  // Lấy thông tin chi tiết bác sĩ
+  useEffect(() => {
+    const fetchDoctorDetail = async () => {
+      try {
+        const res = await axiosInstance.get("http://localhost:8083/api/get-detail-doctor-by-id", {
+          params: { id: doctorId }
+        });
+        if (res.data.errCode === 0) {
+          setDoctorDetail(res.data.data);
+        } else {
+          setDoctorDetail(null);
+        }
+      } catch (error) {
+        console.error("Lỗi khi lấy detail bác sĩ:", error);
+        setDoctorDetail(null);
+      }
+    };
+
+    if (doctorId) fetchDoctorDetail();
+  }, [doctorId]);
+
+  // Lấy lịch khám bác sĩ theo ngày
   useEffect(() => {
     const fetchSchedule = async () => {
-      if (selectedDoctor && selectedDate) {
-        try {
-          const res = await axiosInstance.get("http://localhost:8083/api/get-schedule-doctor-by-date", {
-            params: {
-              doctorId: selectedDoctor,
-              date: selectedDate,
-            },
-          });
+      if (!doctorId || !selectedDate) {
+        setAvailableTimes([]);
+        return;
+      }
 
-          if (res.data.errCode === 0) {
-            const serverTimes = res.data.data.map((item) => item.timeType);
-            setAvailableTimes(serverTimes);
-          } else {
-            setAvailableTimes([]);
+      try {
+        const res = await axiosInstance.get("http://localhost:8083/api/get-schedule-doctor-by-date", {
+          params: {
+            doctorId: doctorId,
+            date: selectedDate,
           }
-        } catch (error) {
-          console.error("Lỗi khi lấy lịch khám:", error);
+        });
+
+        if (res.data.errCode === 0) {
+          const serverTimes = res.data.data.map(item => item.timeType);
+          setAvailableTimes(serverTimes);
+        } else {
           setAvailableTimes([]);
         }
+      } catch (error) {
+        console.error("Lỗi khi lấy lịch khám:", error);
+        setAvailableTimes([]);
       }
     };
 
     fetchSchedule();
-  }, [selectedDoctor, selectedDate]);
+  }, [doctorId, selectedDate]);
 
   const handleTimeClick = (slot) => {
     if (availableTimes.includes(slot)) {
@@ -60,41 +86,32 @@ function DoctorSchedule() {
     setTimeout(() => setBookingSuccess(false), 3000);
   };
 
-  const t = (text) => text;
-
   return (
     <div className="doctor-schedule">
-      <nav className="navbar">
-        <div className="logo" onClick={() => navigate("/")}>
-          <img className="logo-img" src="/logo.png" alt="BookingCare" />
-          <span className="logo-text">BookingCare</span>
-        </div>
-        <ul className={`nav-links ${menuOpen ? "open" : ""}`}>
-          <li>{t("Chuyên khoa")}<br /><span>{t("Tìm bác sĩ theo chuyên khoa")}</span></li>
-          <li>{t("Cơ sở y tế")}<br /><span>{t("Chọn bệnh viện phòng khám")}</span></li>
-          <li>{t("Bác sĩ")}<br /><span>{t("Chọn bác sĩ giỏi")}</span></li>
-          <li>{t("Gói khám")}<br /><span>{t("Khám sức khỏe tổng quát")}</span></li>
-        </ul>
-        <div className="navbar-right">
-          <div className="navbar-support">
-            <button><i className="fa-solid fa-phone-volume"></i> {t("Hỗ trợ")}</button>
-          </div>
-          <div className="language-switch">
-            <button className="active-lang">🇻🇳</button>
-            <button>🇺🇸</button>
-          </div>
-        </div>
-      </nav>
+      {/* Thông tin bác sĩ */}
+      {doctorDetail ? (
+        <div className="header">
+          <img
+            src={`http://localhost:8083${doctorDetail.image}`}
+            alt="Doctor"
+          />
 
-      <div className="header">
-        <img src="/2.png" alt="Doctor" />
-        <div className="info">
-          <h2>Tiến sĩ, Huỳnh Quốc Cường</h2>
-          <p>Bác sĩ đầu ngành chuyên khoa Tâm thần, Bệnh viện Bạch Mai. Nguyên Viện trưởng Viện Sức khỏe Tâm thần quốc gia.</p>
-          <p className="note">Lưu ý: Bác sĩ có nhận tư vấn từ xa.</p>
+          <div className="info">
+            <h2>
+              {doctorDetail.positionData?.valueVi} {doctorDetail.firstName} {doctorDetail.lastName}
+            </h2>
+            <div
+              className="doctor-description"
+              dangerouslySetInnerHTML={{ __html: doctorDetail.Markdown?.contentHTML || "" }}
+            />
+            <p className="note">Lưu ý: Bác sĩ có nhận tư vấn từ xa.</p>
+          </div>
         </div>
-      </div>
+      ) : (
+        <p>Đang tải thông tin bác sĩ...</p>
+      )}
 
+      {/* Chọn ngày khám */}
       <div className="schedule-section">
         <label htmlFor="datePicker">Chọn ngày khám:</label>
         <input
@@ -121,36 +138,23 @@ function DoctorSchedule() {
         <div className="note">Chọn giờ và đặt (miễn phí)</div>
       </div>
 
-      {showModal && (
-        <BookingModal
-          time={selectedTime}
-          onClose={() => setShowModal(false)}
-          onSuccess={handleBookingSuccess}
-          doctorId={selectedDoctor}
-          date={selectedDate}
-        />
-      )}
+      {showModal && doctorDetail && (
+  <BookingModal
+    time={selectedTime}
+    onClose={() => setShowModal(false)}
+    onSuccess={handleBookingSuccess}
+    doctorId={doctorId}
+    date={selectedDate}
+    doctorInfo={doctorDetail} // Truyền thông tin bác sĩ
+  />
+)}
+
 
       {bookingSuccess && (
         <div className="booking-success-popup">
           <p>Bạn đã đặt lịch thành công - Vui lòng xác nhận email!</p>
         </div>
       )}
-
-      <div className="details">
-        <h4>1. Tiến sĩ, Huỳnh Quốc Cường</h4>
-        <ul>
-          <li>Danh hiệu Thầy thuốc Nhân dân</li>
-          <li>Bác sĩ đầu ngành chuyên khoa Tâm thần</li>
-          <li>Nguyên Viện trưởng Viện Sức khỏe Tâm thần quốc gia, Bệnh viện Bạch Mai</li>
-        </ul>
-
-        <h4>2. Quá trình công tác</h4>
-        <ul>
-          <li>PGS.TS Bác sĩ chuyên khoa tại Bệnh viện Bạch Mai</li>
-          <li>Chủ trì các đề tài nghiên cứu, giảng dạy tại Đại học Y Hà Nội</li>
-        </ul>
-      </div>
 
       <Footer />
     </div>
