@@ -1,34 +1,52 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../util/axios";
 import DoctorSidebar from "../../components/DoctorSidebar/DoctorSidebar";
-import { toast, ToastContainer } from "react-toastify"; 
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Doctor.css";
 
 const DoctorDashboard = () => {
-  const [appointments, setAppointments] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const defaultDoctorId = user?.id;
+
+  const [doctors, setDoctors] = useState([]);
+  const [selectedDoctorId, setSelectedDoctorId] = useState(defaultDoctorId || "");
   const [selectedDate, setSelectedDate] = useState("");
-  const [doctorId, setDoctorId] = useState("1"); 
+  const [appointments, setAppointments] = useState([]);
 
+  // Lấy danh sách bác sĩ khi mount component
   useEffect(() => {
-    if (selectedDate && doctorId) {
-      fetchAppointments(selectedDate);
-    }
-  }, [selectedDate]);
+    axiosInstance
+      .get("http://localhost:8083/api/get-all-doctors")
+      .then((res) => {
+        setDoctors(res.data.data || []);
+      })
+      .catch((err) => {
+        console.error("Lỗi khi lấy danh sách bác sĩ:", err);
+      });
+  }, []);
 
-  const fetchAppointments = (date) => {
-    if (doctorId && date) {
-      axiosInstance
-        .get("http://localhost:8083/api/get-list-patient-for-doctor", {
-          params: {
-            doctorId: doctorId,
-            date: date,
-          },
-        })
-        .then((response) => setAppointments(response.data.data || []))
-        .catch((error) => console.log(error));
+  // Khi đổi bác sĩ hoặc ngày thì lấy lại lịch khám
+  useEffect(() => {
+    if (selectedDoctorId && selectedDate) {
+      fetchAppointments(selectedDoctorId, selectedDate);
+    } else {
+      setAppointments([]);
     }
+  }, [selectedDoctorId, selectedDate]);
+
+  const fetchAppointments = (doctorId, date) => {
+    axiosInstance
+      .get("http://localhost:8083/api/get-list-patient-for-doctor", {
+        params: {
+          doctorId,
+          date,
+        },
+      })
+      .then((response) => setAppointments(response.data.data || []))
+      .catch((error) => console.log(error));
   };
+
   const getStatusLabel = (statusId) => {
     switch (statusId) {
       case "S1":
@@ -44,8 +62,6 @@ const DoctorDashboard = () => {
     }
   };
 
-
-// Xác nhận lịch hẹn khi khám xong chuyển về S3S3
   const confirmAppointment = (appointment) => {
     axiosInstance
       .post("http://localhost:8083/api/send-remedy", {
@@ -55,64 +71,29 @@ const DoctorDashboard = () => {
         date: appointment.date,
       })
       .then(() => {
-         const updatedAppointments = appointments.map((apptItem) =>
-         apptItem.id === appointment.id ? { ...apptItem, statusId: "S2" } : apptItem
-       );
+        const updatedAppointments = appointments.map((apptItem) =>
+          apptItem.id === appointment.id ? { ...apptItem, statusId: "S2" } : apptItem
+        );
         setAppointments(updatedAppointments);
-        toast.success("Đã xác nhận lịch khám", {
-          position: "top-right", // Đặt thông báo ở góc trên bên phải
-          autoClose: 5000, // Thời gian tự động đóng
-          hideProgressBar: false, // Hiển thị thanh tiến trình
-          closeOnClick: true, // Cho phép đóng thông báo bằng click
-          pauseOnHover: true, // Tạm dừng khi hover chuột
-          draggable: true, // Cho phép kéo thông báo
-          progress: undefined,
-        });
+        toast.success("Đã xác nhận lịch khám");
       })
-      .catch((error) => {
-        toast.error("Lỗi khi xác nhận lịch khám", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+      .catch(() => {
+        toast.error("Lỗi khi xác nhận lịch khám");
       });
   };
 
-// Hủy lịch hẹn khi bệnh nhân không đêsn khám S4 
   const cancelAppointment = (bookingId) => {
     axiosInstance
-      .post(`http://localhost:8083/api/cancel-booking`, { appointmentId: bookingId })
+      .post("http://localhost:8083/api/cancel-booking", { appointmentId: bookingId })
       .then(() => {
-        // const updatedAppointments = appointments.filter((appt) => appt.id !== bookingId);
-        // setAppointments(updatedAppointments);
         const updatedAppointments = appointments.map((appt) =>
-        appt.id === bookingId ? { ...appt, statusId: "S4" } : appt
-      );
-      setAppointments(updatedAppointments);
-        toast.success("Đã huỷ lịch khám", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+          appt.id === bookingId ? { ...appt, statusId: "S4" } : appt
+        );
+        setAppointments(updatedAppointments);
+        toast.success("Đã huỷ lịch khám");
       })
-      .catch((error) => {
-        toast.error("Lỗi khi huỷ lịch khám", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+      .catch(() => {
+        toast.error("Lỗi khi huỷ lịch khám");
       });
   };
 
@@ -122,6 +103,22 @@ const DoctorDashboard = () => {
       <div className="doctor-main">
         <div className="doctor-header">
           <h2>QUẢN LÝ BỆNH NHÂN KHÁM BỆNH</h2>
+
+          {/* Dropdown chọn bác sĩ */}
+          <select
+            value={selectedDoctorId}
+            onChange={(e) => setSelectedDoctorId(e.target.value)}
+            className="doctor-select"
+          >
+            <option value="">-- Chọn bác sĩ --</option>
+            {doctors.map((doc) => (
+              <option key={doc.id} value={doc.id}>
+                {doc.firstName} {doc.lastName}
+              </option>
+            ))}
+          </select>
+
+          {/* Chọn ngày */}
           <input
             type="date"
             value={selectedDate}
@@ -135,9 +132,9 @@ const DoctorDashboard = () => {
             <tr>
               <th>STT</th>
               <th>Trạng thái</th>
-              <th>email</th>
-              <th>firstName</th>
-              <th>address</th>
+              <th>Email</th>
+              <th>Họ tên</th>
+              <th>Địa chỉ</th>
               <th>Giờ khám</th>
               <th>Hành động</th>
             </tr>
@@ -145,16 +142,20 @@ const DoctorDashboard = () => {
           <tbody>
             {appointments.length > 0 ? (
               appointments.map((appt, index) => (
-                <tr key={index}>
+                <tr key={appt.id || index}>
                   <td>{index + 1}</td>
-                  <td><span className={`status-badge ${appt.statusId}`}>
+                  <td>
+                    <span className={`status-badge ${appt.statusId}`}>
                       {getStatusLabel(appt.statusId)}
-                      </span>
-                 </td>
+                    </span>
+                  </td>
                   <td>{appt.patientData?.email || "--"}</td>
-                  <td>{appt.patientData?.firstName || "--"}</td>
+                  <td>
+                    {appt.patientData?.firstName || "--"}{" "}
+                    {appt.patientData?.lastName || ""}
+                  </td>
                   <td>{appt.patientData?.address || "--"}</td>
-                  <td>{appt.timeType || "--"}</td> 
+                  <td>{appt.timeType || "--"}</td>
                   <td>
                     <button
                       className="btn confirm"
@@ -162,7 +163,6 @@ const DoctorDashboard = () => {
                     >
                       Xác nhận
                     </button>
-
                     <button
                       className="btn cancel"
                       onClick={() => cancelAppointment(appt.id)}
@@ -174,13 +174,13 @@ const DoctorDashboard = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="8">Không có lịch khám cho ngày này.</td>
+                <td colSpan="7">Không có lịch khám cho lựa chọn này.</td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-      <ToastContainer /> 
+      <ToastContainer />
     </div>
   );
 };
