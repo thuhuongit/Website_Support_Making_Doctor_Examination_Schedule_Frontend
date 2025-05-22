@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "../../util/axios";
 import "./DoctorDetail.css";
 import Footer from "../Footer/Footer";
 import BookingModal from "./BookingModal";
+import { useTranslation } from "react-i18next";
 
 const timeSlots = [
   "8:00 - 9:00", "9:00 - 10:00", "10:00 - 11:00", "11:00 - 12:00",
@@ -12,29 +13,34 @@ const timeSlots = [
 
 function DoctorSchedule() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const [selectedDate, setSelectedDate] = useState("");
   const [availableTimes, setAvailableTimes] = useState([]);
   const [doctorDetail, setDoctorDetail] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const doctorId = Number(id);
 
-  // Lấy thông tin chi tiết bác sĩ
+  // Fetch doctor detail
   useEffect(() => {
     const fetchDoctorDetail = async () => {
       try {
         const res = await axiosInstance.get("http://localhost:8083/api/get-detail-doctor-by-id", {
           params: { id: doctorId }
         });
+
         if (res.data.errCode === 0) {
           setDoctorDetail(res.data.data);
         } else {
           setDoctorDetail(null);
         }
       } catch (error) {
-        console.error("Lỗi khi lấy detail bác sĩ:", error);
+        console.error("Lỗi khi lấy chi tiết bác sĩ:", error);
         setDoctorDetail(null);
       }
     };
@@ -42,7 +48,7 @@ function DoctorSchedule() {
     if (doctorId) fetchDoctorDetail();
   }, [doctorId]);
 
-  // Lấy lịch khám theo ngày
+  // Fetch available schedule
   useEffect(() => {
     const fetchSchedule = async () => {
       if (!doctorId || !selectedDate) {
@@ -52,10 +58,7 @@ function DoctorSchedule() {
 
       try {
         const res = await axiosInstance.get("http://localhost:8083/api/get-schedule-doctor-by-date", {
-          params: {
-            doctorId: doctorId,
-            date: selectedDate,
-          }
+          params: { doctorId, date: selectedDate }
         });
 
         if (res.data.errCode === 0) {
@@ -88,31 +91,50 @@ function DoctorSchedule() {
 
   return (
     <div className="doctor-schedule">
-      {/* Thông tin bác sĩ */}
+      {/* Navbar */}
+      <nav className="navbar">
+        <div className="logo" onClick={() => navigate("/")}>
+          <img className="logo-img" src="/logo.png" alt="BookingCare" />
+          <span className="logo-text">BookingCare</span>
+        </div>
+
+        <ul className={`nav-links ${menuOpen ? "open" : ""}`}>
+          <li>{t("Chuyên khoa")}<br /><span>{t("Tìm bác sĩ theo chuyên khoa")}</span></li>
+          <li>{t("Cơ sở y tế")}<br /><span>{t("Chọn bệnh viện phòng khám")}</span></li>
+          <li>{t("Bác sĩ")}<br /><span>{t("Chọn bác sĩ giỏi")}</span></li>
+          <li>{t("Gói khám")}<br /><span>{t("Khám sức khỏe tổng quát")}</span></li>
+        </ul>
+
+        <div className="navbar-right">
+          <div className="navbar-support">
+            <button><i className="fa-solid fa-phone-volume"></i> {t("Hỗ trợ")}</button>
+          </div>
+          <div className="language-switch">
+            <button className="active-lang">🇻🇳</button>
+            <button>🇺🇸</button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Doctor Information */}
       {doctorDetail ? (
         <div className="header">
-          <img
-            src={`http://localhost:8083${doctorDetail.image}`}
-            alt="Doctor"
-          />
-
+          <img src={`http://localhost:8083${doctorDetail.image}`} alt="Doctor" />
           <div className="info">
             <h2>
               {doctorDetail.positionData?.valueVi} {doctorDetail.firstName} {doctorDetail.lastName}
             </h2>
-            <p className="short-description">
-              {doctorDetail.Markdown?.description}
-            </p>
-            <p className="note">Lưu ý: Bác sĩ có nhận tư vấn từ xa.</p>
+            <p className="short-description">{doctorDetail.Markdown?.description}</p>
+            <p className="note">{t("Lưu ý: Bác sĩ có nhận tư vấn từ xa.")}</p>
           </div>
         </div>
       ) : (
-        <p>Đang tải thông tin bác sĩ...</p>
+        <p>{t("Đang tải thông tin bác sĩ...")}</p>
       )}
 
-      {/* Chọn ngày khám */}
+      {/* Schedule */}
       <div className="schedule-section">
-        <label htmlFor="datePicker">Chọn ngày khám:</label>
+        <label htmlFor="datePicker">{t("Chọn ngày khám")}:</label>
         <input
           id="datePicker"
           type="date"
@@ -121,7 +143,7 @@ function DoctorSchedule() {
           className="date-picker"
         />
 
-        <h3>Lịch khám theo ngày</h3>
+        <h3>{t("Lịch khám theo ngày")}</h3>
         <div className="slots">
           {timeSlots.map((slot, index) => (
             <button
@@ -134,10 +156,10 @@ function DoctorSchedule() {
             </button>
           ))}
         </div>
-        <div className="note">Chọn giờ và đặt (miễn phí)</div>
+        <div className="note">{t("Chọn giờ và đặt (miễn phí)")}</div>
       </div>
 
-      {/* Mô tả chi tiết bác sĩ */}
+      {/* Doctor Full Description */}
       {doctorDetail?.Markdown?.contentHTML && (
         <div
           className="doctor-description-full"
@@ -145,7 +167,7 @@ function DoctorSchedule() {
         />
       )}
 
-      {/* Modal đặt lịch */}
+      {/* Booking Modal */}
       {showModal && doctorDetail && (
         <BookingModal
           time={selectedTime}
@@ -157,10 +179,10 @@ function DoctorSchedule() {
         />
       )}
 
-      {/* Thông báo thành công */}
+      {/* Booking Success Notification */}
       {bookingSuccess && (
         <div className="booking-success-popup">
-          <p>Bạn đã đặt lịch thành công - Vui lòng xác nhận email!</p>
+          <p>{t("Bạn đã đặt lịch thành công - Vui lòng xác nhận email!")}</p>
         </div>
       )}
 

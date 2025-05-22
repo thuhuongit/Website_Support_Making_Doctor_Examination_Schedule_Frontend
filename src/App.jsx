@@ -20,8 +20,7 @@ import Dashboard from "./pages/Admin/Dashboard/Dashboard";
 import ManageSpecialist from "./pages/Admin/Specialist/Specialist"; 
 import SpecialtiesPage from "./components/SpecialtiesPage/SpecialtiesPage";
 import ManageUser from "./pages/Admin/ManageUser/User";
-
-
+import Specialty from "./components/Specialty/Specialty";
 
 
 
@@ -45,6 +44,7 @@ function App() {
           <Route path="/doctor-dashboard"element={<DoctorDashboard />}/>
           <Route path="/verify-booking" element={<ConfirmationPage />} />
           <Route path="/specialties" element={<SpecialtiesPage />} />
+          <Route path="/specialty/:id" element={<Specialty/>} />
 
 
           <Route path="/admin" element={<AdminLayout />}>

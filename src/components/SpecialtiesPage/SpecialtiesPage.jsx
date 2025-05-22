@@ -18,7 +18,7 @@ const SpecialtiesPage = () => {
         const res = await axiosInstance.get("http://localhost:8083/api/get-specialty");
         console.log("Fetched specialties:", res.data);
         if (res.data && res.data.errCode === 0) {
-          setSpecialties(res.data.data); // ✅ đúng tên hàm set
+          setSpecialties(res.data.data); // 
         }
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu:", error);
@@ -26,7 +26,7 @@ const SpecialtiesPage = () => {
     };
 
     fetchData();
-  }, []); // ✅ Không cần [type] nếu không có biến type
+  }, []); // 
 
   return (
     <div className="specialties-page">
