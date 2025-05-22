@@ -142,29 +142,30 @@ const SpecialtiesSlider = ({ type }) => {
         <>
           <h2>{t("Bác sĩ nổi bật")}</h2>
           <Slider {...settings}>
-            {doctors.map((doctor) => (
-              <div
-                key={doctor.id}
-                className="doctor-item"
-                onClick={() => navigate(`/doctor/${doctor.id}`)}
-                style={{ cursor: "pointer" }}
-              >
-                {typeof doctor.image === "string" && doctor.image !== "" && (
+             {doctors.map((doctor) => (
+               <div
+                  key={doctor.id}
+                  className="doctor-item"
+                  onClick={() => navigate(`/doctor/${doctor.id}`)}
+                  style={{ cursor: "pointer" }}
+                >
+                 {typeof doctor.image === "string" && doctor.image !== "" && (
                   <img
-                    src={`http://localhost:8083${doctor.image}`}
-                    alt={`${doctor.positionData?.valueVi || ""} ${doctor.lastName || ""}`}
-                  />
-                )}
+                     src={`http://localhost:8083${doctor.image}`}
+                     alt={`${doctor.positionData?.valueVi || ""} ${doctor.firstName || ""} ${doctor.lastName || ""}`}
+                 />
+                 )}
 
-                <p className="doctor-name">
-                  {doctor.positionData?.valueVi} {doctor.lastName}
-                </p>
-                <p className="doctor-desc">
-                  {doctor.Doctor_Infor?.Specialty?.name || "Chưa có chuyên khoa"}
+                 <p className="doctor-name">
+                    {doctor.positionData?.valueVi} {doctor.lastName} {doctor.firstName} 
+                 </p>
+
+                 <p className="doctor-desc">
+                    {doctor.Doctor_Infor?.Specialty?.name || "Chưa có chuyên khoa"}
                 </p>
               </div>
-            ))}
-          </Slider>
+             ))}
+            </Slider>
         </>
       )}
 

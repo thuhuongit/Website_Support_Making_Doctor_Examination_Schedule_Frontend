@@ -11,7 +11,7 @@ const timeSlots = [
 ];
 
 function DoctorSchedule() {
-  const { id } = useParams(); // lấy doctorId từ URL
+  const { id } = useParams();
   const [selectedDate, setSelectedDate] = useState("");
   const [availableTimes, setAvailableTimes] = useState([]);
   const [doctorDetail, setDoctorDetail] = useState(null);
@@ -19,7 +19,7 @@ function DoctorSchedule() {
   const [showModal, setShowModal] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState(false);
 
-  const doctorId = Number(id); // convert sang number để gọi API
+  const doctorId = Number(id);
 
   // Lấy thông tin chi tiết bác sĩ
   useEffect(() => {
@@ -42,7 +42,7 @@ function DoctorSchedule() {
     if (doctorId) fetchDoctorDetail();
   }, [doctorId]);
 
-  // Lấy lịch khám bác sĩ theo ngày
+  // Lấy lịch khám theo ngày
   useEffect(() => {
     const fetchSchedule = async () => {
       if (!doctorId || !selectedDate) {
@@ -100,10 +100,9 @@ function DoctorSchedule() {
             <h2>
               {doctorDetail.positionData?.valueVi} {doctorDetail.firstName} {doctorDetail.lastName}
             </h2>
-            <div
-              className="doctor-description"
-              dangerouslySetInnerHTML={{ __html: doctorDetail.Markdown?.contentHTML || "" }}
-            />
+            <p className="short-description">
+              {doctorDetail.Markdown?.description}
+            </p>
             <p className="note">Lưu ý: Bác sĩ có nhận tư vấn từ xa.</p>
           </div>
         </div>
@@ -138,18 +137,27 @@ function DoctorSchedule() {
         <div className="note">Chọn giờ và đặt (miễn phí)</div>
       </div>
 
+      {/* Mô tả chi tiết bác sĩ */}
+      {doctorDetail?.Markdown?.contentHTML && (
+        <div
+          className="doctor-description-full"
+          dangerouslySetInnerHTML={{ __html: doctorDetail.Markdown.contentHTML }}
+        />
+      )}
+
+      {/* Modal đặt lịch */}
       {showModal && doctorDetail && (
-  <BookingModal
-    time={selectedTime}
-    onClose={() => setShowModal(false)}
-    onSuccess={handleBookingSuccess}
-    doctorId={doctorId}
-    date={selectedDate}
-    doctorInfo={doctorDetail} // Truyền thông tin bác sĩ
-  />
-)}
+        <BookingModal
+          time={selectedTime}
+          onClose={() => setShowModal(false)}
+          onSuccess={handleBookingSuccess}
+          doctorId={doctorId}
+          date={selectedDate}
+          doctorInfo={doctorDetail}
+        />
+      )}
 
-
+      {/* Thông báo thành công */}
       {bookingSuccess && (
         <div className="booking-success-popup">
           <p>Bạn đã đặt lịch thành công - Vui lòng xác nhận email!</p>

@@ -98,6 +98,7 @@ const User = () => {
           role: "Bệnh nhân",
           position: "Bác sĩ",
           avatar: null,
+          specialty: "", 
         });
         setAvatarPreview(null);
         fetchUsers();
@@ -218,6 +219,16 @@ const User = () => {
             <option value="Bác sĩ">Bác sĩ</option>
             <option value="Admin">Admin</option>
           </select>
+
+
+           <select name="specialty" value={formData.specialty} onChange={handleChange}>
+              <option value="">-- Chọn chuyên khoa --</option>
+              <option value="Tim mạch">Tim mạch</option>
+              <option value="Tiêu hóa">Tiêu hóa</option>
+              <option value="Nhi khoa">Nhi khoa</option>
+              <option value="Da liễu">Da liễu</option>
+              <option value="Thần kinh">Thần kinh</option>
+           </select>
 
           <div className="upload-container">
             <label htmlFor="avatar">Tải ảnh</label>

@@ -16,6 +16,8 @@ function ManageDoctorInfo() {
   const [addressClinic, setAddressClinic] = useState("");
   const [note, setNote] = useState("");
   const [specialtyId, setSpecialtyId] = useState("");
+  const [description, setDescription] = useState ("");
+
 
   useEffect(() => {
     async function fetchDoctors() {
@@ -43,7 +45,8 @@ function ManageDoctorInfo() {
       !selectedProvince ||
       !nameClinic ||
       !addressClinic ||
-      !specialtyId
+      !specialtyId ||
+      !description
     ) {
       toast.error("Vui lòng điền đầy đủ thông tin.");
       return;
@@ -61,6 +64,7 @@ function ManageDoctorInfo() {
       addressClinic,
       note,
       specialtyId,
+      description,
     };
 
     try {
@@ -77,6 +81,7 @@ function ManageDoctorInfo() {
         setAddressClinic("");
         setNote("");
         setSpecialtyId("");
+        setDescription(""); 
       } else {
         toast.error(res.data.errMessage || "Lưu thất bại");
       }
@@ -140,6 +145,7 @@ function ManageDoctorInfo() {
             <option value="hanoi">Hà Nội</option>
             <option value="hochiminh">Hồ Chí Minh</option>
             <option value="danang">Đà Nẵng</option>
+            <option value="danang">Lâm Đồng</option>
           </select>
         </div>
   
@@ -183,6 +189,17 @@ function ManageDoctorInfo() {
           </select>
         </div>
       </div>
+
+
+      <div className="form-group">
+        <label>Mô tả ngắn (Description)</label>
+        <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+        />
+      </div>
+
   
       <div className="form-row">
         <div className="form-group">

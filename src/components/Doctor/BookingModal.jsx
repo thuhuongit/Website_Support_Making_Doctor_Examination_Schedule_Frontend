@@ -34,6 +34,7 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
         address: formData.address,
         selectedGender: formData.gender,
         reason: formData.reason,
+        phone: formData.phone
       });
 
       if (response.status === 200 && response.data.errCode === 0) {
