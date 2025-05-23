@@ -21,6 +21,7 @@ import ManageSpecialist from "./pages/Admin/Specialist/Specialist";
 import SpecialtiesPage from "./components/SpecialtiesPage/SpecialtiesPage";
 import ManageUser from "./pages/Admin/ManageUser/User";
 import Specialty from "./components/Specialty/Specialty";
+import ManageClinic from "./pages/Admin/ManageClinic/ManageClinic";
 
 
 
@@ -55,6 +56,7 @@ function App() {
              <Route path="plan" element={<ManagePlan />} />
              <Route path="managedoctor" element={<ManageDoctor />} />
              <Route path="managespecialist" element={<ManageSpecialist />} />
+             <Route path="manageclinic" element={<ManageClinic />} />
 
              
           </Route>

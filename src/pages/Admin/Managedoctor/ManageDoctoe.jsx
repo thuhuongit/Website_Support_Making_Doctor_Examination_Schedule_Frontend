@@ -104,7 +104,7 @@ function ManageDoctorInfo() {
             <option value="">-- Chọn bác sĩ --</option>
             {doctors.map((doc) => (
               <option key={doc.id} value={doc.id}>
-                {doc.lastName} {doc.firstName} 
+                {doc.lastName}{doc.firstName}
               </option>
             ))}
           </select>
