@@ -81,7 +81,7 @@ const User = () => {
     const { email, firstName, lastName } = formData;
 
     if (!email || !firstName || !lastName) {
-      toast.error("⚠ Vui lòng nhập đầy đủ thông tin!", {
+      toast.error("Vui lòng nhập đầy đủ thông tin!", {
         position: "top-right",
       });
       return;
@@ -181,7 +181,7 @@ const User = () => {
 
   return (
     <div className="user-form-container">
-      <h2>{editingUserId ? "Chỉnh sửa người dùng" : "Thêm mới người dùng"}</h2>
+      <h1 style={{ textAlign: 'center' }}>THÊM NGƯỜI DÙNG MỚI</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-row">
           <input type="text" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />

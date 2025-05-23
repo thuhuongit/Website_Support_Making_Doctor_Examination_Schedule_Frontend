@@ -32,8 +32,7 @@ const Specialist = () => {
     formData.append("name", specialtyName);
     formData.append("image", file);
     formData.append("descriptionMarkdown", description);
-    formData.append("descriptionHTML", description); // Có thể dùng hàm convert nếu cần HTML riêng
-
+    formData.append("descriptionHTML", description); 
     
     try {
       const response = await axiosInstance.post(
@@ -62,7 +61,7 @@ const Specialist = () => {
 
   return (
     <div className="form-container">
-      <h2>Quản Lý Chuyên Khoa</h2>
+      <h2>QUẢN LÝ CHUYÊN KHOA</h2>
 
       <div className="form-group">
         <label>Tên chuyên khoa</label>

@@ -26,7 +26,7 @@ function DoctorSchedule() {
 
   const doctorId = Number(id);
 
-  // Fetch doctor detail
+ 
   useEffect(() => {
     const fetchDoctorDetail = async () => {
       try {
@@ -48,7 +48,7 @@ function DoctorSchedule() {
     if (doctorId) fetchDoctorDetail();
   }, [doctorId]);
 
-  // Fetch available schedule
+
   useEffect(() => {
     const fetchSchedule = async () => {
       if (!doctorId || !selectedDate) {
@@ -125,7 +125,7 @@ function DoctorSchedule() {
               {doctorDetail.positionData?.valueVi} {doctorDetail.firstName} {doctorDetail.lastName}
             </h2>
             <p className="short-description">{doctorDetail.Markdown?.description}</p>
-            <p className="note">{t("Lưu ý: Bác sĩ có nhận tư vấn từ xa.")}</p>
+            <p className="note" style={{color: 'red'}}>{t("Lưu ý: Bác sĩ có nhận tư vấn từ xa.")}</p>
           </div>
         </div>
       ) : (

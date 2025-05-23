@@ -129,11 +129,11 @@
 }
 
 .btn.confirm {
-  background-color: #4caf50;
+  background-color: #3060e6;
 }
 
 .btn.confirm:hover {
-  background-color: #388e3c;
+  background-color: #001d6d;
 }
 
 .btn.cancel {

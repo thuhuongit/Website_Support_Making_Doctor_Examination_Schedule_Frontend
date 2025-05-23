@@ -10,9 +10,11 @@
 }
 
 /* Tiêu đề */
-h3 {
-  margin-bottom: 20px;
-  color: #333;
+.form-container h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 28px;
 }
 
 /* Hàng chứa các input hoặc select */

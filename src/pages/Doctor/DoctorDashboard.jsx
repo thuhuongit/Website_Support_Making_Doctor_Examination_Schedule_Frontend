@@ -72,7 +72,7 @@ const DoctorDashboard = () => {
       })
       .then(() => {
         const updatedAppointments = appointments.map((apptItem) =>
-          apptItem.id === appointment.id ? { ...apptItem, statusId: "S2" } : apptItem
+          apptItem.id === appointment.id ? { ...apptItem, statusId: "S3" } : apptItem
         );
         setAppointments(updatedAppointments);
         toast.success("Đã xác nhận lịch khám");
@@ -113,7 +113,7 @@ const DoctorDashboard = () => {
             <option value="">-- Chọn bác sĩ --</option>
             {doctors.map((doc) => (
               <option key={doc.id} value={doc.id}>
-                {doc.firstName} {doc.lastName}
+                {doc.lastName} {doc.firstName}
               </option>
             ))}
           </select>
@@ -157,18 +157,22 @@ const DoctorDashboard = () => {
                   <td>{appt.patientData?.address || "--"}</td>
                   <td>{appt.timeType || "--"}</td>
                   <td>
-                    <button
-                      className="btn confirm"
-                      onClick={() => confirmAppointment(appt)}
-                    >
-                      Xác nhận
-                    </button>
-                    <button
-                      className="btn cancel"
-                      onClick={() => cancelAppointment(appt.id)}
-                    >
-                      Huỷ
-                    </button>
+                    {appt.statusId === "S2" && (
+                      <>
+                        <button
+                          className="btn confirm"
+                          onClick={() => confirmAppointment(appt)}
+                          >
+                            Đã Khám
+                          </button>
+                        <button
+                          className="btn cancel"
+                          onClick={() => cancelAppointment(appt.id)}
+                          >
+                            Hủy
+                          </button>
+                      </>
+                    )}
                   </td>
                 </tr>
               ))

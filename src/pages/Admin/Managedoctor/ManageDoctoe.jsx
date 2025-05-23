@@ -92,7 +92,7 @@ function ManageDoctorInfo() {
 
   return (
     <div className="manage-doctor-info-container">
-      <h2 className="title">Quản lý thông tin bác sĩ</h2>
+      <h2 className="title">QUẢN LÝ THÔNG TIN BÁC SĨ</h2>
   
       <div className="manage-doctor-info-form">
         <div className="form-group">
@@ -104,7 +104,7 @@ function ManageDoctorInfo() {
             <option value="">-- Chọn bác sĩ --</option>
             {doctors.map((doc) => (
               <option key={doc.id} value={doc.id}>
-                {doc.firstName} {doc.lastName}
+                {doc.lastName} {doc.firstName} 
               </option>
             ))}
           </select>
