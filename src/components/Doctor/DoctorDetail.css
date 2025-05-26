@@ -370,4 +370,13 @@
   background-color: #fafafa;
   border-left: 4px solid #007bff;
 }
+.name-group {
+  display: flex;
+  gap: 10px;
+}
+
+.name-group input {
+  flex: 1;
+}
+
  

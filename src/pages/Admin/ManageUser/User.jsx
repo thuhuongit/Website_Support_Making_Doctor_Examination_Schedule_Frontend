@@ -16,7 +16,7 @@ const User = () => {
     address: "",
     gender: "Nam",
     role: "Bệnh nhân",
-    position: "Bác sĩ",
+    position: "Tiến sĩ",
     avatar: null,
     specialty: "",
   });
@@ -138,7 +138,7 @@ const User = () => {
       address: "",
       gender: "Nam",
       role: "Bệnh nhân",
-      position: "Bác sĩ",
+      position: "Tiến sĩ",
       avatar: null,
       specialty: "",
     });
@@ -207,6 +207,17 @@ const User = () => {
             <option value="Bác sĩ">Bác sĩ</option>
             <option value="Admin">Admin</option>
           </select>
+
+          <select name="position" value={formData.position} onChange={handleChange}>
+            <option value="Bác sĩ">Bác sĩ</option>
+            <option value="Tiến sĩ">Tiến sĩ</option>
+            <option value="Thạc sĩ">Thạc sĩ</option>
+            <option value="Phó giáo sư">Phó giáo sư</option>
+            <option value="Giáo sư">Giáo sư</option>
+          </select>
+
+
+
 
           <select name="specialty" value={formData.specialty} onChange={handleChange}>
             <option value="">-- Chọn chuyên khoa --</option>

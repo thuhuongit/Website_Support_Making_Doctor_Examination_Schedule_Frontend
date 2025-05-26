@@ -174,7 +174,7 @@ const SpecialtiesSlider = ({ type }) => {
                   />
                 )}
                 <p className="doctor-name">
-                  {doctor.positionData?.valueVi} {doctor.lastName} {doctor.firstName}
+                   {`${doctor.positionData?.valueVi || ""} ${doctor.lastName || ""} ${doctor.firstName || ""}`}
                 </p>
                 <p className="doctor-desc">
                   {doctor.Doctor_Infor?.Specialty?.name || "Chưa có chuyên khoa"}

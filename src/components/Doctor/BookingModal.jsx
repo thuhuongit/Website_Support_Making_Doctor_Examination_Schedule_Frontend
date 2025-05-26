@@ -4,7 +4,8 @@ import axiosInstance from "../../util/axios";
 
 function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) {
   const [formData, setFormData] = useState({
-    name: '',
+    lastName: '',
+    firstName: '',
     phone: '',
     email: '',
     address: '',
@@ -29,7 +30,8 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
         doctorId: doctorId,
         timeType: time,
         date: date,
-        fullName: formData.name,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         email: formData.email,
         address: formData.address,
         selectedGender: formData.gender,
@@ -57,7 +59,7 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
       <div className="modal">
         <div className="modal-header">
           <h3>Thông tin đặt lịch khám bệnh</h3>
-          <button className="close-btn" onClick={onClose}>×</button>
+          <button className="close-btn" onClick={onClose} style={{color: 'red'}}>×</button>
         </div>
 
         <div className="modal-body">
@@ -68,12 +70,18 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
                   {doctorInfo.positionData?.valueVi} {doctorInfo.firstName} {doctorInfo.lastName}
                 </strong>
               </p>
+              <p className="doctor-description">
+                {doctorInfo.Markdown?.description || "Chưa có mô tả"}
+              </p>
               <p><strong>{time}</strong> - <strong>{formattedDate}</strong></p>
               <p>Miễn phí đặt lịch</p>
             </>
           )}
 
-          <input type="text" placeholder="Họ và tên" name="name" value={formData.name} onChange={handleChange} />
+          <div className="name-group">
+             <input type="text" placeholder="Họ" name="lastName" value={formData.lastName} onChange={handleChange} />
+             <input type="text" placeholder="Tên" name="firstName" value={formData.firstName} onChange={handleChange} />
+          </div>
           <input type="text" placeholder="Số điện thoại" name="phone" value={formData.phone} onChange={handleChange} />
           <input type="email" placeholder="Địa chỉ email" name="email" value={formData.email} onChange={handleChange} />
           <input type="text" placeholder="Địa chỉ liên lạc" name="address" value={formData.address} onChange={handleChange} />

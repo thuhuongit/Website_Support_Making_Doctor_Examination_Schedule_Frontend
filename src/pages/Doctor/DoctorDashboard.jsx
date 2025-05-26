@@ -133,7 +133,7 @@ const DoctorDashboard = () => {
               <th>STT</th>
               <th>Trạng thái</th>
               <th>Email</th>
-              <th>Họ tên</th>
+              <th>Họ và tên</th>
               <th>Địa chỉ</th>
               <th>Giờ khám</th>
               <th>Hành động</th>
@@ -150,10 +150,7 @@ const DoctorDashboard = () => {
                     </span>
                   </td>
                   <td>{appt.patientData?.email || "--"}</td>
-                  <td>
-                    {appt.patientData?.firstName || "--"}{" "}
-                    {appt.patientData?.lastName || ""}
-                  </td>
+                  <td>{appt.patientData?.lastName || ""} {appt.patientData?.firstName || ""}</td>
                   <td>{appt.patientData?.address || "--"}</td>
                   <td>{appt.timeType || "--"}</td>
                   <td>
