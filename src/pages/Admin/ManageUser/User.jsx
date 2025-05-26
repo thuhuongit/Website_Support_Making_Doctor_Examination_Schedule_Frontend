@@ -10,8 +10,8 @@ const User = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    firstName: "",
     lastName: "",
+    firstName: "",
     phone: "",
     address: "",
     gender: "Nam",
@@ -62,8 +62,8 @@ const User = () => {
     setFormData({
       email: user.email || "",
       password: user.password ||"", 
-      firstName: user.firstName || "",
       lastName: user.lastName || "",
+      firstName: user.firstName || "",
       phone: user.phone || "",
       address: user.address || "",
       gender: user.gender || "",
@@ -78,9 +78,9 @@ const User = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, firstName, lastName } = formData;
+    const { email, lastName, firstName } = formData;
 
-    if (!email || !firstName || !lastName) {
+    if (!email || !lastName || !firstName) {
       toast.error("Vui lòng nhập đầy đủ thông tin!", {
         position: "top-right",
       });
@@ -132,8 +132,8 @@ const User = () => {
     setFormData({
       email: "",
       password: "",
-      firstName: "",
       lastName: "",
+      firstName: "",
       phone: "",
       address: "",
       gender: "Nam",
@@ -186,8 +186,8 @@ const User = () => {
         <div className="form-row">
           <input type="text" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
           <input type="password" name="password" placeholder="Mật khẩu" value={formData.password} onChange={handleChange} />
-          <input type="text" name="firstName" placeholder="Tên" value={formData.firstName} onChange={handleChange} />
           <input type="text" name="lastName" placeholder="Họ" value={formData.lastName} onChange={handleChange} />
+          <input type="text" name="firstName" placeholder="Tên" value={formData.firstName} onChange={handleChange} />
         </div>
 
         <div className="form-row">
