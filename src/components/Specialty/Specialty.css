@@ -1,3 +1,4 @@
+/* Container tổng */
 .specialty-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -7,10 +8,12 @@
   color: #2c3e50;
 }
 
+/* Tiêu đề */
 .title {
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 10px;
+  color: #2c3e50;
 }
 
 .sub-title {
@@ -19,6 +22,7 @@
   color: #34495e;
 }
 
+/* Nội dung mô tả HTML */
 .description-html {
   padding: 1rem 0;
   font-size: 16px;
@@ -26,32 +30,70 @@
   color: #555;
 }
 
+/* Box chứa chi tiết chuyên khoa */
+.specialty-detail-box {
+  background-color: #fff;
+  padding: 24px;
+  margin: 60px 0 30px 0;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+/* Danh sách bác sĩ */
+.doctor-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
 .doctor-card {
   display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 25px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  gap: 20px;
-  align-items: flex-start;
+  align-items: flex-start; /* QUAN TRỌNG: Căn top thay vì center */
 }
 
-.doctor-left {
-  flex-shrink: 0;
+
+.doctor-header {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  flex: 2;
 }
 
 .doctor-image {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
-  border: 2px solid #3498db;
+  border-radius: 50%; 
 }
 
-.doctor-middle {
-  flex-grow: 1;
+.doctor-info {
+  flex: 3;
+}
+
+.doctor-info h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 8px;
+  color: #2c3e50;
+}
+
+.doctor-info h4 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #34495e;
+}
+.doctor-details {
+  line-height: 1.5;
+  color: #555;
 }
 
 .doctor-name {
@@ -61,158 +103,14 @@
   margin-bottom: 6px;
 }
 
-.badge {
-  display: inline-block;
-  background-color: #ff7675;
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 12px;
-  margin-right: 8px;
-}
-
 .doctor-description,
 .doctor-role,
-.doctor-location {
-  font-size: 14px;
-  color: #555;
-  margin: 5px 0;
-}
-
-.doctor-right {
-  min-width: 200px;
-  text-align: right;
-}
-
-.schedule-title {
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: #16a085;
-}
-
-.times {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  justify-content: flex-end;
-  margin-bottom: 10px;
-}
-
-.time-button {
-  padding: 5px 10px;
-  background-color: #e5e7eb;
-  color: #030303;
-  border: none;
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.time-button:hover:not(.disabled) {
-  background-color: #d1d5db;
-}
-
-.disabled {
-  background-color: #bdc3c7;
-  color: #fff;
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: none;
-  font-size: 13px;
-  cursor: not-allowed;
-}
-
+.doctor-location,
 .doctor-address,
 .doctor-price {
-  font-size: 13px;
-  margin-top: 5px;
-  color: #7f8c8d;
-}
-
-.left-section {
-  display: flex;
-  flex: 1.2;
-  align-items: center;
-}
-
-.avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-right: 16px;
-  object-fit: cover;
-  border: 2px solid #3498db;
-}
-
-.info {
-  flex-grow: 1;
-}
-
-.name {
-  font-weight: 700;
-  font-size: 18px;
-  margin-bottom: 8px;
-}
-
-.favorite {
-  background-color: #ff0000;
-  color: #fff;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px;
-  margin-right: 6px;
-  display: inline-block;
-}
-
-.description {
   font-size: 14px;
-  margin: 2px 0;
+  margin: 5px 0;
   color: #555;
-}
-
-.location {
-  margin-top: 6px;
-  font-size: 14px;
-  color: #555;
-}
-
-.right-section {
-  flex: 1;
-  border-left: 1px solid #ddd;
-  padding-left: 16px;
-}
-
-.date {
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: #16a085;
-}
-
-.schedule {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.time-slot {
-  padding: 6px 12px;
-  background-color: #f5f5f5;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.time-slot:hover {
-  background-color: #e0e0e0;
-}
-
-.note {
-  font-size: 13px;
-  color: gray;
-  margin-bottom: 12px;
 }
 
 .clinic-name {
@@ -220,37 +118,171 @@
   font-weight: 700;
 }
 
-.price {
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-right: 6px;
+  color: #fff;
+  background-color: #ff7675;
+}
+
+.favorite {
+  background-color: #ff0000;
+}
+.doctor-actions,
+.schedule {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.time-slot,
+.time-button {
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.time-slot:hover,
+.time-button:hover:not(.disabled) {
+  background-color: #e0e0e0;
+}
+
+.disabled {
+  background-color: #bdc3c7;
+  color: #fff;
+  cursor: not-allowed;
+  border: none;
+}
+
+/* Phần phải (giá & lịch) */
+.right-section {
+  flex: 1;
+  max-width: 180px;
+  font-size: 13px;
+  border-left: 1px solid #ddd;
+  padding-left: 1rem;
+  text-align: left; /* Để label và nút dễ nhìn */
+}
+
+.schedule-title,
+.date {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #16a085;
+}
+
+.note {
+  font-size: 13px;
+  color: gray;
+  margin-bottom: 12px;
+}
+.view-profile,
+.book-appointment {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+}
+
+.view-profile {
+  background-color: #007bff;
+}
+
+.book-appointment {
+  background-color: #28a745;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 0.5rem;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+}
+
+.doctor-schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #fdfdfd;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.doctor-schedule h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #040507;
+}
+
+.doctor-schedule label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.doctor-schedule input[type="date"] {
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  max-width: 180px;
+}
+
+.doctor-schedule .note {
+  font-size: 13px;
+  color: rgb(0, 0, 0);
+  margin-top: 10px;
+}
+
+.clinic-info-horizontal {
   margin-top: 8px;
   font-size: 14px;
-  color: #555;
-}
-.specialty-detail-box {
-  background-color: #ffffff;
-  padding: 24px;
-  margin-bottom: 30px;
-  border-radius: 12px;
-  margin: 60px 0 30px 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e0e0e0;
+  color: #000000;
 }
 
-.specialty-detail-box .title {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #2c3e50;
+.clinic-info-horizontal div {
+  margin-bottom: 4px;
 }
 
-.specialty-detail-box .sub-title {
-  font-size: 18px;
-  margin-bottom: 16px;
-  color: #34495e;
+.favorite-icon {
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffe6e6; /* nhẹ nhàng */
+  color: #ff4757;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-radius: 6px;
+  margin-right: 8px;
 }
-
-.specialty-detail-box .description-html {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #555;
-}
-

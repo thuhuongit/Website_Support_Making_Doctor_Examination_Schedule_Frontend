@@ -23,6 +23,7 @@ function DoctorSchedule() {
   const [showModal, setShowModal] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  
 
   const doctorId = Number(id);
 
