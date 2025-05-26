@@ -15,8 +15,12 @@ function ManageDoctorInfo() {
   const [nameClinic, setNameClinic] = useState("");
   const [addressClinic, setAddressClinic] = useState("");
   const [note, setNote] = useState("");
+  const [specialties, setSpecialties] = useState([]);
   const [specialtyId, setSpecialtyId] = useState("");
+  const [clinics, setClinic] = useState([]);
+  const [clinicId, setClinicId] = useState("");
   const [description, setDescription] = useState ("");
+ 
 
 
   useEffect(() => {
@@ -33,6 +37,43 @@ function ManageDoctorInfo() {
       }
     }
     fetchDoctors();
+  }, []);
+
+
+  useEffect(() => {
+    async function fetchSpecialties() {
+      try {
+        const res = await axiosInstance.get("http://localhost:8083/api/get-specialty");
+        if (res.data && res.data.errCode === 0) {
+          setSpecialties(res.data.data); 
+        } else {
+          toast.error("Không lấy được danh sách chuyên khoa.");
+        }
+      } catch (error) {
+        console.error("Failed to load specialties:", error);
+        toast.error("Lỗi khi lấy dữ liệu chuyên khoa.");
+      }
+    }
+
+    fetchSpecialties();
+  }, []);
+
+    useEffect(() => {
+    async function fetchClinics() {
+      try {
+        const res = await axiosInstance.get("http://localhost:8083/api/get-clinic");
+        if (res.data && res.data.errCode === 0) {
+          setClinic(res.data.data); 
+        } else {
+          toast.error("Không lấy được danh sách chuyên khoa.");
+        }
+      } catch (error) {
+        console.error("Failed to load specialties:", error);
+        toast.error("Lỗi khi lấy dữ liệu phòng khám.");
+      }
+    }
+
+    fetchClinics();
   }, []);
 
   const handleSubmit = async () => {
@@ -183,14 +224,32 @@ function ManageDoctorInfo() {
             onChange={(e) => setSpecialtyId(e.target.value)}
           >
             <option value="">-- Chọn chuyên khoa --</option>
-            <option value="1">Tim mạch</option>
-            <option value="2">Cơ xương khớp</option>
-            <option value="3">Tiêu hóa</option>
+            {specialties.map((item) => (
+               <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
           </select>
         </div>
+
+
+        <div className="form-group">
+          <label>Phòng khám</label>
+          <select
+            value={clinicId}
+            onChange={(e) => setClinicId(e.target.value)}
+          >
+            <option value="">-- Chọn phòng khám --</option>
+            {clinics.map((item) => (
+               <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        </div> 
       </div>
 
-
+            
       <div className="form-group">
         <label>Mô tả ngắn (Description)</label>
         <input

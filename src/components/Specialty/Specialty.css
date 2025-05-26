@@ -1,16 +1,16 @@
 .specialty-container {
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto;
   padding: 30px 20px;
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
+  color: #2c3e50;
 }
 
 .title {
   font-size: 28px;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 10px;
-  color: #2c3e50;
 }
 
 .sub-title {
@@ -19,22 +19,23 @@
   color: #34495e;
 }
 
-.description-list {
-  padding-left: 20px;
-  margin-bottom: 30px;
+.description-html {
+  padding: 1rem 0;
+  font-size: 16px;
+  line-height: 1.6;
   color: #555;
 }
 
 .doctor-card {
   display: flex;
-  background: #fff;
+  background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 25px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  align-items: flex-start;
   gap: 20px;
+  align-items: flex-start;
 }
 
 .doctor-left {
@@ -55,25 +56,27 @@
 
 .doctor-name {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 700;
   color: #2c3e50;
+  margin-bottom: 6px;
 }
 
 .badge {
+  display: inline-block;
   background-color: #ff7675;
-  color: white;
+  color: #fff;
   padding: 4px 8px;
   border-radius: 8px;
-  margin-right: 8px;
   font-size: 12px;
+  margin-right: 8px;
 }
 
 .doctor-description,
 .doctor-role,
 .doctor-location {
-  margin: 5px 0;
   font-size: 14px;
   color: #555;
+  margin: 5px 0;
 }
 
 .doctor-right {
@@ -82,7 +85,7 @@
 }
 
 .schedule-title {
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 10px;
   color: #16a085;
 }
@@ -98,13 +101,17 @@
 .time-button {
   padding: 5px 10px;
   background-color: #e5e7eb;
-  color: rgb(3, 3, 3);
+  color: #030303;
   border: none;
   border-radius: 6px;
   font-size: 13px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
+.time-button:hover:not(.disabled) {
+  background-color: #d1d5db;
+}
 
 .disabled {
   background-color: #bdc3c7;
@@ -113,6 +120,7 @@
   border-radius: 6px;
   border: none;
   font-size: 13px;
+  cursor: not-allowed;
 }
 
 .doctor-address,
@@ -122,9 +130,10 @@
   color: #7f8c8d;
 }
 
-.left {
+.left-section {
   display: flex;
   flex: 1.2;
+  align-items: center;
 }
 
 .avatar {
@@ -132,6 +141,8 @@
   height: 100px;
   border-radius: 50%;
   margin-right: 16px;
+  object-fit: cover;
+  border: 2px solid #3498db;
 }
 
 .info {
@@ -139,39 +150,43 @@
 }
 
 .name {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 18px;
   margin-bottom: 8px;
 }
 
 .favorite {
-  background: #ff0000;
+  background-color: #ff0000;
   color: #fff;
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 12px;
   margin-right: 6px;
+  display: inline-block;
 }
 
 .description {
   font-size: 14px;
   margin: 2px 0;
+  color: #555;
 }
 
 .location {
   margin-top: 6px;
   font-size: 14px;
+  color: #555;
 }
 
-.right {
+.right-section {
   flex: 1;
   border-left: 1px solid #ddd;
   padding-left: 16px;
 }
 
 .date {
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 8px;
+  color: #16a085;
 }
 
 .schedule {
@@ -187,6 +202,11 @@
   border: 1px solid #ccc;
   border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.time-slot:hover {
+  background-color: #e0e0e0;
 }
 
 .note {
@@ -197,9 +217,40 @@
 
 .clinic-name {
   color: #00a9ff;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .price {
   margin-top: 8px;
+  font-size: 14px;
+  color: #555;
 }
+.specialty-detail-box {
+  background-color: #ffffff;
+  padding: 24px;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  margin: 60px 0 30px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
+}
+
+.specialty-detail-box .title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.specialty-detail-box .sub-title {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #34495e;
+}
+
+.specialty-detail-box .description-html {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+}
+

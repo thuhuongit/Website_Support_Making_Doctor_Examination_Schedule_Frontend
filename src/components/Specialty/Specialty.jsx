@@ -1,40 +1,46 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';  // thêm useParams
 import { useTranslation } from 'react-i18next';
 import './Specialty.css';
 import Footer from '../Footer/Footer';
-
-const doctors = [
-  {
-    id: 1,
-    name: 'PGS. TS. BSCKII. TTUT Vũ Văn Hòa',
-    description: 'Bác sĩ có 35 năm kinh nghiệm về Cột sống, thần kinh, cơ xương khớp',
-    role: 'Phó chủ tịch hội Phẫu thuật cột sống Việt Nam',
-    location: 'Hà Nội',
-    address: 'Phòng khám Spinetech Clinic, 257 Giải Phóng, Đống Đa, Hà Nội',
-    price: '500.000đ',
-    availableTimes: ['13:30 - 14:00', '14:00 - 14:30', '14:30 - 15:00', '15:00 - 15:30', '15:30 - 16:00'],
-    image: './7.jpg',
-    favorite: true
-  },
-  {
-    id: 2,
-    name: 'ThS.BS Nguyễn Trần Trung',
-    description: 'Bác sĩ có nhiều năm kinh nghiệm trong khám và điều trị Cơ xương khớp',
-    role: 'Phó trưởng khoa Cơ Xương Khớp Bệnh viện E',
-    location: 'Hà Nội',
-    address: 'Bệnh viện E Trung Ương, 89 Trần Cung, Cầu Giấy, Hà Nội',
-    price: '400.000đ',
-    availableTimes: [],
-    image: 'https://via.placeholder.com/80x80',
-    favorite: true
-  }
-];
+import axiosInstance from "../../util/axios";
 
 const Specialty = () => {
+  const [detail, setDetail] = useState({});
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [doctors, setDoctors] = useState([]);
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [menuOpen, setMenuOpen] = useState(false);
+
+  const { id } = useParams();  // lấy id từ URL params
+  const specialtyId = id;
+  const location = "ALL";
+
+  useEffect(() => {
+    const fetchSpecialty = async () => {
+      try {
+        const res = await axiosInstance.get(`http://localhost:8083/api/get-detail-specialty-by-id`, {
+          params: {
+            id: specialtyId,
+            location: location
+          }
+        });
+        console.log('Detail data from API:', res.data.data);
+        if (res.data.errCode === 0) {
+          setDetail(res.data.data);
+          if (res.data.data.doctors) {
+            setDoctors(res.data.data.doctors);
+          }
+        }
+      } catch (e) {
+        console.error("Error fetching specialty detail:", e);
+      }
+    };
+
+    if (specialtyId) {
+      fetchSpecialty();
+    }
+  }, [specialtyId]);
 
   return (
     <div className="specialty-container">
@@ -60,49 +66,22 @@ const Specialty = () => {
         </div>
       </nav>
 
-      <h2 className="title">Cơ Xương Khớp</h2>
-      <p className="sub-title">Bác sĩ Cơ Xương Khớp giỏi</p>
-      <ul className="description-list">
-        <li>Chuyên gia đào tạo bài bản, nhiều kinh nghiệm</li>
-        <li>Giảng viên Đại học Y khoa</li>
-        <li>Công tác tại các bệnh viện lớn</li>
-      </ul>
+      <div className="specialty-detail-box">
+         <h2 className="title">{detail.name || "Tên chuyên khoa"}</h2>
+         <p className="sub-title">{`Chuyên khoa ${detail.name || "chuyên khoa"}`}</p>
+
+        {detail.descriptionHTML && (
+         <div
+            className="description-html"
+            dangerouslySetInnerHTML={{ __html: detail.descriptionHTML }}
+         />
+     )}
+    </div>
+
 
       {doctors.map((doc) => (
         <div className="doctor-card" key={doc.id}>
-          <div className="left">
-            <img src={doc.image} alt="Doctor" className="avatar" />
-            <div className="info">
-              <p className="name">
-                {doc.favorite && <span className="favorite">💛 Yêu thích</span>}{' '}
-                <span className="name-text">{doc.name}</span>
-              </p>
-              <p className="description">{doc.description}</p>
-              <p className="role">{doc.role}</p>
-              <p className="location"> <i class="fa-solid fa-location-dot"></i> {doc.location}</p>
-            </div>
-          </div>
-
-          <div className="right">
-            <div className="date">Hôm nay - 22/5 ⌄</div>
-            <div className="schedule">
-              {doc.availableTimes.length > 0 ? (
-                doc.availableTimes.map((time, idx) => (
-                  <button className="time-slot" key={idx}>{time}</button>
-                ))
-              ) : (
-                <p className="no-schedule">Không có lịch hôm nay</p>
-              )}
-            </div>
-            <p className="note">Chọn và đặt (Phí đặt lịch 0đ)</p>
-            <div className="clinic">
-              <p><strong>ĐỊA CHỈ KHÁM</strong></p>
-              <p className="clinic-name">{doc.address}</p>
-            </div>
-            <div className="price">
-              <strong>GIÁ KHÁM:</strong> {doc.price} <a href="#">Xem chi tiết</a>
-            </div>
-          </div>
+          {/* phần hiển thị bác sĩ như bạn đã viết */}
         </div>
       ))}
 
