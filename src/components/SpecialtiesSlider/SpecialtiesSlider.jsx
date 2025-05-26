@@ -89,15 +89,6 @@ const SpecialtiesSlider = ({ type }) => {
     }
   }, [type]);
 
-  // Dữ liệu gói khám bệnh tĩnh
-  const healPackage = [
-    { title: "Gói khám tổng quát", img: "/goi1.png", link: "/package/general-checkup" },
-    { title: "Gói khám tim mạch", img: "/goi2.png", link: "/package/cardiology-checkup" },
-    { title: "Gói khám tiểu đường", img: "/goi3.png", link: "/package/diabetes-checkup" },
-    { title: "Gói khám ung thư", img: "/goi4.png", link: "/package/cancer-screening" },
-    { title: "Gói khám sức khỏe định kỳ", img: "/goi5.png", link: "/package/regular-health" },
-  ];
-
   return (
     <div className="specialties-slider">
       {/* Chuyên khoa phổ biến */}
@@ -179,25 +170,6 @@ const SpecialtiesSlider = ({ type }) => {
                 <p className="doctor-desc">
                   {doctor.Doctor_Infor?.Specialty?.name || "Chưa có chuyên khoa"}
                 </p>
-              </div>
-            ))}
-          </Slider>
-        </>
-      )}
-
-      {/* Gói khám bệnh */}
-      {type === "healPackage" && (
-        <>
-          <h2>{t("Gói khám bệnh")}</h2>
-          <Slider {...settings}>
-            {healPackage.map((item, index) => (
-              <div
-                key={index}
-                className="specialty-item"
-                onClick={() => navigate(item.link)}
-              >
-                <img src={item.img} alt={item.title} />
-                <p>{item.title}</p>
               </div>
             ))}
           </Slider>
