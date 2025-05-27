@@ -91,7 +91,7 @@ function DoctorSchedule() {
   };
 
   return (
-    <div className="doctor-schedule">
+    <div className="doctor-schedule" style={{ marginTop: "80px" }} >
       {/* Navbar */}
       <nav className="navbar">
         <div className="logo" onClick={() => navigate("/")}>
@@ -123,7 +123,7 @@ function DoctorSchedule() {
           <img src={`http://localhost:8083${doctorDetail.image}`} alt="Doctor" />
           <div className="info">
             <h2>
-              {doctorDetail.positionData?.valueVi} {doctorDetail.firstName} {doctorDetail.lastName}
+              {doctorDetail.positionData?.valueVi} {doctorDetail.lastName} {doctorDetail.firstName}
             </h2>
             <p className="short-description">{doctorDetail.Markdown?.description}</p>
             <p className="note" style={{color: 'red'}}>{t("Lưu ý: Bác sĩ có nhận tư vấn từ xa.")}</p>

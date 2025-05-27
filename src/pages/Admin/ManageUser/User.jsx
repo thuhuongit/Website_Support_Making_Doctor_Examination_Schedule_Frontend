@@ -18,12 +18,12 @@ const User = () => {
     role: "Bệnh nhân",
     position: "Tiến sĩ",
     avatar: null,
-    specialty: "",
   });
 
   const [avatarPreview, setAvatarPreview] = useState(null);
   const [users, setUsers] = useState([]);
   const [editingUserId, setEditingUserId] = useState(null);
+
 
   useEffect(() => {
     fetchUsers();
@@ -59,6 +59,13 @@ const User = () => {
   };
 
   const handleEdit = (user) => {
+    console.log("User to edit:", user);
+
+    const genderMap = {
+    0: "Nam",
+    1: "Nữ",
+    2: "Khác",
+  };
     setFormData({
       email: user.email || "",
       password: user.password ||"", 
@@ -66,11 +73,10 @@ const User = () => {
       firstName: user.firstName || "",
       phone: user.phone || "",
       address: user.address || "",
-      gender: user.gender || "",
+      gender: genderMap[user.gender],
       role: user.role || "",
       position: user.position || "",
       avatar: null,
-      specialty: user.specialty || "",
     });
     setEditingUserId(user.id);
     setAvatarPreview(user.image ? `data:image/jpeg;base64,${user.image}` : null);
@@ -78,6 +84,7 @@ const User = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting form");
     const { email, lastName, firstName } = formData;
 
     if (!email || !lastName || !firstName) {
@@ -140,7 +147,6 @@ const User = () => {
       role: "Bệnh nhân",
       position: "Tiến sĩ",
       avatar: null,
-      specialty: "",
     });
     setAvatarPreview(null);
     setEditingUserId(null);
@@ -184,7 +190,7 @@ const User = () => {
       <h1 style={{ textAlign: 'center' }}>THÊM NGƯỜI DÙNG MỚI</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-row">
-          <input type="text" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
+          <input type="text" name="email" placeholder="Email"  value={formData.email} onChange={handleChange} />
           <input type="password" name="password" placeholder="Mật khẩu" value={formData.password} onChange={handleChange} />
           <input type="text" name="lastName" placeholder="Họ" value={formData.lastName} onChange={handleChange} />
           <input type="text" name="firstName" placeholder="Tên" value={formData.firstName} onChange={handleChange} />
@@ -195,20 +201,20 @@ const User = () => {
           <input type="text" name="address" placeholder="Địa chỉ" value={formData.address} onChange={handleChange} />
         </div>
 
-        <div className="form-row">
-          <select name="gender" value={formData.gender} onChange={handleChange}>
-            <option value="Nam">Nam</option>
-            <option value="Nữ">Nữ</option>
-            <option value="Khác">Khác</option>
+        <div className="form-row" >
+          <select name="gender" className="small-select" value={formData.gender} onChange={handleChange} style={{ flex: "0 0 50px", maxWidth: "200px", maxHeight: "70px", marginTop: "30px" }}>
+            <option value="0">Nam</option>
+            <option value="1">Nữ</option>
+            <option value="2">Khác</option>
           </select>
 
-          <select name="role" value={formData.role} onChange={handleChange}>
+          <select name="role" className="small-select" value={formData.role} onChange={handleChange} style={{ flex: "0 0 50px", maxWidth: "20200px", maxHeight: "70px", marginTop: "30px" }}>
             <option value="Bệnh nhân">Bệnh nhân</option>
             <option value="Bác sĩ">Bác sĩ</option>
             <option value="Admin">Admin</option>
           </select>
 
-          <select name="position" value={formData.position} onChange={handleChange}>
+          <select name="position" className="small-select" value={formData.position} onChange={handleChange}  style={{ flex: "0 0 50px", maxWidth: "200px", maxHeight: "70px", marginTop: "30px" }}>
             <option value="Bác sĩ">Bác sĩ</option>
             <option value="Tiến sĩ">Tiến sĩ</option>
             <option value="Thạc sĩ">Thạc sĩ</option>
@@ -217,18 +223,7 @@ const User = () => {
           </select>
 
 
-
-
-          <select name="specialty" value={formData.specialty} onChange={handleChange}>
-            <option value="">-- Chọn chuyên khoa --</option>
-            <option value="Tim mạch">Tim mạch</option>
-            <option value="Tiêu hóa">Tiêu hóa</option>
-            <option value="Nhi khoa">Nhi khoa</option>
-            <option value="Da liễu">Da liễu</option>
-            <option value="Thần kinh">Thần kinh</option>
-          </select>
-
-          <div className="upload-container">
+          <div className="upload-container" style={{ flex: "0 0 50px", maxWidth: "250px", maxHeight: "70px", marginTop: "-1px",  marginLeft: "30px" }}>
             <label htmlFor="avatar">Tải ảnh</label>
             <input id="avatar" type="file" accept="image/*" onChange={handleImageChange} />
           </div>
@@ -240,7 +235,7 @@ const User = () => {
           </div>
         )}
 
-        <button type="submit" className="save-btn">
+        <button type="submit" className="save-btn" onClick={(e) => e.stopPropagation()}>
           {editingUserId ? "Cập nhật" : "Lưu user"}
         </button>
         {editingUserId && (

@@ -25,6 +25,18 @@
   flex-wrap: wrap;
 }
 
+.small-select {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  flex: 0 0 50px; /* chiều rộng cố định 150px, không kéo giãn */
+  max-width: 150px; /* optional giới hạn max-width */
+}
+
+
+
 /* Input và Select */
 .form-row input,
 .form-row select {

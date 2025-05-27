@@ -8,6 +8,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./SpecialtiesSlider.css";
 
+const positionMap = {
+  1: "Bác sĩ",
+  2: "Tiến sĩ",
+  3: "Thạc sĩ",
+  4: "Phó giáo sư",
+  5: "Giáo sư",
+};
+
 // Tùy chỉnh nút Next
 const SampleNextArrow = (props) => {
   const { className, onClick } = props;
@@ -30,14 +38,15 @@ const SpecialtiesSlider = ({ type }) => {
 
   // Cấu hình slider
   const settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-  };
+  dots: false,
+  infinite: false,
+  speed: 500,
+  slidesToShow: Math.min(4, type === "doctors" ? doctors.length : 4),
+  slidesToScroll: 1,
+  nextArrow: <SampleNextArrow />,
+  prevArrow: <SamplePrevArrow />,
+};
+
 
   // Gọi API chuyên khoa
   useEffect(() => {
@@ -81,6 +90,7 @@ const SpecialtiesSlider = ({ type }) => {
         .then((res) => {
           if (res.data && res.data.data) {
             setDoctors(res.data.data);
+            console.log("Doctors result:", res.data.data);
           }
         })
         .catch((err) => {
@@ -143,36 +153,42 @@ const SpecialtiesSlider = ({ type }) => {
       )}
 
       {/* Bác sĩ nổi bật */}
-      {type === "doctors" && (
-        <>
-          <h2>{t("Bác sĩ nổi bật")}</h2>
-          <Slider {...settings}>
-            {doctors.map((doctor) => (
-              <div
-                key={doctor.id}
-                className="doctor-item"
-                onClick={() => navigate(`/doctor/${doctor.id}`)}
-                style={{ cursor: "pointer" }}
-              >
-                {typeof doctor.image === "string" && doctor.image !== "" && (
-                  <img
-                    src={
-                      doctor.image.startsWith("http")
-                        ? doctor.image
-                        : `http://localhost:8083${doctor.image}`
-                    }
-                    alt={`${doctor.positionData?.valueVi || ""} ${doctor.lastName || ""} ${doctor.firstName || ""}`}
-                  />
-                )}
-                <p className="doctor-name">
-                   {`${doctor.positionData?.valueVi || ""} ${doctor.lastName || ""} ${doctor.firstName || ""}`}
-                </p>
-                <p className="doctor-desc">
-                  {doctor.Doctor_Infor?.Specialty?.name || "Chưa có chuyên khoa"}
-                </p>
-              </div>
-            ))}
-          </Slider>
+     {type === "doctors" && (
+  <>
+    <h2>{t("Bác sĩ nổi bật")}</h2>
+    <Slider {...settings}>
+      {doctors.map((doctor) => {
+
+        console.log("Rendering doctor:", doctor.id);
+        const positionName = positionMap[doctor.positionId] || doctor.positionData?.valueVi || "";
+
+        return (
+          <div
+            key={doctor.id}
+            className="doctor-item"
+            onClick={() => navigate(`/doctor/${doctor.id}`)}
+            style={{ cursor: "pointer" }}
+          >
+            {typeof doctor.image === "string" && doctor.image !== "" && (
+              <img
+                src={
+                  doctor.image.startsWith("http")
+                    ? doctor.image
+                    : `http://localhost:8083${doctor.image}`
+                }
+                alt={`${positionName} ${doctor.lastName || ""} ${doctor.firstName || ""}`}
+              />
+            )}
+            <p className="doctor-name" style={{ fontWeight: "bold", color: "black" }}>
+              {`${positionName} ${doctor.lastName || ""} ${doctor.firstName || ""}`}
+            </p>
+            <p className="doctor-desc">
+              {doctor.Doctor_Infor?.specialtyData?.name || "Chưa có chuyên khoa"}
+            </p>
+          </div>
+        );
+      })}
+    </Slider>
         </>
       )}
     </div>
