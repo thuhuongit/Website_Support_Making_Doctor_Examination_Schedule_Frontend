@@ -3,6 +3,8 @@ import axiosInstance from "../../../util/axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./ManageDoctor.css";
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 
 function ManageDoctorInfo() {
   const [doctors, setDoctors] = useState([]);
@@ -162,9 +164,9 @@ function ManageDoctorInfo() {
             onChange={(e) => setSelectedPrice(e.target.value)}
           >
             <option value="">-- Chọn giá --</option>
-            <option value="100000">100.000 VNĐ</option>
-            <option value="200000">200.000 VNĐ</option>
-            <option value="300000">300.000 VNĐ</option>
+            <option value="100.000">100.000 VNĐ</option>
+            <option value="200.000">200.000 VNĐ</option>
+            <option value="300.000">300.000 VNĐ</option>
           </select>
         </div>
   
@@ -255,7 +257,7 @@ function ManageDoctorInfo() {
 
             
       <div className="form-group">
-        <label>Mô tả ngắn (Description)</label>
+        <label>Mô tả ngắn</label>
         <input
             type="text"
             value={description}
@@ -266,18 +268,40 @@ function ManageDoctorInfo() {
   
       <div className="form-row">
         <div className="form-group">
-          <label>Thông tin chi tiết (Markdown)</label>
-          <textarea
-            value={contentMarkdown}
-            onChange={(e) => setContentMarkdown(e.target.value)}
-          />
+          <label>Thông tin chi tiết</label>
+          <ReactQuill
+             theme="snow"
+             value={contentMarkdown}
+             onChange={setContentMarkdown}
+             placeholder="Nhập nội dung chi tiết (markdown)..."
+             modules={{
+             toolbar: [
+               [{ header: [1, 2, false] }],
+               ['bold', 'italic', 'underline', 'strike'],
+               [{ list: 'ordered' }, { list: 'bullet' }],
+               ['link', 'image'],
+               ['clean'],
+           ],
+        }}
+         />
         </div>
   
         <div className="form-group">
           <label>Mô tả HTML</label>
-          <textarea
-            value={contentHTML}
-            onChange={(e) => setContentHTML(e.target.value)}
+           <ReactQuill
+             theme="snow"
+             value={contentHTML}
+             onChange={setContentHTML}
+             placeholder="Nhập mô tả HTML..."
+             modules={{
+             toolbar: [
+               [{ header: [1, 2, false] }],
+               ['bold', 'italic', 'underline', 'strike'],
+               [{ list: 'ordered' }, { list: 'bullet' }],
+               ['link', 'image'],
+               ['clean'],
+           ],
+        }}
           />
         </div>
       </div>

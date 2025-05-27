@@ -142,6 +142,8 @@ function DoctorSchedule() {
             </h2>
             <p className="short-description">{doctorDetail.Markdown?.description}</p>
             <p className="note" style={{color: 'red'}}>{t("Lưu ý: Bác sĩ có nhận tư vấn từ xa.")}</p>
+            <p> <i class="fa-solid fa-location-dot"></i> {provinceMap[doctorDetail.Doctor_Infor.provinceId]}</p>
+          
           </div>
         </div>
       ) : (
@@ -149,32 +151,45 @@ function DoctorSchedule() {
       )}
 
       {/* Schedule */}
-      <div className="schedule-section">
-        <label htmlFor="datePicker">{t("Chọn ngày khám")}:</label>
-        <input
-          id="datePicker"
-          type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-          className="date-picker"
-        />
+     <div className="booking-layout">
+  {/* Lịch khám (bên trái) */}
+  <div className="schedule-section">
+    <label htmlFor="datePicker">{t("Chọn ngày khám")}:</label>
+    <input
+      id="datePicker"
+      type="date"
+      value={selectedDate}
+      onChange={(e) => setSelectedDate(e.target.value)}
+      className="date-picker"
+    />
 
-        <h3>{t("Lịch khám theo ngày")}</h3>
-        <div className="slots">
-          {timeSlots.map((slot, index) => (
-            <button
-              key={index}
-              className={`slot-button ${availableTimes.includes(slot) ? "available" : "unavailable"}`}
-              onClick={() => handleTimeClick(slot)}
-              disabled={!availableTimes.includes(slot)}
-            >
-              {slot}
-            </button>
-          ))}
-        </div>
-        <div className="note">{t("Chọn giờ và đặt (miễn phí)")}</div>
-      </div>
+    <h3>{t("Lịch khám theo ngày")}</h3>
+    <div className="slots">
+      {timeSlots.map((slot, index) => (
+        <button
+          key={index}
+          className={`slot-button ${availableTimes.includes(slot) ? "available" : "unavailable"}`}
+          onClick={() => handleTimeClick(slot)}
+          disabled={!availableTimes.includes(slot)}
+        >
+          {slot}
+        </button>
+      ))}
+    </div>
+    <div className="note">{t("Chọn giờ và đặt (miễn phí)")}</div>
+  </div>
 
+  {/* Thông tin phòng khám (bên phải) */}
+  {doctorDetail?.Doctor_Infor && (
+  <div className="clinic-info-right">
+    <p><strong>{t("ĐỊA CHỈ KHÁM")}</strong></p>
+    <p>{doctorDetail.Doctor_Infor.addressClinic}</p>
+    <p className="info-line" style={{color: '#7b61da'}}>{doctorDetail.Doctor_Infor.nameClinic}</p>
+    <p ><strong>{t("GIÁ KHÁM")}:</strong> {doctorDetail.Doctor_Infor.priceId}</p>
+  </div>
+  
+  )}
+</div>
       {/* Doctor Full Description */}
       {doctorDetail?.Markdown?.contentHTML && (
         <div

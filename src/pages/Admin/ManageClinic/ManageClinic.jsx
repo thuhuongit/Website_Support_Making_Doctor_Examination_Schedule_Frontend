@@ -4,7 +4,8 @@ import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./ManageClinic.css";
-
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css'
 const ManageClinic = () => {
   const [clinicName, setClinicName] = useState('');
   const [address, setAddress] = useState('');
@@ -23,8 +24,8 @@ const ManageClinic = () => {
     setAddress(e.target.value);
   };
 
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
+  const handleDescriptionChange = (value) => {
+    setDescription(value);
   };
 
   const handleSubmit = async () => {
@@ -97,12 +98,23 @@ const ManageClinic = () => {
 
       <div className="form-group">
         <label>Mô tả phòng khám</label>
-        <textarea
-          placeholder="Nhập mô tả phòng khám"
+       <ReactQuill
+          theme="snow"
           value={description}
           onChange={handleDescriptionChange}
-        ></textarea>
+          placeholder="Nhập mô tả phòng khám"
+          modules={{
+          toolbar: [
+               [{ header: [1, 2, false] }],
+               ['bold', 'italic', 'underline', 'strike'],
+               [{ list: 'ordered' }, { list: 'bullet' }],
+               ['link', 'image'],
+               ['clean'],
+           ],
+        }}
+       />
       </div>
+
 
       <button className="save-button" onClick={handleSubmit}>Lưu</button>
       

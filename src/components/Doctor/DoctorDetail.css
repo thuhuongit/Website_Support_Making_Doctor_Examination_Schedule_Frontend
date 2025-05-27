@@ -367,5 +367,35 @@
 .name-group input {
   flex: 1;
 }
+.booking-layout {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 40px;
+  gap: 20px;
+}
+
+.schedule-section {
+  flex: 2;
+}
+
+.divider {
+  font-size: 24px;
+  color: #999;
+  padding: 0 10px;
+  line-height: 1.5;
+}
+
+.clinic-info-right {
+  flex: 1;
+  border-left: 1px solid #ccc;
+  padding-left: 30px;
+  margin-right: 400px; 
+}
+.clinic-info-right .info-line {
+  border-bottom: 1px solid #ccc;
+  padding: 8px 0;
+  margin: 0;
+}
+
 
  

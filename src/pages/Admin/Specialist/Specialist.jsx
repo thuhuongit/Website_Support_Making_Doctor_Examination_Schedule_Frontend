@@ -4,7 +4,8 @@ import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Specialist.css";
-
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 const Specialist = () => {
   const [file, setFile] = useState(null);
   const [specialtyName, setSpecialtyName] = useState('');
@@ -18,8 +19,8 @@ const Specialist = () => {
     setSpecialtyName(e.target.value);
   };
 
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
+  const handleDescriptionChange = (value) => {
+    setDescription(value);
   };
 
   const handleSubmit = async () => {
@@ -80,12 +81,22 @@ const Specialist = () => {
       </div>
 
       <div className="form-group">
-        <label>Mô tả (Markdown hoặc văn bản)</label>
-        <textarea
-          placeholder="Nhập mô tả chuyên khoa"
+        <label>Mô tả chuyên khoa</label>
+       <ReactQuill
+          theme="snow"
           value={description}
           onChange={handleDescriptionChange}
-        ></textarea>
+          placeholder="Nhập mô tả chuyên khoa"
+          modules={{
+          toolbar: [
+               [{ header: [1, 2, false] }],
+               ['bold', 'italic', 'underline', 'strike'],
+               [{ list: 'ordered' }, { list: 'bullet' }],
+               ['link', 'image'],
+               ['clean'],
+           ],
+        }}
+       />
       </div>
 
       <button className="save-button" onClick={handleSubmit}>Lưu</button>
