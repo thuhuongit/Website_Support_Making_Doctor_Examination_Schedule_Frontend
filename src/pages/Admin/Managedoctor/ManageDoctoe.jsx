@@ -130,6 +130,10 @@ function ManageDoctorInfo() {
       toast.error("Có lỗi khi lưu thông tin bác sĩ.");
     }
   };
+  const uniqueDoctors = doctors.filter((doctor, index, self) =>
+  index === self.findIndex((d) => d.id === doctor.id)
+);
+
 
   return (
     <div className="manage-doctor-info-container">
@@ -143,7 +147,7 @@ function ManageDoctorInfo() {
             onChange={(e) => setSelectedDoctor(e.target.value)}
           >
             <option value="">-- Chọn bác sĩ --</option>
-            {doctors.map((doctor) => (
+            {uniqueDoctors.map((doctor) => (
               <option key={doctor.id} value={doctor.id}>
                 {doctor.lastName} {doctor.firstName}
               </option>

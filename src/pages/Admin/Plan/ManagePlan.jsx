@@ -14,6 +14,10 @@ function ManageSchedule() {
   const [selectedDoctor, setSelectedDoctor] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [doctorList, setDoctorList] = useState([]); // Danh sách bác sĩ
+  const uniqueDoctors = doctorList.filter((doctor, index, self) =>
+  index === self.findIndex((d) => d.id === doctor.id)
+);
+
 
   // Gọi API để lấy danh sách bác sĩ
   useEffect(() => {
@@ -81,6 +85,7 @@ function ManageSchedule() {
       toast.error("Có lỗi xảy ra khi lưu lịch khám.");
     }
   };
+   
 
   return (
     <div className="schedule-container">
@@ -93,7 +98,7 @@ function ManageSchedule() {
           onChange={(e) => setSelectedDoctor(e.target.value)}
         >
           <option value="">-- Chọn bác sĩ --</option>
-          {doctorList.map(doctor => (
+          {uniqueDoctors.map(doctor => (
             <option key={doctor.id} value={doctor.id}>
               {doctor.lastName} {doctor.firstName}
             </option>

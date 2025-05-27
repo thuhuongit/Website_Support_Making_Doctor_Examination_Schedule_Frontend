@@ -13,6 +13,10 @@ const DoctorDashboard = () => {
   const [selectedDoctorId, setSelectedDoctorId] = useState(defaultDoctorId || "");
   const [selectedDate, setSelectedDate] = useState("");
   const [appointments, setAppointments] = useState([]);
+  const uniqueDoctors = doctors.filter((doctor, index, self) =>
+  index === self.findIndex((d) => d.id === doctor.id)
+);
+
 
   // Lấy danh sách bác sĩ khi mount component
   useEffect(() => {
@@ -112,7 +116,7 @@ const DoctorDashboard = () => {
             style={{marginTop: "10px", maxWidth: "350px"}}
           >
             <option value="">-- Chọn bác sĩ --</option>
-            {doctors.map((doc) => (
+            {uniqueDoctors.map((doc) => (
               <option key={doc.id} value={doc.id}>
                 {doc.lastName} {doc.firstName}
               </option>
