@@ -15,6 +15,14 @@ const timeTypeMap = {
   T6: '15:00 - 16:00',
   T7: '16:00 - 17:00',
 };
+const provinceMap = {
+  hanoi: "Hà Nội",
+  hochiminh: "Hồ Chí Minh",
+  danang: "Đà Nẵng",
+  lamdong: "Lâm Đồng",
+  
+};
+
 
 const Specialty = () => {
   const { id } = useParams();
@@ -29,6 +37,8 @@ const Specialty = () => {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [bookingSuccess, setBookingSuccess] = useState(false);
+
+
 
   // Lấy chuyên khoa và bác sĩ
   useEffect(() => {
@@ -179,7 +189,12 @@ const Specialty = () => {
       {/* Danh sách bác sĩ */}
       {doctors.length > 0 ? (
         doctors.map((doctor) => {
+          console.log(doctors);
           const selectedDate = selectedDates[doctor.id] || new Date().toISOString().split('T')[0];
+          const provinceKey = doctor.Doctor_Infor?.provinceId?.toLowerCase().replace(/\s+/g, '') || '';
+          const provinceName = provinceMap[provinceKey] || doctor.Doctor_Infor?.provinceId || 'Chưa cập nhật vị trí';
+
+
           return (
             <div key={doctor.id} className="doctor-card">
               <div className="doctor-header">
@@ -198,9 +213,15 @@ const Specialty = () => {
                       __html: doctor.Markdown?.description || `<p>${t('Chưa có giới thiệu')}</p>`,
                     }}
                   />
-                  <div className="doctor-location" style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>
-                    {doctor.provinceId ? `Vị trí: ${provinceMap[doctor.provinceId] || doctor.provinceId}` : 'Chưa cập nhật vị trí'}
-                  </div>
+                  <div className="doctor-location" style={{ fontSize: '14px', color: 'black', marginBottom: '8px' }}> 
+                    <i class="fa-solid fa-location-dot" style={{margin: '5px', color: 'black'}}></i>
+                   {doctor.Doctor_Infor?.provinceId 
+                    ? `${provinceMap[doctor.Doctor_Infor.provinceId.toLowerCase()] || doctor.Doctor_Infor.provinceId}`
+                     : 'Chưa cập nhật vị trí'}
+                   </div>
+
+                  
+
 
 
 

@@ -10,6 +10,21 @@ const timeSlots = [
   "8:00 - 9:00", "9:00 - 10:00", "10:00 - 11:00", "11:00 - 12:00",
   "13:00 - 14:00", "14:00 - 15:00", "15:00 - 16:00", "16:00 - 17:00"
 ];
+const positionMap = {
+  1: "Bác sĩ",
+  2: "Tiến sĩ",
+  3: "Thạc sĩ",
+  4: "Phó giáo sư",
+  5: "Giáo sư",
+};
+const provinceMap = {
+  hanoi: "Hà Nội",
+  hochiminh: "Hồ Chí Minh",
+  danang: "Đà Nẵng",
+  lamdong: "Lâm Đồng",
+  
+};
+
 
 function DoctorSchedule() {
   const { id } = useParams();
@@ -123,7 +138,7 @@ function DoctorSchedule() {
           <img src={`http://localhost:8083${doctorDetail.image}`} alt="Doctor" />
           <div className="info">
             <h2>
-              {doctorDetail.positionData?.valueVi} {doctorDetail.lastName} {doctorDetail.firstName}
+              {positionMap[doctorDetail.positionId] || "Chức vụ chưa cập nhật"} {doctorDetail.lastName} {doctorDetail.firstName}
             </h2>
             <p className="short-description">{doctorDetail.Markdown?.description}</p>
             <p className="note" style={{color: 'red'}}>{t("Lưu ý: Bác sĩ có nhận tư vấn từ xa.")}</p>
