@@ -23,7 +23,7 @@ import ManageUser from "./pages/Admin/ManageUser/User";
 import Specialty from "./components/Specialty/Specialty";
 import ManageClinic from "./pages/Admin/ManageClinic/ManageClinic";
 import HospitalPage from "./components/HospitalPage/HospitalPage";
-
+import BookingPage from "./components/BookingPage/BookingPage"; 
 
 
 function App() {
@@ -47,6 +47,7 @@ function App() {
           <Route path="/specialties" element={<SpecialtiesPage />} />
           <Route path="/specialty/:id" element={<Specialty/>} />
           <Route path="/hospitals" element={<HospitalPage/>} />
+          <Route path="/booking/:doctorId" element={<BookingPage/>} />
 
 
           <Route path="/admin" element={<AdminLayout />}>

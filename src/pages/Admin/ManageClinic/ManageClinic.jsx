@@ -38,7 +38,7 @@ const ManageClinic = () => {
     formData.append("name", clinicName);
     formData.append("address", address);
     formData.append("image", file);
-    formData.append("descriptionMarkdown", description);
+    formData.append("description", description);
 
     try {
       const response = await axiosInstance.post(
@@ -117,7 +117,6 @@ const ManageClinic = () => {
 
 
       <button className="save-button" onClick={handleSubmit}>Lưu</button>
-      
 
       <ToastContainer />
       

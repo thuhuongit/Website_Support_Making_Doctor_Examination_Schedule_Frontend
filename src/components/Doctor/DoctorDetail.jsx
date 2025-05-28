@@ -10,6 +10,7 @@ const timeSlots = [
   "8:00 - 9:00", "9:00 - 10:00", "10:00 - 11:00", "11:00 - 12:00",
   "13:00 - 14:00", "14:00 - 15:00", "15:00 - 16:00", "16:00 - 17:00"
 ];
+
 const positionMap = {
   1: "Bác sĩ",
   2: "Tiến sĩ",
@@ -17,14 +18,13 @@ const positionMap = {
   4: "Phó giáo sư",
   5: "Giáo sư",
 };
+
 const provinceMap = {
   hanoi: "Hà Nội",
   hochiminh: "Hồ Chí Minh",
   danang: "Đà Nẵng",
   lamdong: "Lâm Đồng",
-  
 };
-
 
 function DoctorSchedule() {
   const { id } = useParams();
@@ -38,18 +38,15 @@ function DoctorSchedule() {
   const [showModal, setShowModal] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  
 
   const doctorId = Number(id);
 
- 
   useEffect(() => {
     const fetchDoctorDetail = async () => {
       try {
         const res = await axiosInstance.get("http://localhost:8083/api/get-detail-doctor-by-id", {
           params: { id: doctorId }
         });
-
         if (res.data.errCode === 0) {
           setDoctorDetail(res.data.data);
         } else {
@@ -63,7 +60,6 @@ function DoctorSchedule() {
 
     if (doctorId) fetchDoctorDetail();
   }, [doctorId]);
-
 
   useEffect(() => {
     const fetchSchedule = async () => {
@@ -106,7 +102,7 @@ function DoctorSchedule() {
   };
 
   return (
-    <div className="doctor-schedule" style={{ marginTop: "80px" }} >
+    <div className="doctor-schedule" style={{ marginTop: "80px" }}>
       {/* Navbar */}
       <nav className="navbar">
         <div className="logo" onClick={() => navigate("/")}>
@@ -132,64 +128,65 @@ function DoctorSchedule() {
         </div>
       </nav>
 
-      {/* Doctor Information */}
+      {/* Doctor Info */}
       {doctorDetail ? (
         <div className="header">
           <img src={`http://localhost:8083${doctorDetail.image}`} alt="Doctor" />
           <div className="info">
             <h2>
-              {positionMap[doctorDetail.positionId] || "Chức vụ chưa cập nhật"} {doctorDetail.lastName} {doctorDetail.firstName}
+              {positionMap[doctorDetail.positionId] || "Chức vụ chưa cập nhật"}{" "}
+              {doctorDetail.lastName} {doctorDetail.firstName}
             </h2>
-            <p className="short-description">{doctorDetail.Markdown?.description}</p>
-            <p className="note" style={{color: 'red'}}>{t("Lưu ý: Bác sĩ có nhận tư vấn từ xa.")}</p>
-            <p> <i class="fa-solid fa-location-dot"></i> {provinceMap[doctorDetail.Doctor_Infor.provinceId]}</p>
-          
+            <p className="short-description">{doctorDetail.Markdown?.description || t("Không có mô tả ngắn")}</p>
+            <p className="note" style={{ color: "red" }}>
+              {t("Lưu ý: Bác sĩ có nhận tư vấn từ xa.")}
+            </p>
+            <p><i className="fa-solid fa-location-dot"></i> {provinceMap[doctorDetail.Doctor_Infor?.provinceId]}</p>
           </div>
         </div>
       ) : (
         <p>{t("Đang tải thông tin bác sĩ...")}</p>
       )}
 
-      {/* Schedule */}
-     <div className="booking-layout">
-  {/* Lịch khám (bên trái) */}
-  <div className="schedule-section">
-    <label htmlFor="datePicker">{t("Chọn ngày khám")}:</label>
-    <input
-      id="datePicker"
-      type="date"
-      value={selectedDate}
-      onChange={(e) => setSelectedDate(e.target.value)}
-      className="date-picker"
-    />
+      {/* Booking Section */}
+      <div className="booking-layout">
+        <div className="schedule-section">
+          <label htmlFor="datePicker">{t("Chọn ngày khám")}:</label>
+          <input
+            id="datePicker"
+            type="date"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+            className="date-picker"
+          />
 
-    <h3>{t("Lịch khám theo ngày")}</h3>
-    <div className="slots">
-      {timeSlots.map((slot, index) => (
-        <button
-          key={index}
-          className={`slot-button ${availableTimes.includes(slot) ? "available" : "unavailable"}`}
-          onClick={() => handleTimeClick(slot)}
-          disabled={!availableTimes.includes(slot)}
-        >
-          {slot}
-        </button>
-      ))}
-    </div>
-    <div className="note">{t("Chọn giờ và đặt (miễn phí)")}</div>
-  </div>
+          <h3>{t("Lịch khám theo ngày")}</h3>
+          <div className="slots">
+            {timeSlots.map((slot, index) => (
+              <button
+                key={index}
+                className={`slot-button ${availableTimes.includes(slot) ? "available" : "unavailable"}`}
+                onClick={() => handleTimeClick(slot)}
+                disabled={!availableTimes.includes(slot)}
+              >
+                {slot}
+              </button>
+            ))}
+          </div>
+          <div className="note">{t("Chọn giờ và đặt (miễn phí)")}</div>
+        </div>
 
-  {/* Thông tin phòng khám (bên phải) */}
-  {doctorDetail?.Doctor_Infor && (
-  <div className="clinic-info-right">
-    <p><strong>{t("ĐỊA CHỈ KHÁM")}</strong></p>
-    <p>{doctorDetail.Doctor_Infor.addressClinic}</p>
-    <p className="info-line" style={{color: '#7b61da'}}>{doctorDetail.Doctor_Infor.nameClinic}</p>
-    <p ><strong>{t("GIÁ KHÁM")}:</strong> {doctorDetail.Doctor_Infor.priceId}</p>
-  </div>
-  
-  )}
-</div>
+        {/* Clinic Info */}
+        {doctorDetail?.Doctor_Infor && (
+          <div className="clinic-info-right">
+            <p><strong>{t("ĐỊA CHỈ KHÁM")}</strong></p>
+            <p>{doctorDetail.Doctor_Infor.addressClinic}</p>
+            <p className="info-line" style={{ color: "#7b61da" }}>{doctorDetail.Doctor_Infor.nameClinic}</p>
+            <p><strong>{t("GIÁ KHÁM")}:</strong> {doctorDetail.Doctor_Infor.priceId}</p>
+          </div>
+        )}
+      </div>
+
       {/* Doctor Full Description */}
       {doctorDetail?.Markdown?.contentHTML && (
         <div
@@ -210,7 +207,7 @@ function DoctorSchedule() {
         />
       )}
 
-      {/* Booking Success Notification */}
+      {/* Booking Success Popup */}
       {bookingSuccess && (
         <div className="booking-success-popup">
           <p>{t("Bạn đã đặt lịch thành công - Vui lòng xác nhận email!")}</p>

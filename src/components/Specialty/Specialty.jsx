@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import './Specialty.css';
 import Footer from '../Footer/Footer';
 import axiosInstance from '../../util/axios';
-import BookingModal from "../Doctor/BookingModal"; // modal đặt lịch
+
 
 const timeTypeMap = {
   T1: '08:00 - 09:00',
@@ -121,6 +121,8 @@ const Specialty = () => {
         {doctorSchedules.map((slot) => {
           const label = timeTypeMap[slot.timeType] || slot.timeType;
           const isAvailable = slot.status === 'available' || slot.status === 1;
+          console.log(slot);
+
 
           return (
             <button
@@ -132,8 +134,10 @@ const Specialty = () => {
                   const doctor = doctors.find(d => d.id === doctorId);
                   setSelectedDoctor(doctor);
                   setSelectedSlot(slot);
-                  setIsModalOpen(true);
                   setBookingSuccess(false);
+                  console.log('Navigating to:', `/booking/${doctorId}?timeType=${slot.timeType}&date=${selectedDates[doctorId]}`);
+                  navigate(`/booking/${doctorId}?timeType=${slot.timeType}&date=${selectedDates[doctorId]}`);
+
                 }
               }}
             >
@@ -220,11 +224,6 @@ const Specialty = () => {
                      : 'Chưa cập nhật vị trí'}
                    </div>
 
-                  
-
-
-
-
                 </div>
               </div>
 
@@ -260,25 +259,6 @@ const Specialty = () => {
         <p>{t('Đang tải thông tin bác sĩ...')}</p>
       )}
 
-      {/* Modal đặt lịch */}
-      {isModalOpen && selectedDoctor && selectedSlot && (
-        <BookingModal
-          onClose={() => setIsModalOpen(false)}
-          onSuccess={handleBookingSuccess}
-          doctorId={selectedDoctor.id}
-          date={selectedDates[selectedDoctor.id]}
-          timeType={selectedSlot.timeType}
-          doctorInfo={selectedDoctor}
-        />
-      )}
-
-      {/* Thông báo thành công */}
-      {bookingSuccess && (
-        <div className="booking-success-popup">
-          <p>{t("Bạn đã đặt lịch thành công - Vui lòng xác nhận email!")}</p>
-          <button onClick={() => setBookingSuccess(false)}>OK</button>
-        </div>
-      )}
 
       <Footer />
     </div>

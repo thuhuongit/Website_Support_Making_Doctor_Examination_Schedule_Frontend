@@ -56,10 +56,10 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
 
   return (
     <div className="modal-overlay">
-      <div className="modal">
+      <div className="modal" style={{width: '600px', height: 'auto'}}>
         <div className="modal-header">
           <h3>Thông tin đặt lịch khám bệnh</h3>
-          <button className="close-btn" onClick={onClose} style={{color: 'red'}}>×</button>
+          <button className="close-btn" onClick={onClose} style={{color: 'red'}}> <i class="fa-solid fa-circle-xmark"></i> </button>
         </div>
 
         <div className="modal-body">
@@ -95,7 +95,7 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
         {error && <div className="error-message">{error}</div>}
 
         <div className="modal-footer">
-          <button className="confirm-btn" onClick={handleSubmit} disabled={loading}>
+          <button className="confirm-btn" onClick={handleSubmit} disabled={loading} style={{backgroundColor: "red", color: "white"}}>
             {loading ? 'Đang xử lý...' : 'Xác nhận'}
           </button>
           <button className="cancel-btn" onClick={onClose}>Hủy</button>
