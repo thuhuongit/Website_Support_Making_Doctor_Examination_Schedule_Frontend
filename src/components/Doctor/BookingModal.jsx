@@ -16,10 +16,12 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
+  const genderMap = { Nam: 1, Nữ: 0 };
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -34,7 +36,7 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
         lastName: formData.lastName,
         email: formData.email,
         address: formData.address,
-        selectedGender: formData.gender,
+        selectedGender: genderMap[formData.gender],
         reason: formData.reason,
         phone: formData.phone
       });
@@ -67,7 +69,7 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
             <>
               <p>
                 <strong>
-                  {doctorInfo.positionData?.valueVi} {doctorInfo.firstName} {doctorInfo.lastName}
+                  {doctorInfo.positionData?.valueVi} {doctorInfo.lastName} {doctorInfo.firstName}
                 </strong>
               </p>
               <p className="doctor-description">

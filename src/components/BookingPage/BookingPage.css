@@ -1,0 +1,97 @@
+.booking-container {
+    max-width: 720px;
+    margin: 20px auto;
+    font-family: sans-serif;
+    padding: 20px;
+    border: 1px solid #eee;
+    background: #fff;
+    border-radius: 8px;
+  }
+  
+  .doctor-info {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .doctor-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  }
+  
+  .doctor-details h3 {
+    margin: 0;
+  }
+  
+  .doctor-name {
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  .time {
+    color: orange;
+  }
+  
+  .price-section {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+  
+  .booking-form input,
+  .booking-form select,
+  .booking-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .radio-group,
+  .gender-group {
+    display: flex;
+    gap: 20px;
+    margin: 10px 0;
+  }
+  
+  .summary {
+    margin-top: 20px;
+  }
+  
+  .summary p {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 0;
+  }
+  
+  .summary .total {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .note {
+    background: #e0f3ff;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  
+  .confirm-btn {
+    background: #f7c600;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .terms {
+    margin-top: 10px;
+    font-size: 12px;
+    text-align: center;
+  }
+  

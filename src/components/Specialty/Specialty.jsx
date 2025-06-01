@@ -5,16 +5,6 @@ import './Specialty.css';
 import Footer from '../Footer/Footer';
 import axiosInstance from '../../util/axios';
 
-
-const timeTypeMap = {
-  T1: '08:00 - 09:00',
-  T2: '09:00 - 10:00',
-  T3: '10:00 - 11:00',
-  T4: '13:00 - 14:00',
-  T5: '14:00 - 15:00',
-  T6: '15:00 - 16:00',
-  T7: '16:00 - 17:00',
-};
 const provinceMap = {
   hanoi: "Hà Nội",
   hochiminh: "Hồ Chí Minh",
@@ -33,7 +23,6 @@ const Specialty = () => {
   const [doctors, setDoctors] = useState([]);
   const [schedules, setSchedules] = useState({});
   const [selectedDates, setSelectedDates] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [bookingSuccess, setBookingSuccess] = useState(false);
@@ -111,23 +100,21 @@ const Specialty = () => {
 
   const renderSchedule = (doctorId) => {
     const doctorSchedules = schedules[doctorId] || [];
-
+  
     if (doctorSchedules.length === 0) {
       return <p>{t('Chưa có lịch khám cho ngày này.')}</p>;
     }
-
+  
     return (
       <div className="time-slot-grid">
         {doctorSchedules.map((slot) => {
-          const label = timeTypeMap[slot.timeType] || slot.timeType;
-          const isAvailable = slot.status === 'available' || slot.status === 1;
-          console.log(slot);
-
-
+          const isAvailable = slot.maxNumber > 0;
+          const isSelected = selectedSlot?.timeType === slot.timeType && selectedDoctor?.id === doctorId;
+  
           return (
             <button
               key={slot.id || slot.timeType}
-              className={`time-slot ${isAvailable ? 'available' : 'full'}`}
+              className={`time-slot ${isAvailable ? "available" : "full"} ${isSelected ? "selected" : ""}`}
               disabled={!isAvailable}
               onClick={() => {
                 if (isAvailable) {
@@ -135,25 +122,19 @@ const Specialty = () => {
                   setSelectedDoctor(doctor);
                   setSelectedSlot(slot);
                   setBookingSuccess(false);
-                  console.log('Navigating to:', `/booking/${doctorId}?timeType=${slot.timeType}&date=${selectedDates[doctorId]}`);
-                  navigate(`/booking/${doctorId}?timeType=${slot.timeType}&date=${selectedDates[doctorId]}`);
-
+              
+                  navigate(`/booking/${doctorId}?timeType=${encodeURIComponent(slot.timeType)}&date=${selectedDates[doctorId]}`);
                 }
               }}
             >
-              {label}
+              {slot.timeType}
             </button>
           );
         })}
       </div>
     );
   };
-
-  const handleBookingSuccess = () => {
-    setIsModalOpen(false);
-    setBookingSuccess(true);
-    setTimeout(() => setBookingSuccess(false), 3000);
-  };
+  
 
   return (
     <div className="specialty-container">

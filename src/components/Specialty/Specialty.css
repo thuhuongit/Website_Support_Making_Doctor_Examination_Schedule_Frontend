@@ -157,23 +157,18 @@
 }
 
 .time-slot.available {
-  background-color: #e0f7fa;
-  color: #00796b;
+  background-color: #bebebe;
+  color: #000000;
 }
 
 .time-slot.full {
-  background-color: #f0f0f0;
+  background-color: #bebebe;
   color: #000000;
   cursor: not-allowed;
 }
 .time-slot.available:hover {
   background-color: gold; 
   color: black;
-}
-
-.time-slot.available:active {
-  background-color: orange;
-  color: white;
 }
 
 .time-slot.selected {
