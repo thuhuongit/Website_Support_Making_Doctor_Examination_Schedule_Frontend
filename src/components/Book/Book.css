@@ -1,92 +1,348 @@
-.book-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    z-index: 1000;
-    align-items: center;
-    overflow-y: auto; /* Cuộn toàn bộ nếu nội dung dài */
+/* Container tổng */
+.specialty-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #2c3e50;
 }
 
-/* Thanh tìm kiếm cố định phía trên */
-.book-header {
-    width: 100%;
-    max-width: 1000px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #ddd;
-    flex-shrink: 0; /* Không co lại */
-}
-.book-header input {
-    flex: 1;
-    max-width: 1001000px;
-    padding: 12px; /* Tăng padding cho dễ bấm */
-    border-radius: 20px; /* Bo tròn hơn */
-    border: 1px solid #ccc;
-    background-color: #f8f8f8;
-    font-size: 16px; /* Tăng kích thước chữ */
-    outline: none; /* Bỏ viền mặc định */
-    transition: all 0.3s ease-in-out;
+/* Tiêu đề */
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #2c3e50;
 }
 
-/* Hiệu ứng khi focus */
-.book-header input:focus {
-    border-color: #3a86ff; /* Đổi màu viền khi focus */
-    box-shadow: 0 0 5px rgba(58, 134, 255, 0.5); /* Đổ bóng nhẹ */
-    background-color: white;
+.sub-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #34495e;
 }
 
-/* Chỉ danh sách có thể cuộn */
-.book-list {
-    width: 100%;
-    max-width: 1000px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
+/* Nội dung mô tả HTML */
+.description-html {
+  padding: 1rem 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Box chứa chi tiết chuyên khoa */
+.specialty-detail-box {
+  background-color: #fff;
+  padding: 24px;
+  margin: 60px 0 30px 0;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+/* Danh sách bác sĩ */
+.doctor-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.doctor-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  align-items: flex-start; /* QUAN TRỌNG: Căn top thay vì center */
 }
 
 
-.book-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
-    max-width: 950px;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-    transition: background 0.3s;
+.doctor-header {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  flex: 2;
 }
 
-.book-item:hover {
-    background: #f9f9f9;
+.doctor-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%; 
 }
 
-.book-item img {
-    width: 200px;
-    height: 150px;
-    border-radius: 8px;
-    object-fit: cover;
+.doctor-info {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  gap: 2px; 
 }
 
-.book-info {
-    flex: 1;
+.doctor-info h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-.footer {
-    background-color: #f8f9fa;
-    padding: 30px 0;
-    font-size: 14px;
-  }
+.favorite-icon {
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffe6e6;
+  color: #ff4757;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-radius: 6px;
+  margin-right: 8px;
+}
+
+.doctor-description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #555;
+  margin: 4px 0;
+}
+
+.doctor-location {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #000;
+  margin-top: 4px;
+}
+
+.doctor-location i {
+  margin-right: 6px;
+  color: #000;
+}
+
+.doctor-description,
+.doctor-role,
+.doctor-location,
+.doctor-address,
+.doctor-price {
+  font-size: 14px;
+  margin: 5px 0;
+  color: #555;
+}
+
+.clinic-name {
+  color: #00a9ff;
+  font-weight: 700;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-right: 6px;
+  color: #fff;
+  background-color: #ff7675;
+}
+
+.favorite {
+  background-color: #ff0000;
+}
+.doctor-actions,
+.schedule {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.time-slot-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.time-slot {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold; 
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.time-slot.available {
+  background-color: #F5F5F5;
+  color: #000000;
+}
+
+.time-slot.full {
+  background-color: #F5F5F5;
+  color: #000000;
+  cursor: not-allowed;
+}
+.time-slot.available:hover {
+  background-color: gold; 
+  color: black;
+}
+
+.time-slot.selected {
+  background-color: #ffea29 !important; 
+  color: black !important;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+
+.time-slot,
+.time-button {
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.time-slot:hover,
+.time-button:hover:not(.disabled) {
+  background-color: #e0e0e0;
+}
+
+.disabled {
+  background-color: #bdc3c7;
+  color: #fff;
+  cursor: not-allowed;
+  border: none;
+}
+
+/* Phần phải (giá & lịch) */
+.right-section {
+  flex: 1;
+  max-width: 180px;
+  font-size: 13px;
+  border-left: 1px solid #ddd;
+  padding-left: 1rem;
+  text-align: left; /* Để label và nút dễ nhìn */
+}
+
+.schedule-title,
+.date {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #16a085;
+}
+
+.note {
+  font-size: 13px;
+  color: gray;
+  margin-bottom: 12px;
+}
+.view-profile,
+.book-appointment {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+}
+
+.view-profile {
+  background-color: #007bff;
+}
+
+.book-appointment {
+  background-color: #28a745;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 0.5rem;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+}
+
+.doctor-schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #fdfdfd;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.doctor-schedule h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #040507;
+}
+
+.doctor-schedule label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.doctor-schedule input[type="date"] {
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  max-width: 180px;
+}
+
+.doctor-schedule .note {
+  font-size: 13px;
+  color: rgb(0, 0, 0);
+  margin-top: 10px;
+}
+
+.clinic-info-horizontal {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #000000;
+}
+
+.clinic-info-horizontal div {
+  margin-bottom: 4px;
+}
+
+.favorite-icon {
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffe6e6; /* nhẹ nhàng */
+  color: #ff4757;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-radius: 6px;
+  margin-right: 8px;
+}

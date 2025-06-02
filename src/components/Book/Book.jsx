@@ -1,141 +1,249 @@
-import React, { useState } from "react";
-import "./Book.css";
-import { X } from "lucide-react"; // Icon đóng
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import './Book.css';
+import Footer from '../Footer/Footer';
+import axiosInstance from '../../util/axios';
 
-
-const specialties = [
-  {
-    id: 1,
-    name: "Khám Nội - Hồi sức thần kinh, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/xet-nghiem.jpg",
-  },
-  {
-    id: 2,
-    name: "Khám Chi trên và Y học thể thao, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y-duoc.jpg",
-  },
-  {
-    id: 3,
-    name: "Khám Chi dưới, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y.png",
-  },
-  {
-    id: 4,
-    name: "Khám Chi dưới, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y.png",
-  },
-  {
-    id: 5,
-    name: "Khám Chi dưới, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y.png",
-  },
-  {
-    id: 6,
-    name: "Khám Chi dưới, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y.png",
-  },
-  {
-    id: 7,
-    name: "Khám Chi dưới, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y.png",
-  },
-  {
-    id: 8,
-    name: "Khám Chi dưới, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y.png",
-  },
-  {
-    id: 9,
-    name: "Khám Chi dưới, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y.png",
-  },
-  {
-    id: 10,
-    name: "Khám Chi dưới, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y.png",
-  },
-  {
-    id: 11,
-    name: "Khám Chi dưới, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y.png",
-  },
-  {
-    id: 12,
-    name: "Khám Chi dưới, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y.png",
-  },
-  {
-    id: 13,
-    name: "Khám Chi dưới, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y.png",
-  },
-  {
-    id: 14,
-    name: "Khám Chi dưới, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y.png",
-  },
-  {
-    id: 15,
-    name: "Khám Chi dưới, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y.png",
-  },
-  {
-    id: 16,
-    name: "Khám Chi dưới, Bệnh viện Hữu Nghị Việt Đức",
-    address: "Nhà H, Tầng 1, số 16 Phủ Doãn, Phường Hàng Bông, Quận Hoàn Kiếm, Hà Nội",
-    image: "/y.png",
-  },
-
-];
-
-const Book = ({ onClose }) => {
-    const [searchTerm, setSearchTerm] = useState("");
+const provinceMap = {
+  hanoi: "Hà Nội",
+  hochiminh: "Hồ Chí Minh",
+  danang: "Đà Nẵng",
+  lamdong: "Lâm Đồng",
   
-    const filteredSpecialties = specialties.filter((specialty) =>
-      specialty.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+};
+
+
+const Clinic = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const [detail, setDetail] = useState({});
+  const [doctors, setDoctors] = useState([]);
+  const [schedules, setSchedules] = useState({});
+  const [selectedDates, setSelectedDates] = useState({});
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [bookingSuccess, setBookingSuccess] = useState(false);
+
+
+
+  // Lấy chuyên khoa và bác sĩ
+  useEffect(() => {
+    const fetchClinicAndDoctors = async () => {
+      try {
+        const res = await axiosInstance.get('http://localhost:8083/api/get-detail-clinic-by-id', {
+          params: { id, location: 'ALL' },
+        });
+        if (res.data.errCode === 0) {
+          setDetail(res.data.data || {});
+          const doctorIds = res.data.data.doctorClinic?.map(item => item.doctorId) || [];
+          const doctorPromises = doctorIds.map(doctorId =>
+            axiosInstance.get('http://localhost:8083/api/get-detail-doctor-by-id', {
+              params: { id: doctorId },
+            })
+          );
+          const responses = await Promise.all(doctorPromises);
+          const validDoctors = responses
+            .filter(r => r.data.errCode === 0)
+            .map(r => r.data.data);
+          setDoctors(validDoctors);
+
+          const today = new Date().toISOString().split('T')[0];
+          const initialDates = {};
+          validDoctors.forEach(d => {
+            initialDates[d.id] = today;
+          });
+          setSelectedDates(initialDates);
+        }
+      } catch (error) {
+        console.error('Lỗi khi lấy chuyên khoa hoặc bác sĩ:', error);
+        setDetail({});
+        setDoctors([]);
+      }
+    };
+
+    if (id) fetchClinicAndDoctors();
+  }, [id]);
+
+  // Lấy lịch khám
+  useEffect(() => {
+    const fetchSchedules = async () => {
+      if (!doctors.length) return;
+
+      try {
+        const schedulePromises = doctors.map(doc => {
+          const date = selectedDates[doc.id];
+          if (!date) return Promise.resolve({ data: { errCode: 1 } });
+          return axiosInstance.get('http://localhost:8083/api/get-schedule-doctor-by-date', {
+            params: { doctorId: doc.id, date },
+          });
+        });
+
+        const responses = await Promise.all(schedulePromises);
+        const scheduleMap = {};
+        responses.forEach((res, idx) => {
+          const doctorId = doctors[idx].id;
+          scheduleMap[doctorId] = res.data.errCode === 0 ? res.data.data || [] : [];
+        });
+
+        setSchedules(scheduleMap);
+      } catch (error) {
+        console.error('Lỗi khi lấy lịch khám:', error);
+        setSchedules({});
+      }
+    };
+
+    fetchSchedules();
+  }, [doctors, selectedDates]);
+
+  const renderSchedule = (doctorId) => {
+    const doctorSchedules = schedules[doctorId] || [];
+  
+    if (doctorSchedules.length === 0) {
+      return <p>{t('Chưa có lịch khám cho ngày này.')}</p>;
+    }
   
     return (
-      <div className="book-container">
-        <div className="book-header">
-          <h2>Chọn chuyên khoa</h2>
-          <input
-            type="text"
-            placeholder="Tìm kiếm"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <X className="close-icon" onClick={onClose} />
-        </div>
+      <div className="time-slot-grid">
+        {doctorSchedules.map((slot) => {
+          const isAvailable = slot.maxNumber > 0;
+          const isSelected = selectedSlot?.timeType === slot.timeType && selectedDoctor?.id === doctorId;
   
-        {/* Không bọc danh sách bằng div */}
-        {filteredSpecialties.map((specialty) => (
-          <div key={specialty.id} className="book-item">
-            <img src={specialty.image} alt={specialty.name} />
-            <div className="book-info">
-              <h3>{specialty.name}</h3>
-              <p>📍 {specialty.address}</p>
-            </div>
-          </div>
-        ))}
+          return (
+            <button
+              key={slot.id || slot.timeType}
+              className={`time-slot ${isAvailable ? "available" : "full"} ${isSelected ? "selected" : ""}`}
+              disabled={!isAvailable}
+              onClick={() => {
+                if (isAvailable) {
+                  const doctor = doctors.find(d => d.id === doctorId);
+                  setSelectedDoctor(doctor);
+                  setSelectedSlot(slot);
+                  setBookingSuccess(false);
+              
+                  navigate(`/booking/${doctorId}?timeType=${encodeURIComponent(slot.timeType)}&date=${selectedDates[doctorId]}`);
+                }
+              }}
+            >
+              {slot.timeType}
+            </button>
+          );
+        })}
       </div>
     );
   };
   
 
-export default Book;
+  return (
+    <div className="specialty-container">
+      {/* Navbar */}
+      <nav className="navbar">
+        <div className="logo" onClick={() => navigate('/')}>
+          <img className="logo-img" src="/logo.png" alt="BookingCare" />
+          <span className="logo-text">BookingCare</span>
+        </div>
+        <ul className="nav-links">
+          <li>{t('Chuyên khoa')}<br /><span>{t('Tìm bác sĩ theo chuyên khoa')}</span></li>
+          <li>{t('Cơ sở y tế')}<br /><span>{t('Chọn bệnh viện phòng khám')}</span></li>
+          <li>{t('Bác sĩ')}<br /><span>{t('Chọn bác sĩ giỏi')}</span></li>
+          <li>{t('Gói khám')}<br /><span>{t('Khám sức khỏe tổng quát')}</span></li>
+        </ul>
+        <div className="navbar-right">
+          <button><i className="fa-solid fa-phone-volume"></i> {t('Hỗ trợ')}</button>
+          <div className="language-switch">
+            <button className="active-lang">🇻🇳</button>
+            <button>🇺🇸</button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Thông tin chuyên khoa */}
+      <div className="specialty-detail-box">
+        <h2 className="title">{detail.name || t('Tên cơ sở y tế')}</h2>
+        <p className="sub-title">{t(`Cơ sở y tế ${detail.name || 'cơ sở y tế'}`)}</p>
+        {detail.description && (
+          <div
+            className="description"
+            dangerouslySetInnerHTML={{ __html: detail.description }}
+          />
+        )}
+      </div>
+
+      {/* Danh sách bác sĩ */}
+      {doctors.length > 0 ? (
+        doctors.map((doctor) => {
+          console.log(doctors);
+          const selectedDate = selectedDates[doctor.id] || new Date().toISOString().split('T')[0];
+          const provinceKey = doctor.Doctor_Infor?.provinceId?.toLowerCase().replace(/\s+/g, '') || '';
+          const provinceName = provinceMap[provinceKey] || doctor.Doctor_Infor?.provinceId || 'Chưa cập nhật vị trí';
+
+
+          return (
+            <div key={doctor.id} className="doctor-card">
+              <div className="doctor-header">
+                <img
+                  src={`http://localhost:8083${doctor.image}`}
+                  alt={`${doctor.lastName} ${doctor.firstName} `}
+                  className="doctor-image"
+                />
+                <div className="doctor-info">
+                  <h2 className="doctor-name">
+                     <span className="favorite-icon">❤️ Yêu thích</span>{' '}
+                     {doctor.positionData?.valueVi} {doctor.lastName} {doctor.firstName}
+                  </h2>
+
+                <div className="doctor-description"
+                  dangerouslySetInnerHTML={{__html: doctor.Markdown?.description || `<p>${t('Chưa có giới thiệu')}</p>`,
+                }}
+                />
+
+                <div className="doctor-location">
+                  <i className="fa-solid fa-location-dot" style={{ marginRight: '6px' }}></i>
+                  {doctor.Doctor_Infor?.provinceId 
+                    ? `${provinceMap[doctor.Doctor_Infor.provinceId.toLowerCase()] || doctor.Doctor_Infor.provinceId}`
+                    : 'Chưa cập nhật vị trí'}
+                </div>
+            </div>
+              </div>
+
+              {/* Lịch khám */}
+              <div className="doctor-schedule" style={{ width: '40%' }}>
+                <h4>{t('Lịch khám')}:</h4>
+                <div>
+                  <label htmlFor={`date-${doctor.id}`}>{t('Chọn ngày')}: </label>
+                  <input
+                    id={`date-${doctor.id}`}
+                    type="date"
+                    value={selectedDate}
+                    onChange={(e) =>
+                      setSelectedDates((prev) => ({ ...prev, [doctor.id]: e.target.value }))
+                    }
+                    min={new Date().toISOString().split('T')[0]}
+                  />
+                </div>
+                {renderSchedule(doctor.id)}
+                <div className="note">{t('Chọn giờ và đặt (miễn phí)')}</div>
+
+                {/* Thông tin phòng khám */}
+                <div className="clinic-info-horizontal">
+                  <div><strong>{t('Phòng khám')}:</strong> {doctor.Doctor_Infor?.nameClinic || t('Chưa cập nhật')}</div>
+                  <div><strong>{t('Địa chỉ')}:</strong> {doctor.Doctor_Infor?.addressClinic || t('Chưa cập nhật')}</div>
+                  <div><strong>{t('Giá khám')}:</strong> {doctor.Doctor_Infor?.priceId || t('Chưa cập nhật')} VND</div>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      ) : (
+        <p>{t('Đang tải thông tin bác sĩ...')}</p>
+      )}
+
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Clinic;

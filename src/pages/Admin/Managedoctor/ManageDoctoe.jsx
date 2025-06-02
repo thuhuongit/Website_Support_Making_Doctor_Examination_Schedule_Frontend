@@ -86,7 +86,7 @@ function ManageDoctorInfo() {
       !selectedPrice ||
       !selectedPayment ||
       !selectedProvince ||
-      !nameClinic ||
+      !clinicId ||
       !addressClinic ||
       !specialtyId ||
       !description
@@ -103,7 +103,8 @@ function ManageDoctorInfo() {
       selectedPrice,
       selectedPayment,
       selectedProvice: selectedProvince,
-      nameClinic,
+      clinicId,
+      nameClinic, 
       addressClinic,
       note,
       specialtyId,
@@ -120,7 +121,7 @@ function ManageDoctorInfo() {
         setSelectedPrice("");
         setSelectedPayment("");
         setSelectedProvince("");
-        setNameClinic("");
+        setClinicId("");
         setAddressClinic("");
         setNote("");
         setSpecialtyId("");

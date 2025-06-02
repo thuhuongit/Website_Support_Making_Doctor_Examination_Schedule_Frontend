@@ -7,27 +7,26 @@ const BookingForm = () => {
   const { doctorId } = useParams();
   const location = useLocation();
 
-  // State bác sĩ
   const [doctor, setDoctor] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // State form
-  const [patientFor, setPatientFor] = useState("self");
-  const [patientName, setPatientName] = useState("");
-  const [gender, setGender] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [birthYear, setBirthYear] = useState("");
-  const [province, setProvince] = useState("");
-  const [district, setDistrict] = useState("");
-  const [address, setAddress] = useState("");
-  const [reason, setReason] = useState("");
+  const [formData, setFormData] = useState({
+    lastName: "",
+    firstName: "",
+    phone: "",
+    email: "",
+    address: "",
+    reason: "",
+    gender: "Nam"
+  });
+
   const [paymentMethod, setPaymentMethod] = useState("after");
 
   const searchParams = new URLSearchParams(location.search);
   const timeType = decodeURIComponent(searchParams.get('timeType') || '');
   const date = searchParams.get('date') || '';
+
   const positionMap = {
     1: 'Bác sĩ',
     2: 'Tiến sĩ',
@@ -35,229 +34,151 @@ const BookingForm = () => {
     4: 'Phó giáo sư',
     5: 'Giáo sư',
   };
-  
-  const mapIdToPosition = (id) => positionMap[id] || '';  
 
-  // Gọi API lấy thông tin bác sĩ
+  const mapIdToPosition = (id) => positionMap[id] || '';
+
   useEffect(() => {
     if (!doctorId) return;
-  
     setLoading(true);
     setError(null);
-  
+
     axiosInstance.get(`http://localhost:8083/api/get-detail-doctor-by-id?id=${doctorId}`)
       .then((res) => {
-        console.log("API response doctor detail:", res.data);
-        if(res.data.errCode === 0 && res.data.data){
+        if (res.data.errCode === 0 && res.data.data) {
           setDoctor(res.data.data);
         } else {
           setError("Không tìm thấy thông tin bác sĩ");
         }
-        setLoading(false);
       })
       .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
+        setError("Lỗi khi tải dữ liệu bác sĩ: " + err.message);
+      })
+      .finally(() => setLoading(false));
   }, [doctorId]);
-  
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+  const genderMap = { Nam: 1, Nữ: 0 };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const { lastName, firstName, phone, gender } = formData;
+
+    if (!lastName || !firstName || !phone || !gender || !doctorId || !timeType || !date) {
+      alert("Vui lòng điền đầy đủ thông tin bắt buộc!");
+      return;
+    }
+
     const bookingData = {
-      patientFor,
-      patientName,
-      gender,
-      phone,
-      email,
-      birthYear,
-      province,
-      district,
-      address,
-      reason,
-      paymentMethod,
-      doctorId,
-      timeType,
-      date,
+      doctorId: doctorId,
+      timeType: timeType,
+      date: date,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      address: formData.address,
+      selectedGender: genderMap[formData.gender],
+      reason: formData.reason,
+      phone: formData.phone
     };
 
-    console.log("Dữ liệu đặt lịch:", bookingData);
-    // TODO: Gửi bookingData lên server
+    console.log("Dữ liệu gửi đi:", bookingData);
+
+    axiosInstance.post('http://localhost:8083/api/patient-book-appointment', bookingData)
+      .then(res => {
+        console.log("Gửi dữ liệu đặt lịch:", bookingData);
+        if (res.data.errCode === 0) {
+          alert('Đặt lịch thành công! Email xác nhận đã được gửi.');
+        } else {
+          alert('Lỗi khi đặt lịch: ' + res.data.errMessage);
+        }
+      })
+      .catch(err => {
+        alert('Lỗi hệ thống: ' + err.message);
+      });
   };
 
   if (loading) return <p>Đang tải thông tin bác sĩ...</p>;
   if (error) return <p>Lỗi: {error}</p>;
   if (!doctor) return <p>Không tìm thấy thông tin bác sĩ</p>;
 
-  // Lấy thông tin Doctor_Infor nếu có
   const info = doctor.Doctor_Infor || {};
+  const formattedPrice = info.priceId ? `${info.priceId} VND` : "500.000đ";
 
   return (
     <div className="booking-container">
-
-<div className="doctor-info">
-    <img
-      src={`http://localhost:8083${doctor.image}`}
-      alt={`${doctor.lastName} ${doctor.firstName}`}
-      className="doctor-image"
-      onError={(e) => { e.target.onerror = null; e.target.src = '/default-avatar.png'; }}
-    />
-    <div className="doctor-details">
-      <h3>ĐẶT LỊCH KHÁM</h3>
-      <p className="doctor-name">{mapIdToPosition(Number(doctor.positionId))} {doctor.lastName} {doctor.firstName}</p>
-      <p className="time">🕘 {timeType}</p>
-      <p className="date">📅 {date}</p>
-      <p className="location">🏥 {doctor.Doctor_Infor?.nameClinic || "Phòng khám chưa cập nhật"}</p>
-      <p className="address">{doctor.Doctor_Infor?.addressClinic || doctor.address || "Địa chỉ chưa cập nhật"}</p>
-    </div>
-  </div>
+      <div className="doctor-info">
+        <img
+          src={`http://localhost:8083${doctor.image}`}
+          alt={`${doctor.lastName} ${doctor.firstName}`}
+          className="doctor-image"
+          onError={(e) => { e.target.src = '/default-avatar.png'; }}
+        />
+        <div className="doctor-details">
+          <h3>ĐẶT LỊCH KHÁM</h3>
+          <p className="doctor-name">{mapIdToPosition(Number(doctor.positionId))} {doctor.lastName} {doctor.firstName}</p>
+          <p className="time">🕘 {timeType}</p>
+          <p className="date">📅 {date}</p>
+          <p className="location">🏥 {info.nameClinic || "Phòng khám chưa cập nhật"}</p>
+          <p className="address">{info.addressClinic || doctor.address || "Địa chỉ chưa cập nhật"}</p>
+        </div>
+      </div>
 
       <form className="booking-form" onSubmit={handleSubmit}>
-      <p className="price">Giá khám: {doctor.Doctor_Infor?.priceId || "Chưa cập nhật"} </p>
+        <p className="price"
+           style={{
+               display: 'inline-block',
+               padding: '6px 12px',
+               border: '1px solid #ccc',
+               borderRadius: '6px',
+               backgroundColor: '#f9f9f9',
+               fontWeight: '600',
+               color: '#333',
+               marginBottom: '16px'
+         }}
+        >Giá khám: {formattedPrice}
+      </p>
 
 
-        <div className="radio-group">
-          
-          <label>
-            <input
-              type="radio"
-              name="patientFor"
-              value="self"
-              checked={patientFor === "self"}
-              onChange={() => setPatientFor("self")}
-            />
-            Đặt cho mình
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="patientFor"
-              value="relative"
-              checked={patientFor === "relative"}
-              onChange={() => setPatientFor("relative")}
-            />
-            Đặt cho người thân
-          </label>
+        <div className="name-group">
+          <input type="text" placeholder="Họ" name="lastName" value={formData.lastName} onChange={handleChange} />
+          <input type="text" placeholder="Tên" name="firstName" value={formData.firstName} onChange={handleChange} />
         </div>
-
-        <input
-          type="text"
-          placeholder="Họ tên bệnh nhân (bắt buộc)"
-          value={patientName}
-          onChange={(e) => setPatientName(e.target.value)}
-          required
-        />
-
-        <div className="gender-group">
-          <label>
-            <input
-              type="radio"
-              name="gender"
-              value="Nam"
-              checked={gender === "Nam"}
-              onChange={(e) => setGender(e.target.value)}
-              required
-            />
-            Nam
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="gender"
-              value="Nữ"
-              checked={gender === "Nữ"}
-              onChange={(e) => setGender(e.target.value)}
-            />
-            Nữ
-          </label>
-        </div>
-
-        <input
-          type="tel"
-          placeholder="Số điện thoại liên hệ (bắt buộc)"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          required
-        />
-
-        <input
-          type="email"
-          placeholder="Địa chỉ email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        <input
-          type="text"
-          placeholder="Năm sinh (bắt buộc)"
-          value={birthYear}
-          onChange={(e) => setBirthYear(e.target.value)}
-          required
-        />
-
-        <select
-          value={province}
-          onChange={(e) => setProvince(e.target.value)}
-          required
-        >
-          <option value="">-- Chọn Tỉnh/Thành --</option>
-          <option value="Hà Nội">Hà Nội</option>
-          <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+        <input type="text" placeholder="Số điện thoại" name="phone" value={formData.phone} onChange={handleChange} />
+        <input type="email" placeholder="Địa chỉ email" name="email" value={formData.email} onChange={handleChange} />
+        <input type="text" placeholder="Địa chỉ liên lạc" name="address" value={formData.address} onChange={handleChange} />
+        <input type="text" placeholder="Lý do khám" name="reason" value={formData.reason} onChange={handleChange} />
+        <select name="gender" value={formData.gender} onChange={handleChange}>
+          <option value="Nam">Nam</option>
+          <option value="Nữ">Nữ</option>
         </select>
-
-        <select
-          value={district}
-          onChange={(e) => setDistrict(e.target.value)}
-          required
-        >
-          <option value="">-- Chọn Quận/Huyện --</option>
-          <option value="Đống Đa">Đống Đa</option>
-          <option value="Ba Đình">Ba Đình</option>
-        </select>
-
-        <input
-          type="text"
-          placeholder="Địa chỉ"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-
-        <textarea
-          placeholder="Lý do khám"
-          rows="3"
-          value={reason}
-          onChange={(e) => setReason(e.target.value)}
-        ></textarea>
 
         <h4>Hình thức thanh toán</h4>
-        <label>
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="after"
-            checked={paymentMethod === "after"}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-          />Thanh toán sau tại cơ sở y tế
+        <label style={{ display: 'flex', alignItems: 'center', width: '300px' }}>
+          <input type="radio" name="paymentMethod" value="after" checked={paymentMethod === "after"} onChange={(e) => setPaymentMethod(e.target.value)} />
+          Thanh toán sau tại cơ sở y tế
         </label>
 
         <div className="summary">
-          <p>Giá khám <span>{info.priceId ? info.priceId + " VND" : "500.000đ"}</span></p>
+          <p>Giá khám <span>{formattedPrice}</span></p>
           <p>Phí đặt lịch <span>Miễn phí</span></p>
-          <p className="total">Tổng cộng <span>{info.priceId ? info.priceId + " VND" : "500.000đ"}</span></p>
+          <p className="total">Tổng cộng <span>{formattedPrice}</span></p>
         </div>
 
-        <div className="note">
+        <div className="note" style={{ color: 'black'}} >
           <strong>LƯU Ý</strong>
           <ul>
-            <li>Ghi rõ họ và tên, viết hoa những chữ cái đầu tiên, ví dụ: <b>Trần Văn Phú</b></li>
-            <li>Điền đầy đủ, đúng và vui lòng kiểm tra lại thông tin trước khi "Xác nhận"</li>
+            <li>Ghi rõ họ và tên, viết hoa chữ cái đầu. Ví dụ: <b>Nguyễn Văn A</b></li>
+            <li>Điền đầy đủ, đúng và vui lòng kiểm tra lại thông tin trước khi ấn "Xác nhận"</li>
           </ul>
         </div>
 
         <button className="confirm-btn" type="submit">Xác nhận đặt khám</button>
         <p className="terms">
-          Bằng việc xác nhận đặt khám, bạn đã hoàn toàn đồng ý với <a href="#">Điều khoản sử dụng</a>
+          Bằng việc xác nhận, bạn đã đồng ý với <a href="#">Điều khoản sử dụng</a>
         </p>
       </form>
     </div>

@@ -1,97 +1,151 @@
+/* Container chính */
 .booking-container {
-    max-width: 720px;
-    margin: 20px auto;
-    font-family: sans-serif;
-    padding: 20px;
-    border: 1px solid #eee;
-    background: #fff;
-    border-radius: 8px;
-  }
-  
-  .doctor-info {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .doctor-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-  }
-  
-  .doctor-details h3 {
-    margin: 0;
-  }
-  
-  .doctor-name {
-    font-weight: bold;
-    color: #007bff;
-  }
-  
-  .time {
-    color: orange;
-  }
-  
-  .price-section {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-  }
-  
-  .booking-form input,
-  .booking-form select,
-  .booking-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 6px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .radio-group,
-  .gender-group {
-    display: flex;
-    gap: 20px;
-    margin: 10px 0;
-  }
-  
-  .summary {
-    margin-top: 20px;
-  }
-  
-  .summary p {
-    display: flex;
-    justify-content: space-between;
-    margin: 4px 0;
-  }
-  
-  .summary .total {
-    color: red;
-    font-weight: bold;
-  }
-  
-  .note {
-    background: #e0f3ff;
-    padding: 10px;
-    margin-top: 20px;
-    font-size: 14px;
-  }
-  
-  .confirm-btn {
-    background: #f7c600;
-    border: none;
-    padding: 12px;
-    width: 100%;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .terms {
-    margin-top: 10px;
-    font-size: 12px;
-    text-align: center;
-  }
-  
+  max-width: 720px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  font-family: sans-serif;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+/* Thông tin bác sĩ */
+.doctor-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  background-color: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.doctor-avatar {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.doctor-details {
+  justify-content: flex-start;
+  width: 500px;
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  margin-left: auto;
+  margin-top: -150px; 
+}
+
+
+
+.doctor-details h3 {
+  font-size: 18px;
+  color: #020202;
+  margin: 0 0 8px;
+  font-weight: bold;
+}
+
+.doctor-name {
+  font-size: 16px;
+  text-align: left;
+  color: #007bff;
+}
+
+
+.time {
+  color: orange;
+}
+
+.date,
+.location,
+.address {
+  color: #555;
+}
+
+/* Giá khám */
+.booking-form price{
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+/* Form đặt lịch */
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.radio-group,
+.gender-group {
+  display: flex;
+  gap: 20px;
+  margin: 10px 0;
+}
+
+/* Tóm tắt */
+.summary {
+  margin-top: 20px;
+}
+
+.summary p {
+  display: flex;
+  justify-content: space-between;
+  margin: 4px 0;
+}
+
+.summary .total {
+  color: red;
+  font-weight: bold;
+}
+
+/* Ghi chú và điều khoản */
+.note {
+  background: #e0f3ff;
+  padding: 10px;
+  margin-top: 20px;
+  font-size: 14px;
+  border-left: 4px solid #007bff;
+}
+
+.terms {
+  margin-top: 10px;
+  font-size: 12px;
+  text-align: center;
+  color: #000000;
+}
+
+/* Nút xác nhận */
+.confirm-btn {
+  background: #f7c600;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.confirm-btn:hover {
+  background: #e6b800;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 3px; /* tạo khoảng cách giữa radio và text */
+  margin-bottom: 8px;
+}

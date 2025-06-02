@@ -189,23 +189,23 @@ const Specialty = () => {
                   className="doctor-image"
                 />
                 <div className="doctor-info">
-                  <h2>
-                      <span className="favorite-icon">❤️ Yêu thích</span>{' '}
-                      {doctor.positionData?.valueVi} {doctor.lastName} {doctor.firstName}
+                  <h2 className="doctor-name">
+                     <span className="favorite-icon">❤️ Yêu thích</span>{' '}
+                     {doctor.positionData?.valueVi} {doctor.lastName} {doctor.firstName}
                   </h2>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: doctor.Markdown?.description || `<p>${t('Chưa có giới thiệu')}</p>`,
-                    }}
-                  />
-                  <div className="doctor-location" style={{ fontSize: '14px', color: 'black', marginBottom: '8px' }}> 
-                    <i class="fa-solid fa-location-dot" style={{margin: '5px', color: 'black'}}></i>
-                   {doctor.Doctor_Infor?.provinceId 
-                    ? `${provinceMap[doctor.Doctor_Infor.provinceId.toLowerCase()] || doctor.Doctor_Infor.provinceId}`
-                     : 'Chưa cập nhật vị trí'}
-                   </div>
 
+                <div className="doctor-description"
+                  dangerouslySetInnerHTML={{__html: doctor.Markdown?.description || `<p>${t('Chưa có giới thiệu')}</p>`,
+                }}
+                />
+
+                <div className="doctor-location">
+                  <i className="fa-solid fa-location-dot" style={{ marginRight: '6px' }}></i>
+                  {doctor.Doctor_Infor?.provinceId 
+                    ? `${provinceMap[doctor.Doctor_Infor.provinceId.toLowerCase()] || doctor.Doctor_Infor.provinceId}`
+                    : 'Chưa cập nhật vị trí'}
                 </div>
+            </div>
               </div>
 
               {/* Lịch khám */}
