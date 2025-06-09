@@ -15,7 +15,7 @@ const HospitalPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axiosInstance.get("http://localhost:8083/api/get-clinic");
+        const res = await axiosInstance.get("http://localhost:8084/api/get-clinic");
         console.log("Fetched hospitals:", res.data);
         if (res.data && res.data.errCode === 0) {
           setHospitals(res.data.data); // 
@@ -62,7 +62,7 @@ const HospitalPage = () => {
               onClick={() => navigate(`/detail-hospitals/${item.id}`)}
             >
               <img
-                src={`http://localhost:8083/${item.image}`} 
+                src={`http://localhost:8084/${item.image}`} 
                 alt={item.name}
               />
               <p>{item.name}</p>

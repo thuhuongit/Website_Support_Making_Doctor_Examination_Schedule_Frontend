@@ -1,6 +1,6 @@
 export default {
     api: {
-        API_BASE_URL: "http://localhost:8083/",
+        API_BASE_URL: "http://localhost:8084/",
         ROUTER_BASE_NAME: null,
     },
     app: {

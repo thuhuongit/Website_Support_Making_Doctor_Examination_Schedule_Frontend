@@ -28,7 +28,7 @@ function ManageDoctorInfo() {
   useEffect(() => {
     async function fetchDoctors() {
       try {
-        const res = await axiosInstance.get("http://localhost:8083/api/get-all-doctors");
+        const res = await axiosInstance.get("http://localhost:8084/api/get-all-doctors");
         if (res.data.errCode === 0) {
           setDoctors(res.data.data);
         } else {
@@ -45,7 +45,7 @@ function ManageDoctorInfo() {
   useEffect(() => {
     async function fetchSpecialties() {
       try {
-        const res = await axiosInstance.get("http://localhost:8083/api/get-specialty");
+        const res = await axiosInstance.get("http://localhost:8084/api/get-specialty");
         if (res.data && res.data.errCode === 0) {
           setSpecialties(res.data.data); 
         } else {
@@ -63,7 +63,7 @@ function ManageDoctorInfo() {
     useEffect(() => {
     async function fetchClinics() {
       try {
-        const res = await axiosInstance.get("http://localhost:8083/api/get-clinic");
+        const res = await axiosInstance.get("http://localhost:8084/api/get-clinic");
         if (res.data && res.data.errCode === 0) {
           setClinic(res.data.data); 
         } else {
@@ -112,7 +112,7 @@ function ManageDoctorInfo() {
     };
 
     try {
-      const res = await axiosInstance.post("http://localhost:8083/api/save-infor-doctors", data);
+      const res = await axiosInstance.post("http://localhost:8084/api/save-infor-doctors", data);
       if (res.data.errCode === 0) {
         toast.success("Lưu thông tin bác sĩ thành công!");
         setSelectedDoctor("");

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import './Book.css';
+import './Detail-Specialty.css';
 import Footer from '../Footer/Footer';
 import axiosInstance from '../../util/axios';
 
@@ -14,7 +14,7 @@ const provinceMap = {
 };
 
 
-const Clinic = () => {
+const Specialty = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -31,14 +31,14 @@ const Clinic = () => {
 
   // Lấy chuyên khoa và bác sĩ
   useEffect(() => {
-    const fetchClinicAndDoctors = async () => {
+    const fetchSpecialtyAndDoctors = async () => {
       try {
-        const res = await axiosInstance.get('http://localhost:8084/api/get-detail-clinic-by-id', {
+        const res = await axiosInstance.get('http://localhost:8084/api/get-detail-specialty-by-id', {
           params: { id, location: 'ALL' },
         });
         if (res.data.errCode === 0) {
           setDetail(res.data.data || {});
-          const doctorIds = res.data.data.doctorClinic?.map(item => item.doctorId) || [];
+          const doctorIds = res.data.data.doctorSpecialty?.map(item => item.doctorId) || [];
           const doctorPromises = doctorIds.map(doctorId =>
             axiosInstance.get('http://localhost:8084/api/get-detail-doctor-by-id', {
               params: { id: doctorId },
@@ -64,7 +64,7 @@ const Clinic = () => {
       }
     };
 
-    if (id) fetchClinicAndDoctors();
+    if (id) fetchSpecialtyAndDoctors();
   }, [id]);
 
   // Lấy lịch khám
@@ -161,12 +161,12 @@ const Clinic = () => {
 
       {/* Thông tin chuyên khoa */}
       <div className="specialty-detail-box">
-        <h2 className="title">{detail.name || t('Tên cơ sở y tế')}</h2>
-        <p className="sub-title">{t(`Cơ sở y tế ${detail.name || 'cơ sở y tế'}`)}</p>
-        {detail.description && (
+        <h2 className="title">{detail.name || t('Tên chuyên khoa')}</h2>
+        <p className="sub-title">{t(`Chuyên khoa ${detail.name || 'chuyên khoa'}`)}</p>
+        {detail.descriptionHTML && (
           <div
-            className="description"
-            dangerouslySetInnerHTML={{ __html: detail.description }}
+            className="description-html"
+            dangerouslySetInnerHTML={{ __html: detail.descriptionHTML }}
           />
         )}
       </div>
@@ -246,4 +246,4 @@ const Clinic = () => {
   );
 };
 
-export default Clinic;
+export default Specialty;

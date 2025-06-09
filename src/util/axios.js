@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Cấu hình base URL cho tất cả các request
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8083/api', // Thay đổi với base URL của bạn
+  baseURL: 'http://localhost:8084/api', // Thay đổi với base URL của bạn
   headers: {
     'Content-Type': 'application/json',
   },

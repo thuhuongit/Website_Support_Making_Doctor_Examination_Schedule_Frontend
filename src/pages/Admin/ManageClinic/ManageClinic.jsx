@@ -42,7 +42,7 @@ const ManageClinic = () => {
 
     try {
       const response = await axiosInstance.post(
-        "http://localhost:8083/api/create-new-clinic", 
+        "http://localhost:8084/api/create-new-clinic", 
         formData,
         {
           headers: {

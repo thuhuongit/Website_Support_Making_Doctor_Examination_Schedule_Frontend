@@ -42,7 +42,7 @@ const BookingForm = () => {
     setLoading(true);
     setError(null);
 
-    axiosInstance.get(`http://localhost:8083/api/get-detail-doctor-by-id?id=${doctorId}`)
+    axiosInstance.get(`http://localhost:8084/api/get-detail-doctor-by-id?id=${doctorId}`)
       .then((res) => {
         if (res.data.errCode === 0 && res.data.data) {
           setDoctor(res.data.data);
@@ -87,7 +87,7 @@ const BookingForm = () => {
 
     console.log("Dữ liệu gửi đi:", bookingData);
 
-    axiosInstance.post('http://localhost:8083/api/patient-book-appointment', bookingData)
+    axiosInstance.post('http://localhost:8084/api/patient-book-appointment', bookingData)
       .then(res => {
         console.log("Gửi dữ liệu đặt lịch:", bookingData);
         if (res.data.errCode === 0) {
@@ -112,7 +112,7 @@ const BookingForm = () => {
     <div className="booking-container">
       <div className="doctor-info">
         <img
-          src={`http://localhost:8083${doctor.image}`}
+          src={`http://localhost:8084${doctor.image}`}
           alt={`${doctor.lastName} ${doctor.firstName}`}
           className="doctor-image"
           onError={(e) => { e.target.src = '/default-avatar.png'; }}

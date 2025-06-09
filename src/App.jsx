@@ -24,7 +24,8 @@ import Specialty from "./components/Specialty/Specialty";
 import ManageClinic from "./pages/Admin/ManageClinic/ManageClinic";
 import HospitalPage from "./components/HospitalPage/HospitalPage";
 import BookingPage from "./components/BookingPage/BookingPage"; 
-
+import DetailSpecialty from "./components/Detail-Specialty/Detail-Specialty"; 
+import DetailHospital from "./components/Detail-Hospital/Detail-Hospital"; 
 
 function App() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -40,14 +41,17 @@ function App() {
           <Route path="/chat" element={<ChatbotPage />} />
           <Route path="/" element={<Navbar />} />
           <Route path="/hospital/:id" element={<Hospital/>} />
+          <Route path="/hospitals" element={<HospitalPage/>} />
+          <Route path="/detail-hospitals/:id" element={<DetailHospital/>} />
           <Route path="/doctor/:id" element={<Doctor/>} />
           <Route path="/dat-kham/:id" element={<Book/>} />
           <Route path="/doctor-dashboard"element={<DoctorDashboard />}/>
           <Route path="/verify-booking" element={<ConfirmationPage />} />
           <Route path="/specialties" element={<SpecialtiesPage />} />
           <Route path="/specialty/:id" element={<Specialty/>} />
-          <Route path="/hospitals" element={<HospitalPage/>} />
+          <Route path="/detail-specialty/:id" element={<DetailSpecialty/>} />
           <Route path="/booking/:doctorId" element={<BookingPage/>} />
+
 
 
           <Route path="/admin" element={<AdminLayout />}>

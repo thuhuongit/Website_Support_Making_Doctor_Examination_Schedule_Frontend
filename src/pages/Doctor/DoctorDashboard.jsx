@@ -21,7 +21,7 @@ const DoctorDashboard = () => {
   // Lấy danh sách bác sĩ khi mount component
   useEffect(() => {
     axiosInstance
-      .get("http://localhost:8083/api/get-all-doctors")
+      .get("http://localhost:8084/api/get-all-doctors")
       .then((res) => {
         setDoctors(res.data.data || []);
       })
@@ -41,7 +41,7 @@ const DoctorDashboard = () => {
 
   const fetchAppointments = (doctorId, date) => {
     axiosInstance
-      .get("http://localhost:8083/api/get-list-patient-for-doctor", {
+      .get("http://localhost:8084/api/get-list-patient-for-doctor", {
         params: {
           doctorId,
           date,
@@ -68,7 +68,7 @@ const DoctorDashboard = () => {
 
   const confirmAppointment = (appointment) => {
     axiosInstance
-      .post("http://localhost:8083/api/send-remedy", {
+      .post("http://localhost:8084/api/send-remedy", {
         doctorId: appointment.doctorId,
         patientId: appointment.patientId,
         timeType: appointment.timeType,
@@ -88,7 +88,7 @@ const DoctorDashboard = () => {
 
   const cancelAppointment = (bookingId) => {
     axiosInstance
-      .post("http://localhost:8083/api/cancel-booking", { appointmentId: bookingId })
+      .post("http://localhost:8084/api/cancel-booking", { appointmentId: bookingId })
       .then(() => {
         const updatedAppointments = appointments.map((appt) =>
           appt.id === bookingId ? { ...appt, statusId: "S4" } : appt

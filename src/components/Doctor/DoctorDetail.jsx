@@ -44,7 +44,7 @@ function DoctorSchedule() {
   useEffect(() => {
     const fetchDoctorDetail = async () => {
       try {
-        const res = await axiosInstance.get("http://localhost:8083/api/get-detail-doctor-by-id", {
+        const res = await axiosInstance.get("http://localhost:8084/api/get-detail-doctor-by-id", {
           params: { id: doctorId }
         });
         if (res.data.errCode === 0) {
@@ -69,7 +69,7 @@ function DoctorSchedule() {
       }
 
       try {
-        const res = await axiosInstance.get("http://localhost:8083/api/get-schedule-doctor-by-date", {
+        const res = await axiosInstance.get("http://localhost:8084/api/get-schedule-doctor-by-date", {
           params: { doctorId, date: selectedDate }
         });
 
@@ -131,7 +131,7 @@ function DoctorSchedule() {
       {/* Doctor Info */}
       {doctorDetail ? (
         <div className="header">
-          <img src={`http://localhost:8083${doctorDetail.image}`} alt="Doctor" />
+          <img src={`http://localhost:8084${doctorDetail.image}`} alt="Doctor" />
           <div className="info">
             <h2>
               {positionMap[doctorDetail.positionId] || "Chức vụ chưa cập nhật"}{" "}

@@ -31,7 +31,7 @@ const User = () => {
 
   const fetchUsers = () => {
     axiosInstance
-      .get("http://localhost:8083/api/get-all-users?id=all")
+      .get("http://localhost:8084/api/get-all-users?id=all")
       .then((res) => {
         setUsers(res.data.users || []);
       })
@@ -107,13 +107,13 @@ const User = () => {
       if (editingUserId) {
         payload.append("id", editingUserId);
         response = await axiosInstance.put(
-          "http://localhost:8083/api/edit-user",
+          "http://localhost:8084/api/edit-user",
           payload,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
       } else {
         response = await axiosInstance.post(
-          "http://localhost:8083/api/create-new-user",
+          "http://localhost:8084/api/create-new-user",
           payload,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
@@ -166,7 +166,7 @@ const User = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await axiosInstance.delete("http://localhost:8083/api/delete-user", {
+        const response = await axiosInstance.delete("http://localhost:8084/api/delete-user", {
           data: { id: userId },
         });
 

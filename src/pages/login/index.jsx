@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import "./index.css";
 
 
-export const API_URL = "http://localhost:8083/api/login";
+export const API_URL = "http://localhost:8084/api/login";
 const LoginForm = () => {
-  const [email, setEmail] = useState("sa@gmail.com");
-  const [password, setPassword] = useState("1");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   
   const navigate = useNavigate(); // Hook điều hướng

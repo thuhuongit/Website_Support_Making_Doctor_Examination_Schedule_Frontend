@@ -15,7 +15,7 @@ const SpecialtiesPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axiosInstance.get("http://localhost:8083/api/get-specialty");
+        const res = await axiosInstance.get("http://localhost:8084/api/get-specialty");
         console.log("Fetched specialties:", res.data);
         if (res.data && res.data.errCode === 0) {
           setSpecialties(res.data.data); // 
@@ -62,7 +62,7 @@ const SpecialtiesPage = () => {
               onClick={() => navigate(`/detail-specialty/${item.id}`)}
             >
               <img
-                src={`http://localhost:8083/${item.image}`} 
+                src={`http://localhost:8084/${item.image}`} 
                 alt={item.name}
               />
               <p>{item.name}</p>

@@ -23,7 +23,7 @@ const DoctorSidebar = () => {
             src={
               doctorInfo.image.startsWith("data:image")
                 ? doctorInfo.image
-                : `http://localhost:8083${doctorInfo.image}`
+                : `http://localhost:8084${doctorInfo.image}`
             }
             alt="Doctor"
             className="avatar"

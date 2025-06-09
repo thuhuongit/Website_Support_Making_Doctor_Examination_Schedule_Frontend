@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
-import "./Hospital.css";
+import "./Detail-Hospital.css";
 import Footer from "../Footer/Footer";
 import axiosInstance from "../../util/axios";
 

@@ -33,14 +33,14 @@ const Specialty = () => {
   useEffect(() => {
     const fetchSpecialtyAndDoctors = async () => {
       try {
-        const res = await axiosInstance.get('http://localhost:8083/api/get-detail-specialty-by-id', {
+        const res = await axiosInstance.get('http://localhost:8084/api/get-detail-specialty-by-id', {
           params: { id, location: 'ALL' },
         });
         if (res.data.errCode === 0) {
           setDetail(res.data.data || {});
           const doctorIds = res.data.data.doctorSpecialty?.map(item => item.doctorId) || [];
           const doctorPromises = doctorIds.map(doctorId =>
-            axiosInstance.get('http://localhost:8083/api/get-detail-doctor-by-id', {
+            axiosInstance.get('http://localhost:8084/api/get-detail-doctor-by-id', {
               params: { id: doctorId },
             })
           );
@@ -76,7 +76,7 @@ const Specialty = () => {
         const schedulePromises = doctors.map(doc => {
           const date = selectedDates[doc.id];
           if (!date) return Promise.resolve({ data: { errCode: 1 } });
-          return axiosInstance.get('http://localhost:8083/api/get-schedule-doctor-by-date', {
+          return axiosInstance.get('http://localhost:8084/api/get-schedule-doctor-by-date', {
             params: { doctorId: doc.id, date },
           });
         });
@@ -184,7 +184,7 @@ const Specialty = () => {
             <div key={doctor.id} className="doctor-card">
               <div className="doctor-header">
                 <img
-                  src={`http://localhost:8083${doctor.image}`}
+                  src={`http://localhost:8084${doctor.image}`}
                   alt={`${doctor.lastName} ${doctor.firstName} `}
                   className="doctor-image"
                 />

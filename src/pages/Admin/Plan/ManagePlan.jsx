@@ -23,7 +23,7 @@ function ManageSchedule() {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const res = await axiosInstance.get("http://localhost:8083/api/get-all-doctors");
+        const res = await axiosInstance.get("http://localhost:8084/api/get-all-doctors");
         if (res.data.errCode === 0) {
           setDoctorList(res.data.data);
         } else {
@@ -70,7 +70,7 @@ function ManageSchedule() {
     };
 
     try {
-      const response = await axiosInstance.post('http://localhost:8083/api/bulk-create-schedule', scheduleData);
+      const response = await axiosInstance.post('http://localhost:8084/api/bulk-create-schedule', scheduleData);
 
       if (response.data.errCode === 0) {
         toast.success("Lịch khám đã được lưu thành công!");

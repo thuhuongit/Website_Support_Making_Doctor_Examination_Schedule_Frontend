@@ -53,7 +53,7 @@ const SpecialtiesSlider = ({ type }) => {
     const fetchSpecialties = async () => {
       try {
         if (type === "specialties") {
-          const res = await axiosInstance.get("http://localhost:8083/api/get-specialty");
+          const res = await axiosInstance.get("http://localhost:8084/api/get-specialty");
           if (res.data && res.data.errCode === 0) {
             setSpecialtiesData(res.data.data);
           }
@@ -70,7 +70,7 @@ const SpecialtiesSlider = ({ type }) => {
     const fetchHospitals = async () => {
       try {
         if (type === "hospitals") {
-          const res = await axiosInstance.get("http://localhost:8083/api/get-clinic");
+          const res = await axiosInstance.get("http://localhost:8084/api/get-clinic");
           if (res.data && res.data.errCode === 0) {
             setHospitalsData(res.data.data);
           }
@@ -86,7 +86,7 @@ const SpecialtiesSlider = ({ type }) => {
   useEffect(() => {
     if (type === "doctors") {
       axiosInstance
-        .get("http://localhost:8083/api/top-doctor-home")
+        .get("http://localhost:8084/api/top-doctor-home")
         .then((res) => {
           if (res.data && res.data.data) {
             setDoctors(res.data.data);
@@ -117,7 +117,7 @@ const SpecialtiesSlider = ({ type }) => {
                 className="specialty-item"
                 onClick={() => navigate(`/specialty/${item.id}`)}
               >
-                <img src={`http://localhost:8083/${item.image}`} alt={item.name} />
+                <img src={`http://localhost:8084/${item.image}`} alt={item.name} />
                 <p>{item.name}</p>
               </div>
             ))}
@@ -142,7 +142,7 @@ const SpecialtiesSlider = ({ type }) => {
                 onClick={() => navigate(`/hospital/${item.id}`)}
               >
                 <img
-                  src={`http://localhost:8083/${item.image}` }
+                  src={`http://localhost:8084/${item.image}` }
                   alt={item.name}
                 />
                 <p>{item.name}</p>
@@ -174,7 +174,7 @@ const SpecialtiesSlider = ({ type }) => {
                 src={
                   doctor.image.startsWith("http")
                     ? doctor.image
-                    : `http://localhost:8083${doctor.image}`
+                    : `http://localhost:8084${doctor.image}`
                 }
                 alt={`${positionName} ${doctor.lastName || ""} ${doctor.firstName || ""}`}
               />
