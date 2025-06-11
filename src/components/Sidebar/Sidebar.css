@@ -12,6 +12,31 @@
   z-index: 10;
 }
 
+/* Phần logo bên trái */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    color: #d82c20;
+    font-size: 100px;
+    cursor: pointer;
+    
+}
+
+.logo i {
+    font-size: 27px;
+    color: #948786;
+}
+
+.logo img {
+    width: 500px;
+    height: auto;
+}
+.logo-text{
+    font-size: 30px;
+}
+
 .user-info {
   display: flex;
   align-items: center;

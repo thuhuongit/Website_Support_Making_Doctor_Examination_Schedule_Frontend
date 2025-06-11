@@ -73,7 +73,7 @@ const Navbar = () => {
           > <i className="fa-solid fa-bars"></i>
 
           </button>
-          <img className="logo-img" src="/logo.png" alt="BookingCare"/>
+          <img className="logo-img" src="/logo.png" alt="BookingCare" style={{width: '50px'}}/>
           <span className="logo-text">BookingCare</span>
         </div>
 

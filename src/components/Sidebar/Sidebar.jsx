@@ -1,22 +1,33 @@
 import { Link, useLocation } from "react-router-dom";
 import "./Sidebar.css";
+import { FaSignInAlt } from "react-icons/fa";
+
 
 const Sidebar = () => {
   const location = useLocation();
 
-  // const isActive = (path) => location.pathname.includes(path);
+  // So sánh trùng khớp tuyệt đối đường dẫn
   const isActive = (path) => location.pathname === path;
 
+  return (
+    <div className="sidebar" style={{ backgroundColor: "#ffffff" }}>
 
-  return ( 
-    <div className="sidebar" style={{ backgroundColor: '#ffffff' }}>
-       <div className="user-info">
-      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="avatar" />
+      
+      {/* Thông tin người dùng */}
+      <div className="user-info">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+          alt="avatar"
+        />
         <div>
-        <p><strong>Xin chào, Admin!</strong></p>
-        <p className="text-xs text-gray-500">ADMIN</p>
+          <p>
+            <strong>Xin chào, Admin!</strong>
+          </p>
+          <p className="text-xs text-gray-500">ADMIN</p>
+        </div>
       </div>
-      </div>
+
+      {/* Danh mục điều hướng */}
       <ul>
         <li className={isActive("/admin") ? "active" : ""}>
           <Link to="/admin">Dashboard</Link>
@@ -36,6 +47,13 @@ const Sidebar = () => {
         <li className={isActive("/admin/manageclinic") ? "active" : ""}>
           <Link to="/admin/manageclinic">Manage Clinic</Link>
         </li>
+
+        {/* --- Nút Login mới thêm --- */}
+        <li className={isActive("/login") ? "active" : ""}>
+           <Link to="/login">
+             <FaSignInAlt style={{ marginRight: "8px" }} />
+           </Link>
+       </li>
 
       </ul>
     </div>

@@ -6,8 +6,6 @@
     z-index: 10;
 }
 
-
-
 /* Dropdown menu */
 .dropdown-menu {
     border: none; /* Xóa viền */
@@ -125,9 +123,8 @@ button {
     color: #948786;
 }
 
-.logo img {
-    width: 500px;
-    height: auto;
+.logo-img {
+    width: 20px;
 }
 .logo-text{
     font-size: 30px;
