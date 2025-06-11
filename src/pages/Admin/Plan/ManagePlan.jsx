@@ -1,139 +1,190 @@
-import './ManagePlan.css';
-import { useState, useEffect } from 'react';
+import "./ManagePlan.css";
+import { useState, useEffect, useCallback } from "react";
 import axiosInstance from "../../../util/axios";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const times = [
+const TIMES = [
   "8:00 - 9:00", "9:00 - 10:00", "10:00 - 11:00", "11:00 - 12:00",
   "13:00 - 14:00", "14:00 - 15:00", "15:00 - 16:00", "16:00 - 17:00",
 ];
 
 function ManageSchedule() {
-  const [selectedTimes, setSelectedTimes] = useState([]);
+  const [selectedTimes, setSelectedTimes]   = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
-  const [doctorList, setDoctorList] = useState([]); // Danh sách bác sĩ
-  const uniqueDoctors = doctorList.filter((doctor, index, self) =>
-  index === self.findIndex((d) => d.id === doctor.id)
-);
+  const [selectedDate, setSelectedDate]     = useState("");
+  const [doctorList,    setDoctorList]      = useState([]);
+  const [bookedTimes,   setBookedTimes]     = useState([]);  // giờ đã lưu DB
 
-
-  // Gọi API để lấy danh sách bác sĩ
+  // Lấy danh sách bác sĩ
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
         const res = await axiosInstance.get("http://localhost:8084/api/get-all-doctors");
-        if (res.data.errCode === 0) {
-          setDoctorList(res.data.data);
-        } else {
-          toast.error("Không thể tải danh sách bác sĩ.");
-        }
-      } catch (error) {
-        console.error("Lỗi khi lấy danh sách bác sĩ:", error);
-        toast.error("Lỗi kết nối đến server.");
+        if (res.data.errCode === 0) setDoctorList(res.data.data);
+        else toast.error("Không thể tải danh sách bác sĩ.");
+      } catch (err) {
+        console.error(err);
+        toast.error("Lỗi kết nối server.");
       }
     };
-
     fetchDoctors();
   }, []);
 
-  const toggleTime = (time) => {
-    if (selectedTimes.includes(time)) {
-      setSelectedTimes(selectedTimes.filter(t => t !== time));
-    } else {
-      setSelectedTimes([...selectedTimes, time]);
-    }
-  };
-
-  const handleSaveSchedule = async () => {
-    if (!selectedDoctor || !selectedDate || selectedTimes.length === 0) {
-      toast.error("Vui lòng chọn đủ thông tin: bác sĩ, ngày và giờ khám.");
+  // Lấy giờ đã lưu từ DB (API mới)
+  const loadBookedTimes = useCallback(async (doctorId, dateISO) => {
+    if (!doctorId || !dateISO) {
+      setBookedTimes([]);
+      setSelectedTimes([]);
       return;
     }
 
-    let dateToSend = selectedDate;
-    if (!(selectedDate instanceof Date)) {
-      dateToSend = new Date(selectedDate);
+    try {
+      const res = await axiosInstance.get(
+        "http://localhost:8084/api/get-schedule-doctor-by-date",
+        { params: { doctorId, date: dateISO } }
+      );
+
+      if (res.data.errCode === 0 && res.data.data.length > 0) {
+        const timesFromAPI = res.data.data.map(item => item.timeType);
+        setBookedTimes(timesFromAPI);
+        setSelectedTimes(timesFromAPI); // tự chọn luôn
+      } else {
+        setBookedTimes([]);
+        setSelectedTimes([]);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Lỗi khi tải lịch khám.");
+      setBookedTimes([]);
+      setSelectedTimes([]);
+    }
+  }, []);
+
+  // Gọi khi thay bác sĩ hoặc ngày
+  useEffect(() => {
+    if (!selectedDoctor || !selectedDate) {
+      setBookedTimes([]);
+      setSelectedTimes([]);
+      return;
+    }
+    const isoDate = new Date(selectedDate).toISOString().split("T")[0];
+    loadBookedTimes(selectedDoctor, isoDate);
+  }, [selectedDoctor, selectedDate, loadBookedTimes]);
+
+  // Bấm chọn / bỏ chọn giờ (không cho bỏ chọn giờ đã lưu trước đó)
+  const toggleTime = (time) => {
+    if (bookedTimes.includes(time)) return;
+    setSelectedTimes(prev =>
+      prev.includes(time) ? prev.filter(t => t !== time) : [...prev, time]
+    );
+  };
+
+  // Lưu lịch khám
+  const handleSaveSchedule = async () => {
+    if (!selectedDoctor || !selectedDate || selectedTimes.length === 0) {
+      toast.error("Vui lòng chọn đủ bác sĩ, ngày và giờ.");
+      return;
     }
 
-    if (isNaN(dateToSend)) {
+    const dateObj = new Date(selectedDate);
+    if (isNaN(dateObj)) {
       toast.error("Ngày không hợp lệ.");
       return;
     }
+    const isoDate = dateObj.toISOString().split("T")[0];
 
-    const isoDateOnly = dateToSend.toISOString().split('T')[0];
-    const scheduleData = {
-      doctorId: selectedDoctor,
-      date: isoDateOnly,
-      arrSchedule: selectedTimes,
-    };
+    // Chỉ gửi những giờ chưa có trong DB
+    const timesToSave = selectedTimes.filter(t => !bookedTimes.includes(t));
+    if (timesToSave.length === 0) {
+      toast.warn("Tất cả giờ đã có trong lịch.");
+      return;
+    }
 
     try {
-      const response = await axiosInstance.post('http://localhost:8084/api/bulk-create-schedule', scheduleData);
-
-      if (response.data.errCode === 0) {
-        toast.success("Lịch khám đã được lưu thành công!");
-        setSelectedDoctor("");
-        setSelectedDate("");
-        setSelectedTimes([]);
+      const res = await axiosInstance.post(
+        "http://localhost:8084/api/bulk-create-schedule",
+        {
+          doctorId: selectedDoctor,
+          date: isoDate,
+          arrSchedule: timesToSave
+        }
+      );
+      if (res.data.errCode === 0) {
+        toast.success("Lưu lịch thành công!");
+        loadBookedTimes(selectedDoctor, isoDate); // load lại lịch
       } else {
-        toast.error(response.data.errMessage);
+        toast.error(res.data.errMessage || "Lỗi khi lưu.");
       }
-    } catch (error) {
-      console.error("Lỗi khi lưu lịch khám:", error);
-      toast.error("Có lỗi xảy ra khi lưu lịch khám.");
+    } catch (err) {
+      console.error(err);
+      toast.error("Có lỗi khi lưu lịch.");
     }
   };
-   
 
   return (
     <div className="schedule-container">
       <h2 className="title">QUẢN LÝ KẾ HOẠCH KHÁM BỆNH CỦA BÁC SĨ</h2>
 
+      {/* Chọn bác sĩ và ngày */}
       <div className="controls">
-        <select 
+        <select
           className="doctor-select"
           value={selectedDoctor}
-          onChange={(e) => setSelectedDoctor(e.target.value)}
+          onChange={e => {
+            setSelectedDoctor(e.target.value);
+            setSelectedTimes([]);
+          }}
         >
           <option value="">-- Chọn bác sĩ --</option>
-          {uniqueDoctors.map(doctor => (
-            <option key={doctor.id} value={doctor.id}>
-              {doctor.lastName} {doctor.firstName}
+          {doctorList.map(d => (
+            <option key={d.id} value={d.id}>
+              {d.lastName} {d.firstName}
             </option>
           ))}
         </select>
 
-        <input 
-          type="date" 
-          className="date-input" 
+        <input
+          type="date"
+          className="date-input"
           value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
+          onChange={e => {
+            setSelectedDate(e.target.value);
+            setSelectedTimes([]);
+          }}
         />
       </div>
 
+      {/* Hiển thị khung giờ */}
       <div className="time-slots">
-        {times.map((time) => (
-          <button
-            key={time}
-            onClick={() => toggleTime(time)}
-            className={`time-button ${selectedTimes.includes(time) ? 'selected' : ''}`}
-          >
-            {time}
-          </button>
-        ))}
+        {TIMES.map(time => {
+          const isBooked   = bookedTimes.includes(time);
+          const isSelected = selectedTimes.includes(time);
+
+          return (
+            <button
+              key={time}
+              onClick={() => toggleTime(time)}
+              disabled={isBooked}
+              className={`time-button ${isBooked ? "booked" : ""} ${isSelected ? "selected" : ""}`}
+              title={isBooked ? "Đã có lịch" : ""}
+            >
+              {time}
+            </button>
+          );
+        })}
       </div>
 
-      <button className="save-button" onClick={handleSaveSchedule}>Lưu thông tin</button>
+      {/* Nút lưu */}
+      <button
+        className="save-button"
+        onClick={handleSaveSchedule}
+        disabled={bookedTimes.length === TIMES.length}
+      >
+        Lưu thông tin
+      </button>
 
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={true}
-        closeOnClick
-        pauseOnHover
-      />
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
     </div>
   );
 }

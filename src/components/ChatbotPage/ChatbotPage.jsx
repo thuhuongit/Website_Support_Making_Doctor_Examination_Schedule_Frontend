@@ -18,7 +18,7 @@ const ChatbotPage = () => {
       {/* Sidebar bên trái */}
       <div className="sidebar">
         <div className="logo" onClick={() => navigate("/")}>
-          <img src="/logo.png" alt="BookingCare" />
+          <img src="/logo.png" alt="BookingCare" style={{width: '50px'}} />
           <span>BookingCare</span>
         </div>
         <button className="new-chat-btn">+ Cuộc trò chuyện mới</button>

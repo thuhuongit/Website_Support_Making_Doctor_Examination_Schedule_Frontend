@@ -187,7 +187,7 @@ const User = () => {
 
   return (
     <div className="user-form-container">
-      <h1 style={{ textAlign: 'center' }}>THÊM NGƯỜI DÙNG MỚI</h1>
+      <h1 style={{ textAlign: 'center' }}>THÊM BÁC SĨ MỚI</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-row">
           <input type="text" name="email" placeholder="Email"  value={formData.email} onChange={handleChange} />

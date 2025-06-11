@@ -1,84 +1,40 @@
-/* Container tổng thể của form */
-.form-container {
-  background-color: #ffffff;
-  padding: 40px;
-  border-radius: 12px;
-  max-width: 1500px;
+.table-wrapper {
+  margin-top: 10px;
+  overflow-x: auto;
+}
+
+.specialty-table {
   width: 100%;
-  margin: 100px auto; /* Căn giữa */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-collapse: collapse;
 }
 
-/* Tiêu đề */
-.form-container h2 {
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 30px;
-  font-size: 28px;
+.specialty-table th,
+.specialty-table td {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  text-align: left;
 }
 
-/* Mỗi nhóm input */
-.form-group {
-  margin-bottom: 20px;
+.specialty-table th {
+  background-color: #f4f4f4;
 }
 
-/* Label */
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #34495e;
-  font-size: 15px;
+.thumb {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
 }
 
-/* Input và textarea */
-.form-group input[type="text"],
-.form-group input[type="file"],
-.form-group textarea {
-  width: 100%;
-  padding: 12px;
-  font-size: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
-}
-
-.form-group input[type="text"]:focus,
-.form-group textarea:focus {
-  border-color: #f39c12;
-  outline: none;
-}
-
-/* Textarea */
-.form-group textarea {
-  height: 140px;
-  resize: vertical;
-}
-
-/* Hiển thị tên file */
-.form-group span {
-  display: block;
-  margin-top: 8px;
-  color: #666;
-  font-size: 14px;
-}
-
-/* Nút Save */
-.save-button {
-  background-color: #f39c12;
+.delete-btn {
+  background-color: #e53935;
   color: #fff;
-  font-size: 16px;
-  padding: 12px 25px;
   border: none;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: 4px;
   cursor: pointer;
-  display: block;
-  margin: 30px auto 0;
-  transition: background-color 0.3s ease;
 }
 
-.save-button:hover {
-  background-color: #e67e22;
+.delete-btn:hover {
+  background-color: #d32f2f;
 }

@@ -3,6 +3,7 @@
     padding: 24px;
     border-radius: 8px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 60px;
   }
   
   .title {
@@ -56,3 +57,12 @@
     cursor: pointer;
   }
   
+.time-button.booked {
+  background-color: #c40c0c;
+  color: #fffefe;
+  cursor: not-allowed;
+}
+
+.time-button.booked:hover {
+  background-color: #aa190f;
+}

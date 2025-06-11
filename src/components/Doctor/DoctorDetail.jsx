@@ -106,7 +106,7 @@ function DoctorSchedule() {
       {/* Navbar */}
       <nav className="navbar">
         <div className="logo" onClick={() => navigate("/")}>
-          <img className="logo-img" src="/logo.png" alt="BookingCare" />
+          <img className="logo-img" src="/logo.png" alt="BookingCare" style={{width: '50px'}} />
           <span className="logo-text">BookingCare</span>
         </div>
 

@@ -1,6 +1,6 @@
 import React from "react";
 import "./Banner.css";
-import { useTranslation } from "react-i18next"; // ✅ Import bắt buộc
+import { useTranslation } from "react-i18next";
 
 
 
