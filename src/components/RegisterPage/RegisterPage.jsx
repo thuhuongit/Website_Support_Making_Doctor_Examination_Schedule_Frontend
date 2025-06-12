@@ -63,13 +63,13 @@ const RegisterPage = () => {
         <h1>BOOKING CARE</h1>
         <div className="announcement">
           <span>CHÍNH THỨC RA MẮT</span>
-          <h2>ĐẶT LỊCH KHÁM BỆNH ONLINE</h2>
+          <h2 className="styled-heading">ĐẶT LỊCH KHÁM BỆNH ONLINE</h2>
           <p>HỎI NHANH, ĐÁP CHUẨN - ĐẶT KHÁM DỄ DÀNG</p>
         </div>
       </div>
 
       <div className="register-right">
-        <h1>ĐĂNG KÝ TÀI KHOẢN</h1>
+        <h1 style={{ textAlign: "center" }}>ĐĂNG KÝ TÀI KHOẢN</h1>
         <form onSubmit={handleSubmit}>
           <input type="email" name="email" placeholder="Email *" required value={formData.email} onChange={handleChange} />
           <input type="password" name="password" placeholder="Password *" required value={formData.password} onChange={handleChange} />
@@ -90,7 +90,7 @@ const RegisterPage = () => {
         </form>
 
         <p className="terms">
-          Bằng việc nhấn nút ĐĂNG KÝ, bạn đã đồng ý với
+          Bằng việc nhấn nút ĐĂNG KÝ NGAY, bạn đã đồng ý với
           <a href="#"> điều khoản sử dụng dịch vụ </a>
           và
           <a href="#"> chính sách bảo mật </a> của chúng tôi.

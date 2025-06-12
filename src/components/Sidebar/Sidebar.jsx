@@ -1,30 +1,49 @@
 import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import "./Sidebar.css";
 import { FaSignInAlt } from "react-icons/fa";
 
-
 const Sidebar = () => {
   const location = useLocation();
+  const [adminInfo, setAdminInfo] = useState(null);
 
   // So sánh trùng khớp tuyệt đối đường dẫn
   const isActive = (path) => location.pathname === path;
 
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      if (user.image && user.image.type === "Buffer" && Array.isArray(user.image.data)) {
+      const buffer = new Uint8Array(user.image.data);
+      user.image = new TextDecoder().decode(buffer); 
+    }
+
+      // Gộp tên đầy đủ
+      user.fullName = `${user.lastName?.trim() || ""} ${user.firstName?.trim() || ""}`;
+      setAdminInfo(user);
+    }
+  }, []);
+
   return (
     <div className="sidebar" style={{ backgroundColor: "#ffffff" }}>
-
-      
       {/* Thông tin người dùng */}
       <div className="user-info">
         <img
-          src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-          alt="avatar"
+          src={
+            adminInfo?.image?.startsWith("data:image")
+              ? adminInfo.image
+              : adminInfo?.image
+              ? `http://localhost:8084${adminInfo.image}`
+              : "/default-avatar.png"
+          }
+          alt="Admin"
+          className="avatar"
         />
-        <div>
-          <p>
-            <strong>Xin chào, Admin!</strong>
-          </p>
-          <p className="text-xs text-gray-500">ADMIN</p>
-        </div>
+        
+        <p className="name"> 
+          Xin chào, {adminInfo ? adminInfo.fullName : "Loading..."}
+        </p>
+        <p className="role">ADMIN</p>
       </div>
 
       {/* Danh mục điều hướng */}
@@ -47,14 +66,6 @@ const Sidebar = () => {
         <li className={isActive("/admin/manageclinic") ? "active" : ""}>
           <Link to="/admin/manageclinic">Manage Clinic</Link>
         </li>
-
-        {/* --- Nút Login mới thêm --- */}
-        <li className={isActive("/login") ? "active" : ""}>
-           <Link to="/login">
-             <FaSignInAlt style={{ marginRight: "8px" }} />
-           </Link>
-       </li>
-
       </ul>
     </div>
   );

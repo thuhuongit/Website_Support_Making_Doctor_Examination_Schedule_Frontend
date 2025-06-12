@@ -1,89 +1,68 @@
+/* Sidebar container */
 .sidebar {
   width: 250px;
-  background-color: #ffffff; 
-  color: #f82121;
   height: 100vh;
-  padding: 1.5rem 1rem;
+  background-color: #ffffff;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  padding: 20px 15px;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-  position: relative; 
-  z-index: 10;
+  font-family: "Segoe UI", sans-serif;
 }
 
-/* Phần logo bên trái */
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: bold;
-    color: #d82c20;
-    font-size: 100px;
-    cursor: pointer;
-    
-}
-
-.logo i {
-    font-size: 27px;
-    color: #948786;
-}
-
-.logo img {
-    width: 500px;
-    height: auto;
-}
-.logo-text{
-    font-size: 30px;
-}
-
+/* User info section */
 .user-info {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.user-info img {
-  width: 50px;
-  height: 50px;
-  border-radius: 9999px;
-  border: 2px solid #fff;
+.user-info .avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%; /* Bo tròn hình ảnh */
+  object-fit: cover; /* Giúp ảnh không bị méo */
+  margin-bottom: 10px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.user-info p {
-  margin: 0;
-  line-height: 1.2;
-  color: black;
+.user-info .name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
 }
 
-ul {
+/* Navigation menu */
+.sidebar ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
 }
 
-ul li a {
-  text-decoration: none;
-  color: #e94319; 
-  font-weight: 500;
-  padding: 0.5rem 1rem;
+.sidebar ul li {
+  margin-bottom: 12px;
+}
+
+.sidebar ul li a {
   display: block;
-  border-radius: 0.375rem;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: #333;
+  text-decoration: none;
   transition: all 0.2s ease-in-out;
+  font-weight: 500;
 }
 
-ul li a:hover {
-  background-color: #FFB84D; 
+.sidebar ul li a:hover {
+  background-color: #f0f4ff;
+  color: #2b7cff;
+}
+
+.sidebar ul li.active a {
+  background-color: #2b7cff;
   color: #fff;
-  box-shadow: 0 4px 6px rgba(255, 184, 77, 0.4); 
-}
-
-ul li.active a {
-  background-color: #FF9F00; 
-  color: white;
-  box-shadow: 0 4px 6px rgba(255, 159, 0, 0.4); 
+  font-weight: 600;
 }

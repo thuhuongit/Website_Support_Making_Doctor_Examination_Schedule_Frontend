@@ -88,7 +88,7 @@ const LoginPage = () => {
           <div className="password-field">
             <input
               type={showPassword ? "text" : "password"}
-              placeholder="Mật khẩu đăng nhập"
+              placeholder="Mật khẩu"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -108,8 +108,8 @@ const LoginPage = () => {
         <div className="login-divider">Hoặc đăng nhập với</div>
 
         <div className="social-login">
-          <button className="facebook-btn">Facebook</button>
-          <button className="google-btn">Google</button>
+          <button className="facebook-btn"> <i class="fa-brands fa-facebook"></i> Facebook</button>
+          <button className="google-btn"> <i class="fa-brands fa-google"></i> Google</button>
         </div>
       </div>
     </div>

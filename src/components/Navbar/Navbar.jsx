@@ -17,6 +17,8 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false); // State để mở menu
   const navigate = useNavigate();
   const [highlighted, setHighlighted] = useState(null);
+  const [user, setUser] = useState(null);
+
 
     // Tạo ref cho phần "Chuyên khoa phổ biến"
     const specialtiesRef = useRef(null);
@@ -53,6 +55,18 @@ const Navbar = () => {
     i18n.changeLanguage(savedLanguage);
     setActiveLang(savedLanguage); // Đảm bảo nút hiển thị đúng màu khi tải trang
   }, []);
+
+  useEffect(() => {
+  const savedLanguage = localStorage.getItem("language") || "vi";
+  i18n.changeLanguage(savedLanguage);
+  setActiveLang(savedLanguage);
+
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  if (storedUser) {
+    setUser(storedUser);
+  }
+}, []);
+
 
   return (
     <div className="header-container">
@@ -109,6 +123,8 @@ const Navbar = () => {
               🇺🇸
             </button>
           </div>
+
+
         </div>
 
       

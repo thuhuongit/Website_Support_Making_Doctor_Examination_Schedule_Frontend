@@ -33,6 +33,7 @@ const DoctorSidebar = () => {
         )}
 
         <p className="name">
+          Xin chào,{" "}
           {doctorInfo
             ? `${doctorInfo.lastName || ""} ${doctorInfo.firstName || ""}`
             : "Loading..."}

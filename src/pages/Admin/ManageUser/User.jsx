@@ -14,9 +14,9 @@ const User = () => {
     firstName: "",
     phone: "",
     address: "",
-    gender: "Nam",
-    role: "Bác sĩ",
-    position: "Tiến sĩ",
+    gender: "",
+    role: "",
+    position: "",
     avatar: null,
   });
 
@@ -143,9 +143,9 @@ const User = () => {
       firstName: "",
       phone: "",
       address: "",
-      gender: "Nam",
-      role: "Bác sĩsĩ",
-      position: "Tiến sĩ",
+      gender: "",
+      role: "",
+      position: "",
       avatar: null,
     });
     setAvatarPreview(null);
@@ -203,17 +203,18 @@ const User = () => {
 
         <div className="form-row" >
           <select name="gender" className="small-select" value={formData.gender} onChange={handleChange} >
-            <option value="Nam">Nam</option>
-            <option value="Nữ">Nữ</option>
-            <option value="Khác">Khác</option>
+            <option value="0">Nam</option>
+            <option value="1">Nữ</option>
+            <option value="2">Khác</option>
           </select>
 
           <select name="role" className="small-select" value={formData.role} onChange={handleChange} >
-            <option value="Admin">Admin</option>
-            <option value="Bác sĩ">Bác sĩ</option>
+           <option value="Admin">Admin</option>
+           <option value="Bác sĩ">Bác sĩ</option>
+            
           </select>
 
-          <select name="position" className="small-select" value={formData.position} onChange={handleChange}  >
+          <select name="position" className="small-select" value={formData.position} onChange={handleChange}  disabled={formData.role === "Admin"}  >
             <option value="Bác sĩ">Bác sĩ</option>
             <option value="Tiến sĩ">Tiến sĩ</option>
             <option value="Thạc sĩ">Thạc sĩ</option>

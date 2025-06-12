@@ -184,7 +184,7 @@ form input {
 }
 
 .login-btn {
-  background: #7b61da;
+  background: linear-gradient(to right, #7b61da, #9c27b0);
   color: white;
   width: 100%;
   padding: 12px;
@@ -237,12 +237,12 @@ form input {
 }
 
 .facebook-btn {
-  background: #3b5998;
+  background: #2e467a;
   color: white;
 }
 
 .google-btn {
-  background: #ffffff;
+  background: #5286e7;
   border: 1px solid #ddd;
-  color: #333;
+  color: #fffefe;
 }
