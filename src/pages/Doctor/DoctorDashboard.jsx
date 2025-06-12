@@ -108,21 +108,6 @@ const DoctorDashboard = () => {
         <div className="doctor-header">
           <h2>QUẢN LÝ BỆNH NHÂN KHÁM BỆNH</h2>
 
-          {/* Dropdown chọn bác sĩ */}
-          <select
-            value={selectedDoctorId}
-            onChange={(e) => setSelectedDoctorId(e.target.value)}
-            className="doctor-select"
-            style={{marginTop: "10px", maxWidth: "350px"}}
-          >
-            <option value="">-- Chọn bác sĩ --</option>
-            {uniqueDoctors.map((doc) => (
-              <option key={doc.id} value={doc.id}>
-                {doc.lastName} {doc.firstName}
-              </option>
-            ))}
-          </select>
-
           {/* Chọn ngày */}
           <input
             type="date"

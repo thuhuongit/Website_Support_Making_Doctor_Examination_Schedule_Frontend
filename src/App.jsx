@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginForm from "./pages/login/index";
+import LoginForm from "./pages/login/login";
 import { ToastContainer } from "react-toastify";
 import Header from "./pages/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
@@ -9,6 +9,8 @@ import ChatbotPage from "./components/ChatbotPage/ChatbotPage";
 import Hospital from "./components/Hospital/Hospital";
 import Doctor from "./components/Doctor/DoctorDetail";
 import Book from "./components/Book/Book"
+import RegisterPage from "./components/RegisterPage/RegisterPage";
+
 
 
 import AdminLayout from "./pages/Admin/layout/AdminLayout";
@@ -54,17 +56,19 @@ function App() {
 
 
 
+
+
+          <Route path="/register" element={<RegisterPage />} />
+
+
+
           <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
-          
-      
              <Route path="manageuser" element={<ManageUser />} />
              <Route path="plan" element={<ManagePlan />} />
              <Route path="managedoctor" element={<ManageDoctor />} />
              <Route path="managespecialist" element={<ManageSpecialist />} />
-             <Route path="manageclinic" element={<ManageClinic />} />
-
-             
+             <Route path="manageclinic" element={<ManageClinic />} />       
           </Route>
          
 

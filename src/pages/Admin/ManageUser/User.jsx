@@ -223,7 +223,7 @@ const User = () => {
           </select>
 
 
-          <div className="upload-container" style={{ flex: "0 0 50px", maxWidth: "250px", maxHeight: "70px", marginTop: "-1px",  marginLeft: "30px" }}>
+          <div className="upload-container" style={{ flex: "0 0 50px", maxWidth: "500px", maxHeight: "70px", marginTop: "-1px",  marginLeft: "30px" }}>
             <label htmlFor="avatar">Tải ảnh</label>
             <input id="avatar" type="file" accept="image/*" onChange={handleImageChange} />
           </div>

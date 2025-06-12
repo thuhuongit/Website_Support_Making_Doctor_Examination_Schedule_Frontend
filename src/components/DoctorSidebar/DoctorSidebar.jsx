@@ -7,10 +7,10 @@ const DoctorSidebar = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
-      // Nếu ảnh base64 chưa có prefix thì thêm prefix
-      if (user.image && !user.image.startsWith("data:image")) {
-        user.image = `data:image/jpeg;base64,${user.image}`;
-      }
+      if (user.image && user.image.type === "Buffer" && Array.isArray(user.image.data)) {
+      const buffer = new Uint8Array(user.image.data);
+      user.image = new TextDecoder().decode(buffer); 
+    }
       setDoctorInfo(user);
     }
   }, []);

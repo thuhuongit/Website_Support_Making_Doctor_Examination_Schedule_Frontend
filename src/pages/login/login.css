@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("/nen14.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-box {
+  width: 350px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 15px;
+  border-radius: 25px;  
+  overflow: hidden; 
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px 40px;
+  border-radius: 25px; /* Bo góc đúng */
+  background: rgba(255, 255, 255, 0.3);
+  color: rgb(3, 3, 3);
+  outline: none;
+  font-size: 16px;
+  transition: border-color 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+
+
+
+.input-field::placeholder {
+  color: 0 0 8px rgba(59, 130, 246, 0.5);
+  transition: opacity 0.3s ease-in-out;
+}
+.input-field:focus::placeholder {
+  opacity: 0; /* Khi focus vào input, placeholder biến mất */
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: black;
+}
+
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  background: rgba(56, 104, 206, 0.8);
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  background: rgba(56, 104, 206, 0.8);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  
+}
+
+.login-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+}
+
+.forgot-link {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f4f7fa;
+  font-family: Arial, sans-serif;
+}
+
+.login-box {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 450px;
+  text-align: center;
+}
+
+.login-logo img {
+  width: 100px;
+  margin-bottom: 10px;
+}
+.form-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.form-logo .logo-img {
+  width: 50px;
+}
+
+.form-logo .logo-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: #e22d2d;
+  margin-top: 8px;
+}
+
+
+.login-box h2 {
+  margin-bottom: 25px;
+  font-size: 18px;
+  color: #333;
+}
+
+form input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-field span {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  cursor: pointer;
+}
+
+.forgot-password {
+  text-align: right;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.forgot-password a {
+  text-decoration: none;
+  color: #3399ff;
+}
+
+.login-btn {
+  background: #7b61da;
+  color: white;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  margin-top: 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-field input {
+  flex: 1;
+  padding-right: 35px; 
+}
+
+.password-toggle {
+  position: absolute;
+  right: 5px;
+  top: 70%;
+  transform: translateY(80%); 
+  cursor: pointer;
+  color: #666;
+}
+
+.login-divider {
+  margin: 20px 0;
+  font-size: 13px;
+  color: #999;
+}
+
+.social-login {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.facebook-btn, .google-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.facebook-btn {
+  background: #3b5998;
+  color: white;
+}
+
+.google-btn {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  color: #333;
+}

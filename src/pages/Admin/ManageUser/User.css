@@ -51,6 +51,9 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  flex: 0 0 50px;
+  max-width: 250px;
+  max-height: 700px;
 }
 
 /* Avatar input */
@@ -98,7 +101,7 @@
 .user-table td {
   padding: 14px 16px;
   text-align: left;
-  border-bottom: 1px solid #e0e0e0;
+  border: 1px solid #ddd;
 }
 
 .user-table thead {

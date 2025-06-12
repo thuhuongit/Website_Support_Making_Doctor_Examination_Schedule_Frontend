@@ -17,7 +17,7 @@ const ChatbotPage = () => {
     <div className="chatbot-container">
       {/* Sidebar bên trái */}
       <div className="sidebar">
-        <div className="logo" onClick={() => navigate("/")}>
+        <div className="logo" onClick={() => navigate("/")} style={{width: '20px'}} >
           <img src="/logo.png" alt="BookingCare" style={{width: '50px'}} />
           <span>BookingCare</span>
         </div>

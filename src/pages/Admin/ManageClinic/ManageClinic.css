@@ -8,6 +8,7 @@
   margin: 100px auto; /* Căn giữa */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 5px;
 }
 
 /* Tiêu đề */
@@ -96,7 +97,7 @@
 .clinic-table th, .clinic-table td {
   padding: 12px 16px;
   text-align: center;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
 }
 
 .clinic-table th {
