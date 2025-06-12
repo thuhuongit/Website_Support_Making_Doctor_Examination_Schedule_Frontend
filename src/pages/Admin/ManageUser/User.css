@@ -23,52 +23,56 @@
   gap: 15px;
   margin-bottom: 15px;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 
+/* Dropdown nhỏ với chiều rộng cố định */
 .small-select {
   padding: 8px 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 14px;
   background: white;
-  flex: 0 0 50px; /* chiều rộng cố định 150px, không kéo giãn */
-  max-width: 150px; /* optional giới hạn max-width */
+  width: 200px; /* chiều rộng cố định */
+  min-width: 100px;
+  box-sizing: border-box;
 }
 
 
-
-/* Input và Select */
+/* Input và Select chung */
 .form-row input,
-.form-row select {
+.form-row select:not(.small-select) {
   flex: 1;
   padding: 8px;
   border: 1px solid #aaa;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 
 /* Container cho phần upload ảnh */
 .upload-container {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  flex: 0 0 50px;
-  max-width: 250px;
-  max-height: 700px;
+  align-items: flex-start;
+  gap: 6px;
+  width: 180px; /* chiều rộng cố định */
+  box-sizing: border-box;
 }
 
-/* Avatar input */
+/* Input upload ảnh */
 #avatar {
   padding: 4px;
+  width: 100%;
 }
 
 /* Ảnh preview */
 .avatar-preview img {
-  margin-top: 10px;
+  margin-top: 5px;
+  max-width: 100%;
   max-height: 100px;
   border: 1px solid #999;
   border-radius: 6px;
 }
-
 /* Nút lưu */
 .save-btn {
   background-color: #007bff;
@@ -114,7 +118,7 @@
 }
 
 .edit-btn, .delete-btn {
-  background-color: #2c44af; /* màu xanh lá cho nút sửa */
+  background-color: #2c44af;
   border: none;
   color: white;
   padding: 8px 10px;

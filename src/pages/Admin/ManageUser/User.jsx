@@ -15,7 +15,7 @@ const User = () => {
     phone: "",
     address: "",
     gender: "Nam",
-    role: "Bệnh nhân",
+    role: "Bác sĩ",
     position: "Tiến sĩ",
     avatar: null,
   });
@@ -144,7 +144,7 @@ const User = () => {
       phone: "",
       address: "",
       gender: "Nam",
-      role: "Bệnh nhân",
+      role: "Bác sĩsĩ",
       position: "Tiến sĩ",
       avatar: null,
     });
@@ -187,7 +187,7 @@ const User = () => {
 
   return (
     <div className="user-form-container">
-      <h1 style={{ textAlign: 'center' }}>THÊM BÁC SĨ MỚI</h1>
+      <h1 style={{ textAlign: 'center' }}>THÊM BÁC SĨ VÀ ADMIN MỚI</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-row">
           <input type="text" name="email" placeholder="Email"  value={formData.email} onChange={handleChange} />
@@ -202,32 +202,29 @@ const User = () => {
         </div>
 
         <div className="form-row" >
-          <select name="gender" className="small-select" value={formData.gender} onChange={handleChange} style={{ flex: "0 0 50px", maxWidth: "200px", maxHeight: "70px", marginTop: "30px" }}>
-            <option value="0">Nam</option>
-            <option value="1">Nữ</option>
-            <option value="2">Khác</option>
+          <select name="gender" className="small-select" value={formData.gender} onChange={handleChange} >
+            <option value="Nam">Nam</option>
+            <option value="Nữ">Nữ</option>
+            <option value="Khác">Khác</option>
           </select>
 
-          <select name="role" className="small-select" value={formData.role} onChange={handleChange} style={{ flex: "0 0 50px", maxWidth: "20200px", maxHeight: "70px", marginTop: "30px" }}>
-            <option value="Bệnh nhân">Bệnh nhân</option>
-            <option value="Bác sĩ">Bác sĩ</option>
+          <select name="role" className="small-select" value={formData.role} onChange={handleChange} >
             <option value="Admin">Admin</option>
+            <option value="Bác sĩ">Bác sĩ</option>
           </select>
 
-          <select name="position" className="small-select" value={formData.position} onChange={handleChange}  style={{ flex: "0 0 50px", maxWidth: "200px", maxHeight: "70px", marginTop: "30px" }}>
+          <select name="position" className="small-select" value={formData.position} onChange={handleChange}  >
             <option value="Bác sĩ">Bác sĩ</option>
             <option value="Tiến sĩ">Tiến sĩ</option>
             <option value="Thạc sĩ">Thạc sĩ</option>
             <option value="Phó giáo sư">Phó giáo sư</option>
             <option value="Giáo sư">Giáo sư</option>
           </select>
-
-
-          <div className="upload-container" style={{ flex: "0 0 50px", maxWidth: "500px", maxHeight: "70px", marginTop: "-1px",  marginLeft: "30px" }}>
+        </div>
+        <div className="upload-container">
             <label htmlFor="avatar">Tải ảnh</label>
             <input id="avatar" type="file" accept="image/*" onChange={handleImageChange} />
           </div>
-        </div>
 
         {avatarPreview && (
           <div className="avatar-preview">

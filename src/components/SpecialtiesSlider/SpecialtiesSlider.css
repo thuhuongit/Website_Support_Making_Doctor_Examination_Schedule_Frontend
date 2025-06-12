@@ -45,10 +45,11 @@
 .specialty-item img {
     width: 100%;
     height: 180px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 8px;
     cursor: pointer;
 }
+
 
 /* Hiển thị thông tin dưới mỗi ảnh */
 .specialty-item p {

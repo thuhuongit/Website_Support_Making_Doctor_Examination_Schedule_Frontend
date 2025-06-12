@@ -6,18 +6,18 @@ import './RegisterPage.css';
 
 const RegisterPage = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
-  // State cho các trường input
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     firstName: '',
     lastName: '',
+    gender: '',
     address: '',
     phone: ''
   });
 
-  // Xử lý thay đổi input
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -26,16 +26,13 @@ const RegisterPage = () => {
     }));
   };
 
-  // Xử lý submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axiosInstance.post("http://localhost:8084/api/create-new-user", formData);
       if (response.data && response.data.errCode === 0) {
-        alert("Đăng ký thành công!");
-        // Optional: chuyển hướng sang trang login
-        // navigate('/login');
+        navigate('/login');
       } else {
         alert(response.data.message || "Đăng ký thất bại!");
       }
@@ -47,7 +44,6 @@ const RegisterPage = () => {
 
   return (
     <div className="register-container">
-      {/* Navbar */}
       <nav className="navbar">
         <div className="logo" onClick={() => window.location.href = "/"}>
           <img className="logo-img" src="/logo.png" alt="BookingCare" style={{ width: '50px' }} />
@@ -63,7 +59,6 @@ const RegisterPage = () => {
         </div>
       </nav>
 
-      {/* Left Side */}
       <div className="register-left">
         <h1>BOOKING CARE</h1>
         <div className="announcement">
@@ -73,7 +68,6 @@ const RegisterPage = () => {
         </div>
       </div>
 
-      {/* Right Side */}
       <div className="register-right">
         <h1>ĐĂNG KÝ TÀI KHOẢN</h1>
         <form onSubmit={handleSubmit}>
@@ -81,10 +75,20 @@ const RegisterPage = () => {
           <input type="password" name="password" placeholder="Password *" required value={formData.password} onChange={handleChange} />
           <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} />
           <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} />
+          
+          {/* Khung chọn giới tính */}
+          <select name="gender" value={formData.gender} onChange={handleChange} required>
+            <option value="">-- Chọn giới tính --</option>
+            <option value="0">Nam</option>
+            <option value="1">Nữ</option>
+            <option value="2">Khác</option>
+          </select>
+
           <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} />
           <input type="text" name="phone" placeholder="Phone" value={formData.phone} onChange={handleChange} />
           <button type="submit">ĐĂNG KÝ NGAY</button>
         </form>
+
         <p className="terms">
           Bằng việc nhấn nút ĐĂNG KÝ, bạn đã đồng ý với
           <a href="#"> điều khoản sử dụng dịch vụ </a>

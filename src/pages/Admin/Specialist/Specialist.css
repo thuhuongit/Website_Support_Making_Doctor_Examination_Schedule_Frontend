@@ -1,3 +1,15 @@
+.form-container {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  max-width: 1500px;
+  width: 100%;
+  margin: 100px auto; /* Căn giữa */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 5px;
+}
+
 .table-wrapper {
   margin-top: 5px;
   overflow-x: auto;
@@ -33,6 +45,8 @@
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
 
 .delete-btn:hover {

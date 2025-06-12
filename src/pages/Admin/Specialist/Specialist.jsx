@@ -144,7 +144,7 @@ const Specialist = () => {
 
       {/* BẢNG CHUYÊN KHOA */}
       <h3 style={{ marginTop: "40px" }}>Danh sách chuyên khoa</h3>
-      <div className="table-wrapper">
+      <div className="table-wrapper" >
         <table className="specialty-table">
           <thead>
             <tr>
