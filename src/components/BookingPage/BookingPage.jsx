@@ -157,7 +157,7 @@ const BookingForm = () => {
         </select>
 
         <h4>Hình thức thanh toán</h4>
-        <label style={{ display: 'flex', alignItems: 'center', width: '300px' }}>
+        <label style={{ display: 'flex', alignItems: 'center', width: '300px', whiteSpace: 'nowrap' }}>
           <input type="radio" name="paymentMethod" value="after" checked={paymentMethod === "after"} onChange={(e) => setPaymentMethod(e.target.value)} />
           Thanh toán sau tại cơ sở y tế
         </label>
