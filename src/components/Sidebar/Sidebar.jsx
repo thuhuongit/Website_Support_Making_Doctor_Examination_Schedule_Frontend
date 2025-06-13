@@ -67,6 +67,12 @@ const Sidebar = () => {
           <Link to="/admin/manageclinic">Manage Clinic</Link>
         </li>
       </ul>
+      {/* Đăng xuất */}
+      <div className="logout">
+        <Link to="/login" className="logout-link">
+          <FaSignInAlt /> Đăng xuất
+        </Link>
+    </div>
     </div>
   );
 };

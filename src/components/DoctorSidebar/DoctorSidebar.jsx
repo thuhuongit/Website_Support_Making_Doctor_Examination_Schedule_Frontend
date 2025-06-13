@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./DoctorSidebar.css";
+import { Link, useLocation } from "react-router-dom";
+import { FaSignInAlt } from "react-icons/fa";
 
 const DoctorSidebar = () => {
   const [doctorInfo, setDoctorInfo] = useState(null);
@@ -46,6 +48,15 @@ const DoctorSidebar = () => {
           <li className="active">Manage Doctor's Patient</li>
         </ul>
       </nav>
+
+      {/* Đăng xuất */}
+      <div className="logout">
+        <Link to="/login" className="logout-link">
+          <FaSignInAlt /> Đăng xuất
+        </Link>
+    </div>
+
+
     </div>
   );
 };

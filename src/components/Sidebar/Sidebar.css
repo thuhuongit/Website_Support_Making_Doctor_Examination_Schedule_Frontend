@@ -19,8 +19,8 @@
 .user-info .avatar {
   width: 70px;
   height: 70px;
-  border-radius: 50%; /* Bo tròn hình ảnh */
-  object-fit: cover; /* Giúp ảnh không bị méo */
+  border-radius: 50%; 
+  object-fit: cover; 
   margin-bottom: 10px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
   display: block;
@@ -65,4 +65,24 @@
   background-color: #2b7cff;
   color: #fff;
   font-weight: 600;
+}
+
+.logout {
+  padding: 20px;
+  margin-top: auto; 
+  background-color: #f8f8f8;
+  border-top: 1px solid #eee;
+}
+
+.logout-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.logout-link:hover {
+  color: #d82c20;
 }
