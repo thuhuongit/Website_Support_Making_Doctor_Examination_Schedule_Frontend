@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import './Navbar.css';
 import { useTranslation } from "react-i18next";
 import "../../i18n";
+import TopBar from '../TopBar/TopBar';
 import Banner from '../Banner/Banner';
 import SpecialtiesSlider from '../SpecialtiesSlider/SpecialtiesSlider'
 import Media from '../Media/Media';
@@ -70,12 +71,12 @@ const Navbar = () => {
 
   return (
     <div className="header-container">
+       <TopBar/>
       <div class="ai-assistant" onClick={() => navigate("/chat")} style={{ cursor: "pointer" }} >
           <img src="/chatbot.png" alt="Trợ lý AI" />
           <span>Trợ lý AI</span>
       </div>
 
-    
 
       <nav className="navbar">
         {/* Logo */}
@@ -124,8 +125,8 @@ const Navbar = () => {
             </button>
           </div>
 
-
         </div>
+       
 
       
 

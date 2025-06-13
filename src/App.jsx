@@ -29,6 +29,7 @@ import BookingPage from "./components/BookingPage/BookingPage";
 import DetailSpecialty from "./components/Detail-Specialty/Detail-Specialty"; 
 import DetailHospital from "./components/Detail-Hospital/Detail-Hospital"; 
 
+
 function App() {
   const user = JSON.parse(localStorage.getItem('user'));
   return (
@@ -53,6 +54,7 @@ function App() {
           <Route path="/specialty/:id" element={<Specialty/>} />
           <Route path="/detail-specialty/:id" element={<DetailSpecialty/>} />
           <Route path="/booking/:doctorId" element={<BookingPage/>} />
+        
 
 
 

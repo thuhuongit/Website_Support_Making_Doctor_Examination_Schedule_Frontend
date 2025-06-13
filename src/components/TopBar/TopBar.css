@@ -1,0 +1,44 @@
+.top-bar {
+  background-color: #7b61da;
+  color: white;
+  padding: 5px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+}
+
+/* Bên trái */
+.top-bar-left span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Bên phải */
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Khoảng cách giữa các mục */
+}
+
+.top-bar-right span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+.top-bar-right span:hover {
+  opacity: 0.8;
+}

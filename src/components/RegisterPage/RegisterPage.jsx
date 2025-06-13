@@ -44,7 +44,7 @@ const RegisterPage = () => {
 
   return (
     <div className="register-container">
-      <nav className="navbar">
+      <nav className="navbar" style={{ marginTop: '0px'}}>
         <div className="logo" onClick={() => window.location.href = "/"}>
           <img className="logo-img" src="/logo.png" alt="BookingCare" style={{ width: '50px' }} />
           <span className="logo-text">BookingCare</span>
