@@ -8,7 +8,7 @@ const Footer = () => {
         {/* Cột 1: Thông tin công ty */}
         <div className="footer-column">
           <h3>Công ty Cổ phần Công nghệ BookingCare</h3>
-          <p>📍 Lô B4/D21, Khu đô thị mới Cầu Giấy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, TP Hà Nội, Việt Nam</p>
+          <p>📍 Lô B4/D21, Khu đô thị mới Hồ Chí Minh</p>
           <p>📜 ĐKKD số: 0106790291. Sở KHĐT Hà Nội cấp ngày 16/03/2015</p>
           <p>📞 <a href="tel:02473012468">024-7301-2468</a> (7h - 18h)</p>
           <p>📧 <a href="mailto:support@bookingcare.vn">support@bookingcare.vn</a> (7h - 18h)</p>

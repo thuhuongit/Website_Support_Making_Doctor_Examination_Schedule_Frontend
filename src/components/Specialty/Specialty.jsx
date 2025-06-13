@@ -106,7 +106,7 @@ const Specialty = () => {
     }
   
     return (
-      <div className="time-slot-grid">
+      <div className="time-slot-grid" style={{ marginTop: '0px'}}>
         {doctorSchedules.map((slot) => {
           const isAvailable = slot.maxNumber > 0;
           const isSelected = selectedSlot?.timeType === slot.timeType && selectedDoctor?.id === doctorId;
@@ -139,7 +139,7 @@ const Specialty = () => {
   return (
     <div className="specialty-container">
       {/* Navbar */}
-      <nav className="navbar">
+      <nav className="navbar" style={{ marginTop: '0px'}}>
         <div className="logo" onClick={() => navigate('/')}>
           <img className="logo-img" src="/logo.png" alt="BookingCare" style={{width: '50px'}} />
           <span className="logo-text">BookingCare</span>

@@ -31,7 +31,7 @@ const HospitalDetail = () => {
   return (
     <div className="hospital-container">
       {/* Navbar */}
-      <nav className="navbar">
+      <nav className="navbar" style={{ marginTop: '0px'}}>
         <div className="logo" onClick={() => navigate("/")}>
           <img className="logo-img" src="/logo.png" alt="BookingCare" style={{width: '50px'}} />
           <span className="logo-text">BookingCare</span>
