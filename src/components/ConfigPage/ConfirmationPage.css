@@ -5,8 +5,7 @@ body {
     color: #333;
     background: #f9fafb;
   }
-  
- 
+
   .confirmation-page {
     display: flex;
     justify-content: center;
@@ -15,7 +14,6 @@ body {
     text-align: center;
   }
   
- 
   .confirmation-box {
     background-color: #ffffff;
     border-radius: 12px;
@@ -44,11 +42,9 @@ body {
     font-weight: bold;
   }
   
-  
   .confirmation-box svg {
     margin-bottom: 20px;
   }
-  
   
   .action-buttons button {
     padding: 12px 24px;
@@ -85,13 +81,11 @@ body {
     transform: translateY(-2px);
   }
   
-  
   .confirmation-box:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   }
   
-
   .loading {
     font-size: 18px;
     color: #FF9800;

@@ -56,9 +56,8 @@
   border: 1px solid #ddd;
   border-radius: 12px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  align-items: flex-start; /* QUAN TRỌNG: Căn top thay vì center */
+  align-items: flex-start; 
 }
-
 
 .doctor-header {
   display: flex;
@@ -199,7 +198,6 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 }
 
-
 .time-slot,
 .time-button {
   padding: 6px 10px;
@@ -225,14 +223,13 @@
   border: none;
 }
 
-/* Phần phải (giá & lịch) */
 .right-section {
   flex: 1;
   max-width: 180px;
   font-size: 13px;
   border-left: 1px solid #ddd;
   padding-left: 1rem;
-  text-align: left; /* Để label và nút dễ nhìn */
+  text-align: left; 
 }
 
 .schedule-title,
@@ -338,7 +335,7 @@
 .favorite-icon {
   display: inline-flex;
   align-items: center;
-  background-color: #ffe6e6; /* nhẹ nhàng */
+  background-color: #ffe6e6;
   color: #ff4757;
   font-size: 13px;
   font-weight: 600;

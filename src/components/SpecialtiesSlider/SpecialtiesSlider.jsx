@@ -3,7 +3,6 @@ import Slider from "react-slick";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../util/axios";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./SpecialtiesSlider.css";
@@ -31,7 +30,6 @@ const SamplePrevArrow = (props) => {
 const SpecialtiesSlider = ({ type }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   const [specialtiesData, setSpecialtiesData] = useState([]);
   const [hospitalsData, setHospitalsData] = useState([]);
   const [doctors, setDoctors] = useState([]);

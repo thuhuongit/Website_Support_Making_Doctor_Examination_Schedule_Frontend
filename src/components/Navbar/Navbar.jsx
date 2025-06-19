@@ -10,16 +10,13 @@ import Footer from '../Footer/Footer';
 import { useNavigate } from "react-router-dom";
 
 
-
-
 const Navbar = () => {
   const { t, i18n } = useTranslation();
-  const [activeLang, setActiveLang] = useState("vi"); // Mặc định là tiếng Việt
-  const [menuOpen, setMenuOpen] = useState(false); // State để mở menu
+  const [activeLang, setActiveLang] = useState("vi"); 
+  const [menuOpen, setMenuOpen] = useState(false); 
   const navigate = useNavigate();
   const [highlighted, setHighlighted] = useState(null);
   const [user, setUser] = useState(null);
-
 
     // Tạo ref cho phần "Chuyên khoa phổ biến"
     const specialtiesRef = useRef(null);
@@ -32,10 +29,9 @@ const Navbar = () => {
         if (ref.current) {
           ref.current.scrollIntoView({ behavior: "smooth" });
       
-          setHighlighted(ref); // Đặt highlight cho section hiện tại
-      
+          setHighlighted(ref); 
           setTimeout(() => {
-            setHighlighted(null); // Xóa highlight sau 1.5 giây
+            setHighlighted(null); 
           }, 1500);
         }
       };
@@ -47,21 +43,20 @@ const Navbar = () => {
     console.log("Chuyển ngôn ngữ sang:", lng);
     i18n.changeLanguage(lng);
     localStorage.setItem("language", lng); 
-    setActiveLang(lng); // Cập nhật trạng thái nút được chọn
+    setActiveLang(lng); 
   };
 
   // Khi component mount, kiểm tra localStorage để load ngôn ngữ đã lưu
   useEffect(() => {
     const savedLanguage = localStorage.getItem("language") || "vi";
     i18n.changeLanguage(savedLanguage);
-    setActiveLang(savedLanguage); // Đảm bảo nút hiển thị đúng màu khi tải trang
+    setActiveLang(savedLanguage);
   }, []);
 
   useEffect(() => {
   const savedLanguage = localStorage.getItem("language") || "vi";
   i18n.changeLanguage(savedLanguage);
   setActiveLang(savedLanguage);
-
   const storedUser = JSON.parse(localStorage.getItem("user"));
   if (storedUser) {
     setUser(storedUser);
@@ -76,7 +71,6 @@ const Navbar = () => {
           <img src="/chatbot.png" alt="Trợ lý AI" />
           <span>Trợ lý AI</span>
       </div>
-
 
       <nav className="navbar">
         {/* Logo */}
@@ -124,13 +118,8 @@ const Navbar = () => {
               🇺🇸
             </button>
           </div>
-
         </div>
        
-
-      
-
-
        {/* Menu dropdown */}
        <div className={`dropdown-menu ${menuOpen ? 'show' : ''}`}>
         <ul>
@@ -148,11 +137,7 @@ const Navbar = () => {
           <li><a href="#">Điều khoản sử dụng</a></li>
         </ul>
       </div>
-      
       </nav>
-      
-
-
 
       <Banner />
         {/* Chuyên khoa phổ biến */}
@@ -177,9 +162,7 @@ const Navbar = () => {
 
       <Media/>
       <Footer/>
-      
- 
-  
+    
     </div>
   );
 };

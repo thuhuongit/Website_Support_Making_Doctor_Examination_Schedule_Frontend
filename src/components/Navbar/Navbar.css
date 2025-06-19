@@ -7,10 +7,10 @@
 
 /* Dropdown menu */
 .dropdown-menu {
-    border: none; /* Xóa viền */
+    border: none; 
     position: absolute;
-    top: 60px; /* Đẩy xuống dưới logo */
-    left: 10px; /* Đặt gần BookingCare */
+    top: 60px; 
+    left: 10px;
     background: white;
     width: 250px;
     border-radius: 5px;
@@ -22,10 +22,10 @@
     padding: 10px 0;
 }
 button {
-    border: none;  /* Xóa viền */
-    outline: none; /* Xóa viền khi focus */
-    background: none; /* Xóa nền */
-    padding: 0; /* Loại bỏ padding nếu có */
+    border: none;  
+    outline: none; 
+    background: none; 
+    padding: 0; 
   }
 
 .dropdown-menu.show {
@@ -49,7 +49,7 @@ button {
 }
 .dropdown-menu li:active, 
 .dropdown-menu li:focus {
-    background-color: #f0f0f0; /* Màu nền khi nhấn */
+    background-color: #f0f0f0; 
 }
 
 
@@ -72,19 +72,19 @@ button {
     cursor: pointer;
     text-align: center;
     font-size: 14px;
-    color: #FFA500; /* Màu cam giống hình */
+    color: #FFA500; 
     font-weight: bold;
     z-index: 9999;
 }
 
 .ai-assistant img {
-    width: 80px; /* Điều chỉnh kích thước */
+    width: 80px; 
     height: auto;
     transition: transform 0.3s ease-in-out;
 }
 
 .ai-assistant:hover img {
-    transform: scale(1.1); /* Hiệu ứng phóng to khi di chuột */
+    transform: scale(1.1);
 }
 
 
@@ -97,7 +97,7 @@ button {
     background-color: #fff;
     border-bottom: 1px solid #eaeaea;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    justify-content: space-between;  /* Chia navbar thành 3 phần */
+    justify-content: space-between; 
     position: sticky;
     top: 0;
     background: white;
@@ -133,11 +133,11 @@ button {
 /* Phần menu ở giữa */
 .nav-links {
     display: flex;
-    flex-direction: row; /* Đảm bảo hàng ngang */
+    flex-direction: row; 
     justify-content: center;
     align-items: center;
     list-style: none;
-    gap: 40px; /* khoảng cách giữa các mục */
+    gap: 40px; 
     padding: 0;
     margin: 0;
 }

@@ -1,26 +1,56 @@
+import {
+  BarChart, Bar, LineChart, Line, XAxis, YAxis,
+  CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  PieChart, Pie, Cell
+} from "recharts";
+
+import { useState, useEffect } from "react";
+import axiosInstance from "../../../util/axios";
 import "./Dashboard.css";
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
 const Dashboard = () => {
-  const dataDoctors = [
-    { name: 'Feb 24', CaoKienNguyen: 50, HuynhQuocCuong: 30, TrinTuan: 20 },
-    { name: 'Mar 24', CaoKienNguyen: 200, HuynhQuocCuong: 50, TrinTuan: 40 },
-    { name: 'Apr 24', CaoKienNguyen: 100, HuynhQuocCuong: 80, TrinTuan: 30 },
-    { name: 'Jul 24', CaoKienNguyen: 400, HuynhQuocCuong: 70, TrinTuan: 100 },
-    { name: 'Sep 24', CaoKienNguyen: 50, HuynhQuocCuong: 90, TrinTuan: 60 },
-    { name: 'Nov 24', CaoKienNguyen: 100, HuynhQuocCuong: 40, TrinTuan: 20 },
-  ];
-
-  const dataPatients = [
-    { name: 'Huỳnh Đức', value: 400 },
-    { name: 'Trần Sơn', value: 280 },
-    { name: 'Nguyễn Hằng', value: 150 },
-    { name: 'Huỳnh', value: 70 },
-  ];
+  const [weeklyRevenue, setWeeklyRevenue] = useState(0);
+  const [newUsersToday, setNewUsersToday] = useState(0);
+  const [appointmentsDone, setAppointmentsDone] = useState(0);
+  const [totalDoctors, setTotalDoctors] = useState(0);
+  const [dataDoctors, setDataDoctors] = useState([]);
+  const [dataPatients, setDataPatients] = useState([]);
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
-  // Đây là custom Legend nè
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const [
+          revenueRes,
+          newUserRes,
+          appointmentRes,
+          doctorRes,
+          topDoctorRes,
+          vipPatientRes
+        ] = await Promise.all([
+          axiosInstance.get("http://localhost:8084/api/get-weekly-revenue"),
+          axiosInstance.get("http://localhost:8084/api/get-total-new-user-day"),
+          axiosInstance.get("http://localhost:8084/api/get-total-health-appointment-done"),
+          axiosInstance.get("http://localhost:8084/api/get-total-doctor"),
+          axiosInstance.get("http://localhost:8084/api/get-top-three-doctors-of-the-year"),
+          axiosInstance.get("http://localhost:8084/api/get-top-four-vip-patient"),
+        ]);
+
+        setWeeklyRevenue(revenueRes.data?.total || 0);
+        setNewUsersToday(newUserRes.data?.count || 0);
+        setAppointmentsDone(appointmentRes.data?.total || 0);
+        setTotalDoctors(doctorRes.data?.count || 0);
+        setDataDoctors(topDoctorRes.data || []);
+        setDataPatients(vipPatientRes.data || []);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
+
   const renderCustomLegend = (props) => {
     const { payload } = props;
     return (
@@ -48,19 +78,19 @@ const Dashboard = () => {
       <div className="cards">
         <div className="card green">
           <p>Weekly Revenue</p>
-          <h3>$0</h3>
+          <h3>${weeklyRevenue.toLocaleString()}</h3>
         </div>
         <div className="card blue">
           <p>New Users</p>
-          <h3>0</h3>
+          <h3>{newUsersToday}</h3>
         </div>
         <div className="card yellow">
           <p>Total Health Appointment Done</p>
-          <h3>18</h3>
+          <h3>{appointmentsDone}</h3>
         </div>
         <div className="card red">
           <p>Total Doctors</p>
-          <h3>7</h3>
+          <h3>{totalDoctors}</h3>
         </div>
       </div>
 
@@ -74,6 +104,7 @@ const Dashboard = () => {
               <YAxis />
               <Tooltip />
               <Legend />
+              {/* Bạn có thể tự động tạo các Bar/Line nếu muốn linh động hơn */}
               <Bar dataKey="CaoKienNguyen" fill="#00C49F" />
               <Bar dataKey="HuynhQuocCuong" fill="#FFBB28" />
               <Line type="monotone" dataKey="TrinTuan" stroke="#0088FE" />
@@ -82,7 +113,7 @@ const Dashboard = () => {
         </div>
 
         <div className="chart-container">
-          <h3>Top 4 vip patients</h3>
+          <h3>Top 4 VIP patients</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie

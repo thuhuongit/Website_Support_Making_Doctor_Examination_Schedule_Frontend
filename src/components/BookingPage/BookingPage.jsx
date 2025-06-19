@@ -6,11 +6,9 @@ import axiosInstance from "../../util/axios";
 const BookingForm = () => {
   const { doctorId } = useParams();
   const location = useLocation();
-
   const [doctor, setDoctor] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
   const [formData, setFormData] = useState({
     lastName: "",
     firstName: "",
@@ -22,11 +20,9 @@ const BookingForm = () => {
   });
 
   const [paymentMethod, setPaymentMethod] = useState("after");
-
   const searchParams = new URLSearchParams(location.search);
   const timeType = decodeURIComponent(searchParams.get('timeType') || '');
   const date = searchParams.get('date') || '';
-
   const positionMap = {
     1: 'Bác sĩ',
     2: 'Tiến sĩ',
@@ -34,7 +30,6 @@ const BookingForm = () => {
     4: 'Phó giáo sư',
     5: 'Giáo sư',
   };
-
   const mapIdToPosition = (id) => positionMap[id] || '';
 
   useEffect(() => {
@@ -141,8 +136,6 @@ const BookingForm = () => {
          }}
         >Giá khám: {formattedPrice}
       </p>
-
-
         <div className="name-group">
           <input type="text" placeholder="Họ" name="lastName" value={formData.lastName} onChange={handleChange} />
           <input type="text" placeholder="Tên" name="firstName" value={formData.firstName} onChange={handleChange} />

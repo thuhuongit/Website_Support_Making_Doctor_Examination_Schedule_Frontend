@@ -59,7 +59,7 @@ const Specialist = () => {
         setSpecialtyName("");
         setFile(null);
         setDescription("");
-        fetchSpecialties(); // refresh bảng
+        fetchSpecialties(); 
       } else {
         toast.error(res.data.errMessage || "Có lỗi khi thêm chuyên khoa.");
       }

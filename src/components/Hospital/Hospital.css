@@ -34,29 +34,29 @@
 .hospital-info {
   display: flex;
   align-items: center;
-  justify-content: center; /* Căn giữa theo chiều ngang */
+  justify-content: center; 
   gap: 20px;
   margin-bottom: 20px;
 }
 
 .hospital-logo {
-  width: 150px;      /* tăng kích thước ảnh logo */
+  width: 150px;      
   height: 150px;
-  object-fit: contain; /* giữ tỉ lệ ảnh */
-  border-radius: 10px; /* nếu muốn bo góc */
-  margin-right: 20px;  /* khoảng cách với tên */
+  object-fit: contain; 
+  border-radius: 10px; 
+  margin-right: 20px;
 }
 
 
 .hospital-name {
-  font-size: 2rem;   /* tăng size chữ tên bệnh viện */
+  font-size: 2rem;  
   font-weight: 700;
   margin: 0;
   color: #333;
 }
 
 .hospital-address {
-  font-size: 1.2rem;   /* tăng size chữ địa chỉ */
+  font-size: 1.2rem;
   color: #666;
   margin-top: 5px;
 }
@@ -119,7 +119,7 @@
 }
 
 .info-box ul {
-  padding-left: 40px; /* Thụt vào 40px */
+  padding-left: 40px;
   margin-top: 10px;
 }
 

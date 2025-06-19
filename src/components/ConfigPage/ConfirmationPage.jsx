@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom"; // Dùng useNavigate thay vì window.location.href
+import { useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "../../util/axios";
 import { CheckCircle2 } from "lucide-react"; 
 import "./ConfirmationPage.css";
 
 const ConfirmationPage = () => {
   const location = useLocation();
-  const navigate = useNavigate(); // Khai báo navigate
+  const navigate = useNavigate(); 
   const [confirmationMessage, setConfirmationMessage] = useState("");
-  const [status, setStatus] = useState("loading"); // "loading", "success", "error"
+  const [status, setStatus] = useState("loading");
 
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get("token");
@@ -48,8 +48,8 @@ const ConfirmationPage = () => {
         <CheckCircle2 size={64} color="#10B981" />
         <h2>{confirmationMessage}</h2>
         <div className="action-buttons">
-          <button onClick={() => navigate("/")}>Trang chủ</button> {/* Sử dụng navigate */}
-          <button onClick={() => navigate("/")} >Đặt lịch mới</button> {/* Sử dụng navigate */}
+          <button onClick={() => navigate("/")}>Trang chủ</button> 
+          <button onClick={() => navigate("/")} >Đặt lịch mới</button> 
         </div>
       </div>
     </div>

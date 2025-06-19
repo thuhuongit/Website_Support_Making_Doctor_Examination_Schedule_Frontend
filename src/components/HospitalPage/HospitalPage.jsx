@@ -8,7 +8,6 @@ import axiosInstance from "../../util/axios";
 const HospitalPage = () => {
   const [hospitals, setHospitals] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
-
   const navigate = useNavigate();
   const { t } = useTranslation();
 

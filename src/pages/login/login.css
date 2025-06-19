@@ -57,7 +57,7 @@ body {
   transition: opacity 0.3s ease-in-out;
 }
 .input-field:focus::placeholder {
-  opacity: 0; /* Khi focus vào input, placeholder biến mất */
+  opacity: 0;
 }
 
 .input-icon {

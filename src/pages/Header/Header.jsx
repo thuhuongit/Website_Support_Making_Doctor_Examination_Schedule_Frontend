@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { userService } from "../../services/userService";  // Import API userService
+import { userService } from "../../services/userService"; 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Modal from "react-modal";
 import { toast, ToastContainer } from "react-toastify";
@@ -15,8 +15,8 @@ Modal.setAppElement("#root");
 const Header = () => {
   const [users, setUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editUser, setEditUser] = useState(null); // Đúng: Lưu user cần chỉnh sửa
-  const [isEditMode, setIsEditMode] = useState(false); // Kiểm tra chế độ chỉnh sửa
+  const [editUser, setEditUser] = useState(null); 
+  const [isEditMode, setIsEditMode] = useState(false); 
   const [newUser, setNewUser] = useState({
     email: "",
     firstName: "",
@@ -32,7 +32,7 @@ const Header = () => {
     const { name, value } = e.target;
     setEditUser(prev => ({
       ...prev,
-      [name]: value ?? "" // Đảm bảo luôn có giá trị
+      [name]: value ?? "" 
     }));
   };
   
@@ -60,7 +60,7 @@ const Header = () => {
       const { name, value } = e.target;
       setNewUser(prev => ({
           ...prev,
-          [name]: value ?? ""  //  Đảm bảo luôn có giá trị
+          [name]: value ?? ""  
       }));
   };
   
@@ -123,9 +123,6 @@ const Header = () => {
       });
     };
     
-  
-    
-  
     //  Chỉnh sửa người dùng
     const handleEditUser = async () => {
       console.log(editUser);
@@ -149,14 +146,6 @@ const Header = () => {
       }
     };
     
-  
-    
-    
-  
-
-    
-
-
 
   return (
     <div className="users-container">

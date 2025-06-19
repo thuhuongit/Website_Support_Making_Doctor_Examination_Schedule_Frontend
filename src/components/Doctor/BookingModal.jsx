@@ -15,14 +15,11 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
   const genderMap = { Nam: 1, Nữ: 0 };
-
   const handleSubmit = async () => {
     setLoading(true);
     setError(null);
@@ -42,7 +39,7 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
       });
 
       if (response.status === 200 && response.data.errCode === 0) {
-        onSuccess(); // thành công
+        onSuccess(); 
       } else {
         setError(response.data.errMessage || "Có lỗi xảy ra.");
       }
@@ -63,7 +60,6 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
           <h3>Thông tin đặt lịch khám bệnh</h3>
           <button className="close-btn" onClick={onClose} style={{color: 'red'}}> <i class="fa-solid fa-circle-xmark"></i> </button>
         </div>
-
         <div className="modal-body">
           {doctorInfo && (
             <>
@@ -95,7 +91,6 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
         </div>
 
         {error && <div className="error-message">{error}</div>}
-
         <div className="modal-footer">
           <button className="confirm-btn" onClick={handleSubmit} disabled={loading} style={{backgroundColor: "red", color: "white"}}>
             {loading ? 'Đang xử lý...' : 'Xác nhận'}

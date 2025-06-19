@@ -100,19 +100,19 @@
 }
 
 .status-badge.S1 {
-  background-color: #ff9800; /* màu cam - Đã đặt */
+  background-color: #ff9800; 
 }
 
 .status-badge.S2 {
-  background-color: #4caf50; /* màu xanh lá - Đã xác nhận */
+  background-color: #4caf50; 
 }
 
 .status-badge.S3 {
-  background-color: #2196f3; /* màu xanh dương - Đã khám */
+  background-color: #2196f3;
 }
 
 .status-badge.S4 {
-  background-color: #f44336; /* màu đỏ - Đã huỷ */
+  background-color: #f44336;
 }
 
 /* Nút hành động */

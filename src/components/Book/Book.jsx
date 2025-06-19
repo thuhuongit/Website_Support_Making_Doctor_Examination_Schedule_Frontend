@@ -10,7 +10,14 @@ const provinceMap = {
   hochiminh: "Hồ Chí Minh",
   danang: "Đà Nẵng",
   lamdong: "Lâm Đồng",
-  
+  haiPhong: "Hải Phòng",
+  haiDuong: "Hải Dương",
+  quangNinh: "Quảng Ninh",
+  bacNinh: "Bắc Ninh",
+  thanhHoa: "Thanh Hóa",
+  nghean: "Nghệ An",
+  tiengiang: "Tiền Giang",
+
 };
 
 

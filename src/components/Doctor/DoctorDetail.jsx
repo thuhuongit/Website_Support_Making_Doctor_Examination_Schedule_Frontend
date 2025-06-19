@@ -24,13 +24,19 @@ const provinceMap = {
   hochiminh: "Hồ Chí Minh",
   danang: "Đà Nẵng",
   lamdong: "Lâm Đồng",
+  haiPhong: "Hải Phòng",
+  haiDuong: "Hải Dương",
+  quangNinh: "Quảng Ninh",
+  bacNinh: "Bắc Ninh",
+  thanhHoa: "Thanh Hóa",
+  nghean: "Nghệ An",
+  tiengiang: "Tiền Giang",
 };
 
 function DoctorSchedule() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
-
   const [selectedDate, setSelectedDate] = useState("");
   const [availableTimes, setAvailableTimes] = useState([]);
   const [doctorDetail, setDoctorDetail] = useState(null);
@@ -38,7 +44,6 @@ function DoctorSchedule() {
   const [showModal, setShowModal] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
   const doctorId = Number(id);
 
   useEffect(() => {
@@ -116,7 +121,7 @@ function DoctorSchedule() {
           <li>{t("Bác sĩ")}<br /><span>{t("Chọn bác sĩ giỏi")}</span></li>
           <li>{t("Gói khám")}<br /><span>{t("Khám sức khỏe tổng quát")}</span></li>
         </ul>
-
+        
         <div className="navbar-right">
           <div className="navbar-support">
             <button><i className="fa-solid fa-phone-volume"></i> {t("Hỗ trợ")}</button>

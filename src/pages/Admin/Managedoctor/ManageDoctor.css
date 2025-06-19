@@ -108,3 +108,26 @@
 .manage-doctor-info-form .form-row .form-group textarea {
   min-height: 120px;
 }
+
+.doctor-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.doctor-table th,
+.doctor-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.doctor-table th {
+  background-color: #f0f0f0;
+}
+
+.doctor-table button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}

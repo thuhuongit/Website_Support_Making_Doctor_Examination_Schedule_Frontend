@@ -13,7 +13,6 @@ const ManageClinic = () => {
   const [file, setFile] = useState(null);
   const [description, setDescription] = useState('');
   const [clinics, setClinics] = useState([]);
-
   const fetchClinics = useCallback(async () => {
     try {
       const res = await axiosInstance.get("http://localhost:8084/api/get-clinic");

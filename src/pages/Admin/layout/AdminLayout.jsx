@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import "./AdminLayout.css";  // Tuỳ chọn: nơi chứa style layout admin
+import "./AdminLayout.css";  
 
 const AdminLayout = () => {
   const navigate = useNavigate();

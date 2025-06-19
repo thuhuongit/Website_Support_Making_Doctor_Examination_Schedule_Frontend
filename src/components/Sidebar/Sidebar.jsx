@@ -7,7 +7,7 @@ const Sidebar = () => {
   const location = useLocation();
   const [adminInfo, setAdminInfo] = useState(null);
 
-  // So sánh trùng khớp tuyệt đối đường dẫn
+ 
   const isActive = (path) => location.pathname === path;
 
   useEffect(() => {
@@ -18,7 +18,6 @@ const Sidebar = () => {
       user.image = new TextDecoder().decode(buffer); 
     }
 
-      // Gộp tên đầy đủ
       user.fullName = `${user.lastName?.trim() || ""} ${user.firstName?.trim() || ""}`;
       setAdminInfo(user);
     }

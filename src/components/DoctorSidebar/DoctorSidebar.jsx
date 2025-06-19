@@ -55,8 +55,6 @@ const DoctorSidebar = () => {
           <FaSignInAlt /> Đăng xuất
         </Link>
     </div>
-
-
     </div>
   );
 };

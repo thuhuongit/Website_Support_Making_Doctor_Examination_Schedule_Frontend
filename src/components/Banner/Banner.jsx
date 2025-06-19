@@ -10,14 +10,13 @@ const Banner = () => {
     <div className="banner">
       <div className="overlay">
         <div className="title1"><h1>{t("NỀN TẢNG Y TẾ")}</h1></div>
-        <div className="title22"><h2>{t("CHĂM SÓC SỨC KHỎE TOÀN DIỆN")}</h2></div>
+        <div className="title2"><h2>{t("CHĂM SÓC SỨC KHỎE TOÀN DIỆN")}</h2></div>
   
         <div className="search-box">
           <i class="fa-solid fa-magnifying-glass"></i>
           <input type="text" placeholder={t("Tìm lý do khám")} />
-          
           </div>
-          </div>
+        </div>
 
         <div className="service-section">
           <div className="service-item">

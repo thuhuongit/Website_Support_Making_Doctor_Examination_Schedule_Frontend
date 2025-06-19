@@ -19,7 +19,7 @@
 
 /* Cấu hình cho slider */
 .specialties-slider .slick-slider {
-    margin-bottom: 50px; /* Khoảng cách giữa các slider */
+    margin-bottom: 50px; 
 }
 
 /* Các nút điều hướng slider */
@@ -94,9 +94,9 @@
   .doctor-item img {
     width: 200px;
     height: 200px;
-    border-radius: 50%; /* Bo tròn hình ảnh */
-    object-fit: cover; /* Giữ tỷ lệ ảnh không méo */
-    border: 1px solid #ddd; /* Viền nhẹ */
+    border-radius: 50%; 
+    object-fit: cover; 
+    border: 1px solid #ddd;
     display: block;
     margin: 0 auto;
   }
@@ -116,7 +116,7 @@
   
   .doctor-desc {
     font-size: 13px;
-    color: #626262; /* Màu chữ nhẹ hơn */
+    color: #626262;
     margin-top: 1px;
   }
 
@@ -140,7 +140,7 @@
     background-color: #f9f9f9;
 }
 
-/* Header của slider (có nút "Xem thêm") */
+
 .slider-header {
     display: flex;
     justify-content: space-between;
@@ -148,7 +148,7 @@
     padding: 0 10px;
 }
 
-/* Nút "Xem thêm" với màu nền giống nền slider */
+
 .view-more-btn {
     background-color: #DAF3F6; 
     color: #34929E; 

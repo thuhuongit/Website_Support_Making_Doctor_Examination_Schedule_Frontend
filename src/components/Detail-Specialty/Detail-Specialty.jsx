@@ -10,15 +10,20 @@ const provinceMap = {
   hochiminh: "Hồ Chí Minh",
   danang: "Đà Nẵng",
   lamdong: "Lâm Đồng",
+  haiPhong: "Hải Phòng",
+  haiDuong: "Hải Dương",
+  quangNinh: "Quảng Ninh",
+  bacNinh: "Bắc Ninh",
+  thanhHoa: "Thanh Hóa",
+  nghean: "Nghệ An",
+  tiengiang: "Tiền Giang",
   
 };
-
 
 const Specialty = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
-
   const [detail, setDetail] = useState({});
   const [doctors, setDoctors] = useState([]);
   const [schedules, setSchedules] = useState({});

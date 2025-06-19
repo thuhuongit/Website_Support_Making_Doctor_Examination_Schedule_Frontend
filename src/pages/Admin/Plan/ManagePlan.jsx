@@ -14,7 +14,7 @@ function ManageSchedule() {
   const [selectedDoctor, setSelectedDoctor] = useState("");
   const [selectedDate, setSelectedDate]     = useState("");
   const [doctorList,    setDoctorList]      = useState([]);
-  const [bookedTimes,   setBookedTimes]     = useState([]);  // giờ đã lưu DB
+  const [bookedTimes,   setBookedTimes]     = useState([]);  
 
   // Lấy danh sách bác sĩ
   useEffect(() => {
@@ -48,7 +48,7 @@ function ManageSchedule() {
       if (res.data.errCode === 0 && res.data.data.length > 0) {
         const timesFromAPI = res.data.data.map(item => item.timeType);
         setBookedTimes(timesFromAPI);
-        setSelectedTimes(timesFromAPI); // tự chọn luôn
+        setSelectedTimes(timesFromAPI); 
       } else {
         setBookedTimes([]);
         setSelectedTimes([]);
@@ -112,7 +112,7 @@ function ManageSchedule() {
       );
       if (res.data.errCode === 0) {
         toast.success("Lưu lịch thành công!");
-        loadBookedTimes(selectedDoctor, isoDate); // load lại lịch
+        loadBookedTimes(selectedDoctor, isoDate); 
       } else {
         toast.error(res.data.errMessage || "Lỗi khi lưu.");
       }
