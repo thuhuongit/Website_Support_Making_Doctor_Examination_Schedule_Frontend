@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./DoctorDetail.css";
 import axiosInstance from "../../util/axios";
 
@@ -10,7 +10,7 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
     email: '',
     address: '',
     reason: '',
-    gender: 'Nam',
+    gender: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -19,7 +19,28 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
-  const genderMap = { Nam: 1, Nữ: 0 };
+  const genderMap = {
+    0: "Nam",
+    1: "Nữ",
+    2: "Khác",
+  };
+
+  useEffect(() => {
+  const userData = JSON.parse(localStorage.getItem("user"));
+  console.log("User loaded:", userData);
+  if (userData) {
+    setFormData({
+      firstName: userData.firstName || "",
+      lastName: userData.lastName || "",
+      email: userData.email || "",
+      phone: userData.phone || "",
+      address: userData.address || "",
+      reason: "",
+      gender: String(userData.gender),
+    });
+  }
+}, []);
+
   const handleSubmit = async () => {
     setLoading(true);
     setError(null);
@@ -33,7 +54,7 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
         lastName: formData.lastName,
         email: formData.email,
         address: formData.address,
-        selectedGender: genderMap[formData.gender],
+        selectedGender: Number(formData.gender),
         reason: formData.reason,
         phone: formData.phone
       });
@@ -77,16 +98,18 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
           )}
 
           <div className="name-group">
-             <input type="text" placeholder="Họ" name="lastName" value={formData.lastName} onChange={handleChange} />
-             <input type="text" placeholder="Tên" name="firstName" value={formData.firstName} onChange={handleChange} />
+             <input type="text" placeholder="Họ" name="lastName" value={formData.lastName} readOnly  />
+             <input type="text" placeholder="Tên" name="firstName" value={formData.firstName} readOnly  />
           </div>
-          <input type="text" placeholder="Số điện thoại" name="phone" value={formData.phone} onChange={handleChange} />
-          <input type="email" placeholder="Địa chỉ email" name="email" value={formData.email} onChange={handleChange} />
-          <input type="text" placeholder="Địa chỉ liên lạc" name="address" value={formData.address} onChange={handleChange} />
+          <input type="text" placeholder="Số điện thoại" name="phone" value={formData.phone} readOnly  />
+          <input type="email" placeholder="Địa chỉ email" name="email" value={formData.email} readOnly  />
+          <input type="text" placeholder="Địa chỉ liên lạc" name="address" value={formData.address} readOnly />
           <input type="text" placeholder="Lý do khám" name="reason" value={formData.reason} onChange={handleChange} />
-          <select name="gender" value={formData.gender} onChange={handleChange}>
-            <option value="Nam">Nam</option>
-            <option value="Nữ">Nữ</option>
+          <select name="gender" value={formData.gender} >
+            <option value="">-- Chọn giới tính --</option>
+            <option value="0">Nam</option>
+            <option value="1">Nữ</option>
+            <option value="2">Khác</option>
           </select>
         </div>
 

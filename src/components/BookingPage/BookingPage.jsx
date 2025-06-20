@@ -16,7 +16,7 @@ const BookingForm = () => {
     email: "",
     address: "",
     reason: "",
-    gender: "Nam"
+    gender: ""
   });
 
   const [paymentMethod, setPaymentMethod] = useState("after");
@@ -55,7 +55,27 @@ const BookingForm = () => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
-  const genderMap = { Nam: 1, Nữ: 0 };
+  const genderMap = {
+    0: "Nam",
+    1: "Nữ",
+    2: "Khác",
+  };
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    console.log("User loaded:", userData);
+    if (userData) {
+      setFormData({
+        firstName: userData.firstName || "",
+        lastName: userData.lastName || "",
+        email: userData.email || "",
+        phone: userData.phone || "",
+        address: userData.address || "",
+        reason: "",
+        gender: String(userData.gender),
+      });
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -75,7 +95,7 @@ const BookingForm = () => {
       lastName: formData.lastName,
       email: formData.email,
       address: formData.address,
-      selectedGender: genderMap[formData.gender],
+      selectedGender: Number(formData.gender),
       reason: formData.reason,
       phone: formData.phone
     };
@@ -137,16 +157,18 @@ const BookingForm = () => {
         >Giá khám: {formattedPrice}
       </p>
         <div className="name-group">
-          <input type="text" placeholder="Họ" name="lastName" value={formData.lastName} onChange={handleChange} />
-          <input type="text" placeholder="Tên" name="firstName" value={formData.firstName} onChange={handleChange} />
+          <input type="text" placeholder="Họ" name="lastName" value={formData.lastName} readOnly />
+          <input type="text" placeholder="Tên" name="firstName" value={formData.firstName} readOnly  />
         </div>
-        <input type="text" placeholder="Số điện thoại" name="phone" value={formData.phone} onChange={handleChange} />
-        <input type="email" placeholder="Địa chỉ email" name="email" value={formData.email} onChange={handleChange} />
-        <input type="text" placeholder="Địa chỉ liên lạc" name="address" value={formData.address} onChange={handleChange} />
+        <input type="text" placeholder="Số điện thoại" name="phone" value={formData.phone} readOnly  />
+        <input type="email" placeholder="Địa chỉ email" name="email" value={formData.email} readOnly />
+        <input type="text" placeholder="Địa chỉ liên lạc" name="address" value={formData.address} readOnly  />
         <input type="text" placeholder="Lý do khám" name="reason" value={formData.reason} onChange={handleChange} />
-        <select name="gender" value={formData.gender} onChange={handleChange}>
-          <option value="Nam">Nam</option>
-          <option value="Nữ">Nữ</option>
+        <select name="gender" value={formData.gender} readOnly >
+          <option value="">-- Chọn giới tính --</option>
+          <option value="0">Nam</option>
+          <option value="1">Nữ</option>
+          <option value="2">Khác</option>
         </select>
 
         <h4>Hình thức thanh toán</h4>
@@ -169,7 +191,12 @@ const BookingForm = () => {
           </ul>
         </div>
 
-        <button className="confirm-btn" type="submit">Xác nhận đặt khám</button>
+        {error && <div className="error-message">{error}</div>}
+        <div className="modal-footer">
+          <button className="confirm-btn" onClick={handleSubmit} disabled={loading} style={{backgroundColor: "red", color: "white"}}>
+            {loading ? 'Đang xử lý...' : 'Xác nhận đặt lịch khám'}
+          </button>
+        </div>
         <p className="terms">
           Bằng việc xác nhận, bạn đã đồng ý với <a href="#">Điều khoản sử dụng</a>
         </p>

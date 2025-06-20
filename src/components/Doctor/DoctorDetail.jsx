@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "../../util/axios";
 import "./DoctorDetail.css";
+import Swal from "sweetalert2";
 import Footer from "../Footer/Footer";
 import BookingModal from "./BookingModal";
 import { useTranslation } from "react-i18next";
@@ -94,11 +95,27 @@ function DoctorSchedule() {
   }, [doctorId, selectedDate]);
 
   const handleTimeClick = (slot) => {
-    if (availableTimes.includes(slot)) {
-      setSelectedTime(slot);
-      setShowModal(true);
-    }
-  };
+  const userData = JSON.parse(localStorage.getItem("user"));
+  if (!userData) {
+    Swal.fire({
+      title: "Bạn chưa đăng ký hoặc đăng nhập!",
+      text: "Vui lòng về trang chủ đăng ký hoặc đăng nhập để tiếp tục đặt lịch khám.",
+      icon: "warning",
+      confirmButtonText: "Trang chủ"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/"); // Chuyển hướng đến trang login
+      }
+    });
+    return; // Không mở modal nếu chưa login
+  }
+
+  // Nếu đã đăng nhập thì cho đặt lịch
+  if (availableTimes.includes(slot)) {
+    setSelectedTime(slot);
+    setShowModal(true);
+  }
+};
 
   const handleBookingSuccess = () => {
     setShowModal(false);
