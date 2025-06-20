@@ -120,7 +120,7 @@ const Specialist = () => {
 
   return (
     <div className="form-container">
-      <h2>QUẢN LÝ CHUYÊN KHOA</h2>
+      <h2>{editingSpecialtyId ? "CHỈNH SỬA CHUYÊN KHOA" : "QUẢN LÝ CHUYÊN KHOA"}</h2>
 
       <div className="form-group">
         <label>Tên chuyên khoa</label>

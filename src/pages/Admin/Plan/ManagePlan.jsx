@@ -3,6 +3,8 @@ import { useState, useEffect, useCallback } from "react";
 import axiosInstance from "../../../util/axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
+
 
 const TIMES = [
   "8:00 - 9:00", "9:00 - 10:00", "10:00 - 11:00", "11:00 - 12:00",
@@ -80,6 +82,42 @@ function ManageSchedule() {
     );
   };
 
+const handleDeleteTime = async (time) => {
+  const confirm = await Swal.fire({
+    title: `Bạn có chắc muốn xoá lịch khám lúc "${time}" không?`,
+    text: "Thao tác này không thể hoàn tác!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Xoá",
+    cancelButtonText: "Huỷ",
+  });
+
+  if (!confirm.isConfirmed) return;
+
+  const isoDate = new Date(selectedDate).toISOString().split("T")[0];
+
+  try {
+    const res = await axiosInstance.delete("http://localhost:8084/api/delete-schedule", {
+      data: {
+        doctorId: selectedDoctor,
+        date: isoDate,
+        timeType: time
+      }
+    });
+
+    if (res.data.errCode === 0) {
+      toast.success("Xoá giờ khám thành công!");
+      loadBookedTimes(selectedDoctor, isoDate);
+    } else {
+      toast.error(res.data.errMessage || "Lỗi khi xoá.");
+    }
+  } catch (err) {
+    console.error(err);
+    toast.error("Lỗi khi xoá lịch khám.");
+  }
+};
+
+
   // Lưu lịch khám
   const handleSaveSchedule = async () => {
     if (!selectedDoctor || !selectedDate || selectedTimes.length === 0) {
@@ -94,7 +132,6 @@ function ManageSchedule() {
     }
     const isoDate = dateObj.toISOString().split("T")[0];
 
-    // Chỉ gửi những giờ chưa có trong DB
     const timesToSave = selectedTimes.filter(t => !bookedTimes.includes(t));
     if (timesToSave.length === 0) {
       toast.warn("Tất cả giờ đã có trong lịch.");
@@ -126,7 +163,6 @@ function ManageSchedule() {
     <div className="schedule-container">
       <h2 className="title">QUẢN LÝ KẾ HOẠCH KHÁM BỆNH CỦA BÁC SĨ</h2>
 
-      {/* Chọn bác sĩ và ngày */}
       <div className="controls">
         <select
           className="doctor-select"
@@ -155,7 +191,6 @@ function ManageSchedule() {
         />
       </div>
 
-      {/* Hiển thị khung giờ */}
       <div className="time-slots">
         {TIMES.map(time => {
           const isBooked   = bookedTimes.includes(time);
@@ -175,7 +210,6 @@ function ManageSchedule() {
         })}
       </div>
 
-      {/* Nút lưu */}
       <button
         className="save-button"
         onClick={handleSaveSchedule}
@@ -183,6 +217,30 @@ function ManageSchedule() {
       >
         Lưu thông tin
       </button>
+
+      {bookedTimes.length > 0 && (
+        <div className="booked-table">
+          <h4>Lịch khám đã lưu</h4>
+          <table>
+            <thead>
+              <tr>
+                <th>Giờ</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              {bookedTimes.map(time => (
+                <tr key={time}>
+                  <td>{time}</td>
+                  <td>
+                    <button onClick={() => handleDeleteTime(time)} className="delete-btn">Xoá</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
     </div>

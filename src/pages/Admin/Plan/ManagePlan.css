@@ -66,3 +66,58 @@
 .time-button.booked:hover {
   background-color: #aa190f;
 }
+.booked-table {
+  margin-top: 30px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  padding: 20px;
+}
+
+.booked-table h4 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #333;
+  font-weight: 600;
+  text-align: center;
+}
+
+.booked-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.booked-table th,
+.booked-table td {
+  padding: 12px 16px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.booked-table th {
+  background-color: #f7f7f7;
+  font-weight: bold;
+  color: #444;
+}
+
+.booked-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.delete-btn {
+  background-color: #ff4d4f;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #e60000;
+}
+

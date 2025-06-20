@@ -124,7 +124,7 @@ const ManageClinic = () => {
 
   return (
     <div className="form-container">
-      <h2>{editingClinicId ? "CHỈNH SỬA PHÒNG KHÁM" : "THÊM PHÒNG KHÁM"}</h2>
+      <h2>{editingClinicId ? "CHỈNH SỬA PHÒNG KHÁM" : "QUẢN LÝ PHÒNG KHÁM"}</h2>
 
       <div className="form-group">
         <label>Tên phòng khám</label>
