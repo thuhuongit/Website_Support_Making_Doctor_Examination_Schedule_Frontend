@@ -13,6 +13,10 @@ const ManageClinic = () => {
   const [file, setFile] = useState(null);
   const [description, setDescription] = useState('');
   const [clinics, setClinics] = useState([]);
+  const [editingClinicId, setEditingClinicId] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
+
+
   const fetchClinics = useCallback(async () => {
     try {
       const res = await axiosInstance.get("http://localhost:8084/api/get-clinic");
@@ -28,24 +32,21 @@ const ManageClinic = () => {
     fetchClinics();
   }, [fetchClinics]);
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
+  const handleFileChange = (e) => setFile(e.target.files[0]);
+  const handleNameChange = (e) => setClinicName(e.target.value);
+  const handleAddressChange = (e) => setAddress(e.target.value);
+  const handleDescriptionChange = (value) => setDescription(value);
 
-  const handleNameChange = (e) => {
-    setClinicName(e.target.value);
-  };
-
-  const handleAddressChange = (e) => {
-    setAddress(e.target.value);
-  };
-
-  const handleDescriptionChange = (value) => {
-    setDescription(value);
+  const resetForm = () => {
+    setClinicName('');
+    setAddress('');
+    setFile(null);
+    setDescription('');
+    setEditingClinicId(null);
   };
 
   const handleSubmit = async () => {
-    if (!clinicName || !address || !description || !file) {
+    if (!clinicName || !address || !description) {
       toast.error("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
@@ -53,29 +54,28 @@ const ManageClinic = () => {
     const formData = new FormData();
     formData.append("name", clinicName);
     formData.append("address", address);
-    formData.append("image", file);
     formData.append("description", description);
+    if (file) formData.append("image", file);
 
     try {
-      const response = await axiosInstance.post(
-        "http://localhost:8084/api/create-new-clinic",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const url = editingClinicId
+        ? `http://localhost:8084/api/edit-clinic`
+        : `http://localhost:8084/api/create-new-clinic`;
+      if (editingClinicId) formData.append("id", editingClinicId);
 
-      if (response.data && response.data.errCode === 0) {
-        Swal.fire("Thành công!", "Phòng khám đã được thêm!", "success");
-        setClinicName('');
-        setAddress('');
-        setFile(null);
-        setDescription('');
+      const response = await axiosInstance({
+        method: editingClinicId ? 'put' : 'post',
+        url,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (response.data?.errCode === 0) {
+        Swal.fire("Thành công!", editingClinicId ? "Phòng khám đã được cập nhật!" : "Phòng khám đã được thêm!", "success");
+        resetForm();
         fetchClinics();
       } else {
-        toast.error(response.data.errMessage || "Có lỗi xảy ra khi thêm phòng khám.");
+        toast.error(response.data.errMessage || "Có lỗi xảy ra khi xử lý dữ liệu.");
       }
     } catch (error) {
       console.error(error);
@@ -112,66 +112,57 @@ const ManageClinic = () => {
     }
   };
 
+  const handleEdit = (clinic) => {
+    setClinicName(clinic.name);
+    setAddress(clinic.address);
+    setDescription(clinic.description);
+    setEditingClinicId(clinic.id);
+    setFile(null);
+    setPreviewImage(`http://localhost:8084/${clinic.image}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="form-container">
-      <h2>QUẢN LÝ PHÒNG KHÁM</h2>
+      <h2>{editingClinicId ? "CHỈNH SỬA PHÒNG KHÁM" : "THÊM PHÒNG KHÁM"}</h2>
 
       <div className="form-group">
         <label>Tên phòng khám</label>
-        <input
-          type="text"
-          placeholder="Nhập tên phòng khám"
-          value={clinicName}
-          onChange={handleNameChange}
-        />
+        <input type="text" value={clinicName} onChange={handleNameChange} placeholder="Nhập tên" />
       </div>
 
       <div className="form-group">
-        <label>Địa chỉ phòng khám</label>
-        <input
-          type="text"
-          placeholder="Nhập địa chỉ phòng khám"
-          value={address}
-          onChange={handleAddressChange}
-        />
+        <label>Địa chỉ</label>
+        <input type="text" value={address} onChange={handleAddressChange} placeholder="Nhập địa chỉ" />
       </div>
 
       <div className="form-group">
-        <label>Ảnh phòng khám</label>
-        <input type="file" onChange={handleFileChange} />
-        {file && <span>{file.name}</span>}
-      </div>
+          <label>Ảnh phòng khám</label>
+          <input type="file" onChange={handleFileChange} />
+          {file && <span>{file.name}</span>}
+          {!file && previewImage && (
+         <div style={{ marginTop: "10px" }}>
+             <p>Ảnh hiện tại:</p>
+             <img src={previewImage} alt="Preview" className="thumb" />
+        </div>
+          )}
+     </div>
 
       <div className="form-group">
-        <label>Mô tả phòng khám</label>
-        <ReactQuill
-          theme="snow"
-          value={description}
-          onChange={handleDescriptionChange}
-          placeholder="Nhập mô tả phòng khám"
-          modules={{
-            toolbar: [
-              [{ header: [1, 2, false] }],
-              ['bold', 'italic', 'underline', 'strike'],
-              [{ list: 'ordered' }, { list: 'bullet' }],
-              ['link', 'image'],
-              ['clean'],
-            ],
-          }}
-        />
+        <label>Mô tả</label>
+        <ReactQuill value={description} onChange={handleDescriptionChange} />
       </div>
 
-      <button className="save-button" onClick={handleSubmit}>Lưu</button>
+      <button className="save-button" onClick={handleSubmit}>{editingClinicId ? 'Cập nhật' : 'Lưu'}</button>
 
-      {/* BẢNG PHÒNG KHÁM */}
       <h3 style={{ marginTop: "40px" }}>Danh sách phòng khám</h3>
       <div className="table-wrapper">
         <table className="clinic-table">
           <thead>
             <tr>
               <th>STT</th>
-              <th>Tên phòng khám</th>
-              <th>Ảnh phòng khám</th>
+              <th>Tên</th>
+              <th>Ảnh</th>
               <th>Thao tác</th>
             </tr>
           </thead>
@@ -187,18 +178,15 @@ const ManageClinic = () => {
                   <td>{clinic.name}</td>
                   <td>
                     {clinic.image ? (
-                      <img
-                        src={`http://localhost:8084/${clinic.image}`}
-                        alt={clinic.name}
-                        className="thumb"
-                      />
-                    ) : (
-                      "N/A"
-                    )}
+                      <img src={`http://localhost:8084/${clinic.image}`} alt={clinic.name} className="thumb" />
+                    ) : "N/A"}
                   </td>
                   <td>
                     <button className="delete-btn" onClick={() => handleDelete(clinic.id)}>
                       <i className="fa-solid fa-trash"></i>
+                    </button>
+                    <button className="edit-btn" onClick={() => handleEdit(clinic)}>
+                      <i className="fa-solid fa-pen-to-square"></i>
                     </button>
                   </td>
                 </tr>

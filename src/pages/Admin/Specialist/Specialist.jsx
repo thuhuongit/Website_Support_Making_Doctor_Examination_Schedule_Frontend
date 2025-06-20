@@ -8,12 +8,12 @@ import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 
 const Specialist = () => {
-  
   const [file, setFile] = useState(null);
   const [specialtyName, setSpecialtyName] = useState("");
   const [description, setDescription] = useState("");
-  const [specialties, setSpecialties] = useState([]); 
-
+  const [specialties, setSpecialties] = useState([]);
+  const [editingSpecialtyId, setEditing] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
 
   const fetchSpecialties = useCallback(async () => {
     try {
@@ -30,36 +30,48 @@ const Specialist = () => {
     fetchSpecialties();
   }, [fetchSpecialties]);
 
-  const handleFileChange = (e) => setFile(e.target.files[0]);
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    if (selectedFile) {
+      setPreviewImage(URL.createObjectURL(selectedFile));
+    }
+  };
+
   const handleNameChange = (e) => setSpecialtyName(e.target.value);
   const handleDescriptionChange = (value) => setDescription(value);
 
-
   const handleSubmit = async () => {
-    if (!specialtyName || !description || !file) {
+    if (!specialtyName || !description || (!file && !editingSpecialtyId)) {
       toast.error("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
 
     const formData = new FormData();
     formData.append("name", specialtyName);
-    formData.append("image", file);
+    if (file) formData.append("image", file);
     formData.append("descriptionMarkdown", description);
     formData.append("descriptionHTML", description);
 
-    try {
-      const res = await axiosInstance.post(
-        "http://localhost:8084/api/create-new-specialty",
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
+    let url = "http://localhost:8084/api/create-new-specialty";
+    if (editingSpecialtyId) {
+      url = "http://localhost:8084/api/edit-specialty";
+      formData.append("id", editingSpecialtyId);
+    }
 
-      if (res.data && res.data.errCode === 0) {
-        Swal.fire("Thành công!", "Chuyên khoa đã được thêm!", "success");
+    try {
+      const res = await axiosInstance.put(url, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (res.data?.errCode === 0) {
+        Swal.fire("Thành công!", editingSpecialtyId ? "Đã cập nhật chuyên khoa!" : "Đã thêm chuyên khoa!", "success");
         setSpecialtyName("");
         setFile(null);
         setDescription("");
-        fetchSpecialties(); 
+        setEditing(null);
+        setPreviewImage(null);
+        fetchSpecialties();
       } else {
         toast.error(res.data.errMessage || "Có lỗi khi thêm chuyên khoa.");
       }
@@ -69,7 +81,14 @@ const Specialist = () => {
     }
   };
 
-  /* ---------- XOÁ CHUYÊN KHOA ---------- */
+  const handleEdit = (specialty) => {
+    setSpecialtyName(specialty.name);
+    setDescription(specialty.descriptionHTML || specialty.descriptionMarkdown);
+    setEditing(specialty.id);
+    setFile(null);
+    setPreviewImage(specialty.image ? `http://localhost:8084/${specialty.image}` : null);
+  };
+
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
       title: "Bạn có chắc muốn xoá?",
@@ -99,12 +118,10 @@ const Specialist = () => {
     }
   };
 
-  /* ---------- RENDER ---------- */
   return (
     <div className="form-container">
       <h2>QUẢN LÝ CHUYÊN KHOA</h2>
 
-      {/* FORM THÊM CHUYÊN KHOA */}
       <div className="form-group">
         <label>Tên chuyên khoa</label>
         <input
@@ -118,6 +135,9 @@ const Specialist = () => {
       <div className="form-group">
         <label>Ảnh chuyên khoa</label>
         <input type="file" onChange={handleFileChange} />
+        {previewImage && (
+          <img src={previewImage} alt="Preview" className="thumb" style={{ marginTop: 10 }} />
+        )}
         {file && <span>{file.name}</span>}
       </div>
 
@@ -140,11 +160,12 @@ const Specialist = () => {
         />
       </div>
 
-      <button className="save-button" onClick={handleSubmit}>Lưu</button>
+      <button className="save-button" onClick={handleSubmit}>
+        {editingSpecialtyId ? "Cập nhật" : "Lưu"}
+      </button>
 
-      {/* BẢNG CHUYÊN KHOA */}
       <h3 style={{ marginTop: "40px" }}>Danh sách chuyên khoa</h3>
-      <div className="table-wrapper" >
+      <div className="table-wrapper">
         <table className="specialty-table">
           <thead>
             <tr>
@@ -167,13 +188,14 @@ const Specialist = () => {
                   <td>
                     {s.image ? (
                       <img src={`http://localhost:8084/${s.image}`} alt={s.name} className="thumb" />
-                    ) : (
-                      "N/A"
-                    )}
+                    ) : "N/A"}
                   </td>
                   <td>
                     <button className="delete-btn" onClick={() => handleDelete(s.id)}>
-                      <i class="fa-solid fa-trash"></i>
+                      <i className="fa-solid fa-trash"></i>
+                    </button>
+                    <button className="edit-btn" onClick={() => handleEdit(s)}>
+                      <i className="fa-solid fa-pen-to-square"></i>
                     </button>
                   </td>
                 </tr>
