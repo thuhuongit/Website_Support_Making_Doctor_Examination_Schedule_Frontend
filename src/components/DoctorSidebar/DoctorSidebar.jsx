@@ -1,21 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./DoctorSidebar.css";
 import { Link, useLocation } from "react-router-dom";
 import { FaSignInAlt } from "react-icons/fa";
+import { AuthContext } from "../../context/AuthContext";
 
 const DoctorSidebar = () => {
   const [doctorInfo, setDoctorInfo] = useState(null);
+  const { setUser } = useContext(AuthContext);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       if (user.image && user.image.type === "Buffer" && Array.isArray(user.image.data)) {
-      const buffer = new Uint8Array(user.image.data);
-      user.image = new TextDecoder().decode(buffer); 
-    }
+        const buffer = new Uint8Array(user.image.data);
+        user.image = new TextDecoder().decode(buffer); 
+      }
       setDoctorInfo(user);
     }
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("loginToken");
+    setUser(null);
+    window.location.href = "/login";
+  };
 
   return (
     <div className="sidebar">
@@ -49,12 +58,11 @@ const DoctorSidebar = () => {
         </ul>
       </nav>
 
-      {/* Đăng xuất */}
       <div className="logout">
-        <Link to="/login" className="logout-link">
+        <button onClick={handleLogout} className="logout-link">
           <FaSignInAlt /> Đăng xuất
-        </Link>
-    </div>
+        </button>
+      </div>
     </div>
   );
 };

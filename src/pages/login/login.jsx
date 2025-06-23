@@ -2,51 +2,48 @@ import React, { useState } from "react";
 import axiosInstance from "../../util/axios";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const response = await axiosInstance.post("http://localhost:8084/api/login", {
-        email,
-        password,
-      });
+  try {
+    const response = await axiosInstance.post("http://localhost:8084/api/login", {
+      email,
+      password,
+    });
 
-      const data = response.data;
+    const data = response.data;
 
-      if (data && data.errCode === 0 && data.user) {
-        // Lưu token (nếu có) và thông tin user vào localStorage
-        localStorage.setItem("user", JSON.stringify(data.user)); 
+    if (data && data.errCode === 0 && data.user) {
+      const loginToken = Date.now().toString(); // token duy nhất mỗi lần login
+      const fullUser = { ...data.user, loginToken };
 
-        // Điều hướng theo vai trò
-        switch (data.user.roleId) {
-          case "1": // Admin
-            navigate("/admin");
-            break;
-          case "2": // Bác sĩ
-            navigate("/doctor-dashboard");
-            break;
-          case "0": // Người dùng
-          default:
-            navigate("/");
-            break;
-        }
-      } else {
-        alert("Đăng nhập thất bại. Sai email hoặc mật khẩu.");
+      localStorage.setItem("user", JSON.stringify(fullUser));
+      sessionStorage.setItem("activeLoginToken", loginToken); // ⬅️ set cho tab hiện tại
+      setUser(fullUser);
+
+      switch(data.user.roleId) {
+        case "1": navigate("/admin"); break;
+        case "2": navigate("/doctor-dashboard"); break;
+        default: navigate("/"); break;
       }
-    } catch (error) {
-      alert(
-        error.response?.data?.message ||
-        "Lỗi khi đăng nhập. Vui lòng thử lại sau."
-      );
+    } else {
+      alert("Đăng nhập thất bại. Sai email hoặc mật khẩu.");
     }
-  };
+  } catch (error) {
+    alert("Lỗi khi đăng nhập. Vui lòng thử lại sau.");
+  }
+};
+
 
   return (
     <div className="login-wrapper">

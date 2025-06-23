@@ -104,10 +104,10 @@ function DoctorSchedule() {
       confirmButtonText: "Trang chủ"
     }).then((result) => {
       if (result.isConfirmed) {
-        navigate("/"); // Chuyển hướng đến trang login
+        navigate("/"); 
       }
     });
-    return; // Không mở modal nếu chưa login
+    return; 
   }
 
   // Nếu đã đăng nhập thì cho đặt lịch

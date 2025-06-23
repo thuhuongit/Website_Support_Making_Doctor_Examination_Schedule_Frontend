@@ -1,27 +1,36 @@
-import { Link, useLocation } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
 import "./Sidebar.css";
 import { FaSignInAlt } from "react-icons/fa";
+import { AuthContext } from "../../context/AuthContext"; // nhớ import context
 
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [adminInfo, setAdminInfo] = useState(null);
+  const { setUser } = useContext(AuthContext); // lấy setUser từ context
 
- 
   const isActive = (path) => location.pathname === path;
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       if (user.image && user.image.type === "Buffer" && Array.isArray(user.image.data)) {
-      const buffer = new Uint8Array(user.image.data);
-      user.image = new TextDecoder().decode(buffer); 
-    }
-
+        const buffer = new Uint8Array(user.image.data);
+        user.image = new TextDecoder().decode(buffer); 
+      }
       user.fullName = `${user.lastName?.trim() || ""} ${user.firstName?.trim() || ""}`;
       setAdminInfo(user);
     }
   }, []);
+
+  const handleLogout = () => {
+     localStorage.removeItem("user");
+     localStorage.removeItem("loginToken");
+     setUser(null);
+     window.location.href = "/login";
+};
+
 
   return (
     <div className="sidebar" style={{ backgroundColor: "#ffffff" }}>
@@ -38,8 +47,7 @@ const Sidebar = () => {
           alt="Admin"
           className="avatar"
         />
-        
-        <p className="name"> 
+        <p className="name">
           Xin chào, {adminInfo ? adminInfo.fullName : "Loading..."}
         </p>
         <p className="role">ADMIN</p>
@@ -66,12 +74,13 @@ const Sidebar = () => {
           <Link to="/admin/manageclinic">Manage Clinic</Link>
         </li>
       </ul>
+
       {/* Đăng xuất */}
       <div className="logout">
-        <Link to="/login" className="logout-link">
+        <button onClick={handleLogout} className="logout-link">
           <FaSignInAlt /> Đăng xuất
-        </Link>
-    </div>
+        </button>
+      </div>
     </div>
   );
 };

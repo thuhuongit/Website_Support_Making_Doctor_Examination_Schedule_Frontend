@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import Swal from "sweetalert2";
 import './Book.css';
 import Footer from '../Footer/Footer';
 import axiosInstance from '../../util/axios';
@@ -124,6 +125,20 @@ const Clinic = () => {
               className={`time-slot ${isAvailable ? "available" : "full"} ${isSelected ? "selected" : ""}`}
               disabled={!isAvailable}
               onClick={() => {
+                const userData = JSON.parse(localStorage.getItem("user"));
+                   if (!userData) {
+                       Swal.fire({
+                          title: "Bạn chưa đăng nhập hoặc đăng ký!",
+                          text: "Vui lòng về trang chủ đăng ký hoặc đăng nhập để tiếp tục đặt lịch khám.",
+                          icon: "warning",
+                          confirmButtonText: "Trang chủ"
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              navigate("/");
+                          }
+                      });
+                    return;
+                    }
                 if (isAvailable) {
                   const doctor = doctors.find(d => d.id === doctorId);
                   setSelectedDoctor(doctor);
