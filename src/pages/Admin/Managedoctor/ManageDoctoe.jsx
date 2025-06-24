@@ -83,36 +83,27 @@ function ManageDoctorInfo() {
   
 
   const handleSubmit = async () => {
-    if (
-      !selectedDoctor ||
-      !contentHTML ||
-      !contentMarkdown ||
-      !selectedPrice ||
-      !selectedPayment ||
-      !selectedProvince ||
-      !clinicId ||
-      !addressClinic ||
-      !specialtyId ||
-      !description
-    ) {
-      toast.error("Vui lòng điền đầy đủ thông tin.");
-      return;
+    if (!selectedDoctor) {
+       toast.error("Bạn phải chọn bác sĩ để cập nhật.");
+       return;
     }
 
+
     const data = {
+      id: editingId,
       doctorId: selectedDoctor,
-      contentHTML,
-      contentMarkdown,
-      action: "CREATE",
-      selectedPrice,
-      selectedPayment,
-      selectedProvice: selectedProvince,
-      clinicId,
-      nameClinic, 
-      addressClinic,
-      note,
-      specialtyId,
-      description,
+      contentHTML: contentHTML || "",
+      contentMarkdown: contentMarkdown || "",
+      action: editingId ? "EDIT" : "CREATE",
+      selectedPrice: selectedPrice || "100.000",
+      selectedPayment: selectedPayment || "cash",
+      selectedProvince: selectedProvince || "hanoi",
+      clinicId: clinicId || null,
+      nameClinic: nameClinic || "",
+      addressClinic: addressClinic || "",
+      note: note || "",
+      specialtyId: specialtyId || null,
+      description: description || ""
     };
 
 
@@ -120,6 +111,8 @@ function ManageDoctorInfo() {
       const res = await axiosInstance.post("http://localhost:8084/api/save-infor-doctors", data);
       if (res.data.errCode === 0) {
         toast.success("Lưu thông tin bác sĩ thành công!");
+        fetchDoctorInfos();
+
         setSelectedDoctor("");
         setContentHTML("");
         setContentMarkdown("");
@@ -162,17 +155,17 @@ function ManageDoctorInfo() {
 
     const handleEdit = (info) => {
        setSelectedDoctor(info.doctorId);
-       setContentHTML(info.contentHTML || "");
-       setContentMarkdown(info.contentMarkdown || "");
-       setSelectedPrice(info.selectedPrice || "");
-       setSelectedPayment(info.selectedPayment || "");
-       setSelectedProvince(info.selectedProvice || "");
+       setContentHTML(info.Markdown?.contentHTML || "");
+       setContentMarkdown(info.Markdown?.contentMarkdown || "");
+       setDescription(info.Markdown?.description || "");
+       setSelectedPrice(info.priceId || "");
+       setSelectedPayment(info.paymentId || "");
+       setSelectedProvince(info.provinceId || "");
        setClinicId(info.clinicId || "");
        setNameClinic(info.nameClinic || "");
        setAddressClinic(info.addressClinic || "");
        setNote(info.note || "");
        setSpecialtyId(info.specialtyId || "");
-       setDescription(info.description || "");
        setEditingId(info.id);
     };
   const handleDelete = async (id) => {
@@ -203,11 +196,17 @@ function ManageDoctorInfo() {
       toast.error("Lỗi kết nối server khi xoá.");
     }
   };
+  const provinceMap = {
+  hanoi: "Hà Nội",
+  hochiminh: "Hồ Chí Minh",
+  danang: "Đà Nẵng",
+  lamdong: "Lâm Đồng"
+};
 
 
   return (
     <div className="manage-doctor-info-container">
-      <h2 className="title">QUẢN LÝ THÔNG TIN BÁC SĨ</h2>
+      <h2 className="title">{editingId ? "CHỈNH SỬA THÔNG TIN BÁC SĨ" : "QUẢN LÝ THÔNG TIN BÁC SĨ"}</h2>
   
       <div className="manage-doctor-info-form">
         <div className="form-group">
@@ -375,7 +374,7 @@ function ManageDoctorInfo() {
       </div>
   
       <button className="save-btn" onClick={handleSubmit}>
-        Lưu thông tin
+        {editingId ? "Cập nhật" : "Lưu thông tin"}
       </button>
       <h3>Danh sách thông tin bác sĩ</h3>
       <table className="doctor-table">
@@ -395,8 +394,8 @@ function ManageDoctorInfo() {
                 <td>{info.doctorData?.lastName} {info.doctorData?.firstName}</td>
                 <td>{info.specialtyData?.name}</td>
                 <td>{info.clinicData?.name}</td>
-                <td>{info.priceTypeData?.valueVi}</td>
-                <td>{info.provinceTypeData?.valueVi}</td>
+                <td>{info.priceId}</td>
+                <td>{provinceMap[info.provinceId]}</td>
                 <td>
                    <button className="edit-btn" onClick={() => handleEdit(info)}><i className="fa-solid fa-pen-to-square"></i></button>
                    <button className="delete-btn" onClick={() => handleDelete(info.id)}><i className="fa-solid fa-trash"></i></button>
