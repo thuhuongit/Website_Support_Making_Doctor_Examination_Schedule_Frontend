@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../../../util/axios";
 import { toast, ToastContainer } from "react-toastify";
+import Swal from "sweetalert2";
 import "react-toastify/dist/ReactToastify.css";
 import "./ManageDoctor.css";
 import ReactQuill from 'react-quill-new';
@@ -174,6 +175,34 @@ function ManageDoctorInfo() {
        setDescription(info.description || "");
        setEditingId(info.id);
     };
+  const handleDelete = async (id) => {
+    const confirm = await Swal.fire({
+      title: "Bạn có chắc muốn xoá?",
+      text: "Thao tác này không thể hoàn tác!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xoá",
+      cancelButtonText: "Huỷ",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const res = await axiosInstance.delete("http://localhost:8084/api/delete-doctor", {
+        params: { id },
+      });
+
+      if (res.data.errCode === 0) {
+        toast.success("Đã xoá doctor!");
+        fetchDoctorInfos();
+      } else {
+        toast.error(res.data.errMessage || "Không xoá được doctor.");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Lỗi kết nối server khi xoá.");
+    }
+  };
 
 
   return (
