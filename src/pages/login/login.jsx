@@ -24,12 +24,13 @@ const LoginPage = () => {
     const data = response.data;
 
     if (data && data.errCode === 0 && data.user) {
-      const loginToken = Date.now().toString(); // token duy nhất mỗi lần login
+      const loginToken = Date.now().toString();
+      sessionStorage.setItem("activeLoginToken", loginToken);
       const fullUser = { ...data.user, loginToken };
-
       localStorage.setItem("user", JSON.stringify(fullUser));
-      sessionStorage.setItem("activeLoginToken", loginToken); // ⬅️ set cho tab hiện tại
       setUser(fullUser);
+      navigate("/");
+
 
       switch(data.user.roleId) {
         case "1": navigate("/admin"); break;

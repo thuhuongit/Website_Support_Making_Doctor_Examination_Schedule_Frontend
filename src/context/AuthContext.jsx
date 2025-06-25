@@ -2,41 +2,39 @@ import { createContext, useState, useEffect } from "react";
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem("user");
-    const activeToken = sessionStorage.getItem("activeLoginToken");
-
-    if (storedUser && activeToken) {
-      const parsedUser = JSON.parse(storedUser);
-      if (parsedUser.loginToken === activeToken) {
-        return parsedUser;
-      }
+    const stored = localStorage.getItem("user");
+    const tok = sessionStorage.getItem("activeLoginToken");
+    if (stored && tok) {
+      const u = JSON.parse(stored);
+      return u.loginToken === tok ? u : null;
     }
     return null;
   });
 
-  useEffect(() => {
-    const onStorageChange = (e) => {
-      if (e.key === "user") {
-        const updatedUser = e.newValue ? JSON.parse(e.newValue) : null;
-        const activeToken = sessionStorage.getItem("activeLoginToken");
-
-        if (updatedUser?.loginToken === activeToken) {
-          setUser(updatedUser);
-        } else {
-          setUser(null);
-        }
+useEffect(() => {
+  const handleStorage = (e) => {
+    if (e.key === 'tokens') {
+      const newTokens = e.newValue ? JSON.parse(e.newValue) : null;
+      if (!newTokens) {
+        setUser(null);
+      } else if (newTokens.accessToken !== currentAccessToken) {
+        // token khác => logout
+        setUser(null);
+      } else {
+        // token giống => giữ login
       }
-    };
+    }
+  };
 
-    window.addEventListener("storage", onStorageChange);
-    return () => window.removeEventListener("storage", onStorageChange);
-  }, []);
+  window.addEventListener('storage', handleStorage);
+  return () => window.removeEventListener('storage', handleStorage);
+}, []);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
