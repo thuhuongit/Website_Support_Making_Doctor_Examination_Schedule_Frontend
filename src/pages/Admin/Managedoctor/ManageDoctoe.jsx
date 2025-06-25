@@ -154,10 +154,12 @@ function ManageDoctorInfo() {
       };
 
     const handleEdit = (info) => {
+      console.log("INFO được chọn để sửa:", info);
+      console.log("Dữ liệu markdown:", info.markdown);
        setSelectedDoctor(info.doctorId);
-       setContentHTML(info.Markdown?.contentHTML || "");
-       setContentMarkdown(info.Markdown?.contentMarkdown || "");
-       setDescription(info.Markdown?.description || "");
+       setContentHTML(info.markdown?.contentHTML || "");
+       setContentMarkdown(info.markdown?.contentMarkdown || "");
+       setDescription(info.markdown?.description || "");
        setSelectedPrice(info.priceId || "");
        setSelectedPayment(info.paymentId || "");
        setSelectedProvince(info.provinceId || "");
