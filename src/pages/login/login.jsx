@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import axiosInstance from "../../util/axios";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -29,13 +30,12 @@ const LoginPage = () => {
       const fullUser = { ...data.user, loginToken };
       localStorage.setItem("user", JSON.stringify(fullUser));
       setUser(fullUser);
-      navigate("/");
 
 
       switch(data.user.roleId) {
-        case "1": navigate("/admin"); break;
-        case "2": navigate("/doctor-dashboard"); break;
-        default: navigate("/"); break;
+        case "1": navigate("/admin", { replace: true }); break;
+        case "2": navigate("/doctor-dashboard", { replace: true }); break;
+        default: navigate("/", { replace: true }); break;
       }
     } else {
       alert("Đăng nhập thất bại. Sai email hoặc mật khẩu.");
