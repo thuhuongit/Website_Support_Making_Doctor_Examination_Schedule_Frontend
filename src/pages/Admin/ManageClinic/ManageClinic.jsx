@@ -47,7 +47,9 @@ const ManageClinic = () => {
 
   const handleSubmit = async () => {
     if (!clinicName || !address || !description) {
-      toast.error("Vui lòng nhập đầy đủ thông tin!");
+      toast.error("Vui lòng nhập đầy đủ thông tin!", {
+        position: "top-right",
+      });
       return;
     }
 

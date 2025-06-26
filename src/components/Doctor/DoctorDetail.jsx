@@ -180,6 +180,7 @@ function DoctorSchedule() {
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
             className="date-picker"
+            min={new Date().toISOString().split("T")[0]}
           />
 
           <h3>{t("Lịch khám theo ngày")}</h3>

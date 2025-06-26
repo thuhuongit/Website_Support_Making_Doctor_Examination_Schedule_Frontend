@@ -28,7 +28,7 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
   useEffect(() => {
   const userData = JSON.parse(localStorage.getItem("user"));
   console.log("User loaded:", userData);
-  if (userData) {
+  if (userData && userData.role === "user") {
     setFormData({
       firstName: userData.firstName || "",
       lastName: userData.lastName || "",
@@ -37,6 +37,17 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
       address: userData.address || "",
       reason: "",
       gender: String(userData.gender),
+    });
+  }else {
+    // Nếu không phải user => reset form (hoặc đóng modal)
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      address: "",
+      reason: "",
+      gender: "",
     });
   }
 }, []);
