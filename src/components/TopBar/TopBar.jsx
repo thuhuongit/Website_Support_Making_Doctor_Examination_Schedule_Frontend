@@ -15,13 +15,11 @@ useEffect(() => {
   if (storedUser) {
     const parsedUser = JSON.parse(storedUser);
 
-    // Nếu chưa có sessionStorage (tab mới mở), thì gán lại luôn từ localStorage
-    if (!activeToken) {
-      sessionStorage.setItem("activeLoginToken", parsedUser.loginToken);
-      setUser(parsedUser);
-    } else if (parsedUser.loginToken === activeToken) {
+    // Chỉ set user nếu sessionStorage khớp token
+    if (parsedUser.loginToken === activeToken) {
       setUser(parsedUser);
     } else {
+      // Không đúng token thì set null, KHÔNG tự gán lại token
       setUser(null);
     }
   } else {

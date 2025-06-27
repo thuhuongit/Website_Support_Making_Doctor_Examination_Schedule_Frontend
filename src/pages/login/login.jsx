@@ -44,6 +44,7 @@ const LoginPage = () => {
       const fullUser = { ...data.user, role, loginToken };
       console.log("Dữ liệu người dùng sau login:", fullUser);
       localStorage.setItem("user", JSON.stringify(fullUser));
+      sessionStorage.setItem("activeLoginToken", loginToken); 
       setUser(fullUser);
 
 
