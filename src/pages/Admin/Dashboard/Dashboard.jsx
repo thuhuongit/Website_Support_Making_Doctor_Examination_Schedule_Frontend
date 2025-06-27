@@ -1,11 +1,9 @@
-import {
-  BarChart, Bar, LineChart, Line, XAxis, YAxis,
-  CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-  PieChart, Pie, Cell
-} from "recharts";
-
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../util/axios";
+import {
+  BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis,
+  CartesianGrid, Tooltip, Legend, ResponsiveContainer
+} from "recharts";
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -13,125 +11,94 @@ const Dashboard = () => {
   const [newUsersToday, setNewUsersToday] = useState(0);
   const [appointmentsDone, setAppointmentsDone] = useState(0);
   const [totalDoctors, setTotalDoctors] = useState(0);
-  const [dataDoctors, setDataDoctors] = useState([]);
-  const [dataPatients, setDataPatients] = useState([]);
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+  const COLORS = ["#4CAF50", "#FF9800"];
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const [
-          revenueRes,
-          newUserRes,
-          appointmentRes,
-          doctorRes,
-          topDoctorRes,
-          vipPatientRes
-        ] = await Promise.all([
-          axiosInstance.get("http://localhost:8084/api/get-weekly-revenue"),
-          axiosInstance.get("http://localhost:8084/api/get-total-new-user-day"),
-          axiosInstance.get("http://localhost:8084/api/get-total-health-appointment-done"),
-          axiosInstance.get("http://localhost:8084/api/get-total-doctor"),
-          axiosInstance.get("http://localhost:8084/api/get-top-three-doctors-of-the-year"),
-          axiosInstance.get("http://localhost:8084/api/get-top-four-vip-patient"),
-        ]);
+        const revenueRes = await axiosInstance.get("/get-weekly-revenue");
+        setWeeklyRevenue(revenueRes.data?.data?.totalWeeklyRevenue || 0);
 
-        setWeeklyRevenue(revenueRes.data?.total || 0);
-        setNewUsersToday(newUserRes.data?.count || 0);
-        setAppointmentsDone(appointmentRes.data?.total || 0);
-        setTotalDoctors(doctorRes.data?.count || 0);
-        setDataDoctors(topDoctorRes.data || []);
-        setDataPatients(vipPatientRes.data || []);
+        const userRes = await axiosInstance.get("/get-total-new-user-day");
+        setNewUsersToday(userRes.data?.data?.totalNewUserDay || 0);
+
+        const appointmentRes = await axiosInstance.get("/get-total-health-appointment-done");
+        setAppointmentsDone(appointmentRes.data?.data?.totalHealthApointmentDone || 0);
+
+        const doctorRes = await axiosInstance.get("/get-total-doctor");
+        setTotalDoctors(doctorRes.data?.data?.totalDoctors || 0);
       } catch (error) {
-        console.error("Error fetching dashboard data:", error);
+        console.error("Dashboard error:", error);
       }
     };
 
     fetchDashboardData();
   }, []);
 
-  const renderCustomLegend = (props) => {
-    const { payload } = props;
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}>
-        {payload.map((entry, index) => (
-          <div key={`item-${index}`} style={{ display: 'flex', alignItems: 'center', margin: '0 10px' }}>
-            <div style={{
-              width: 10,
-              height: 10,
-              backgroundColor: entry.color,
-              borderRadius: '50%',
-              marginRight: 5,
-            }} />
-            <span style={{ fontSize: 14 }}>{entry.value}</span>
-          </div>
-        ))}
-      </div>
-    );
-  };
+  // 👉 Tạo dữ liệu cho biểu đồ
+  const userVsDoctorData = [
+    { name: "Người dùng mới", value: newUsersToday },
+    { name: "Bác sĩ", value: totalDoctors },
+  ];
 
   return (
-    <div className="dashboard">
-      <h2>Hi, Welcome back</h2>
+    <div className="dashboard-container">
+      <h2>Hệ thống quản trị tổng quan</h2>
 
-      <div className="cards">
-        <div className="card green">
-          <p>Weekly Revenue</p>
+      <div className="summary-cards">
+        <div className="card card-green">
+          <p>Doanh thu tuần</p>
           <h3>${weeklyRevenue.toLocaleString()}</h3>
         </div>
-        <div className="card blue">
-          <p>New Users</p>
+        <div className="card card-blue">
+          <p>Người dùng mới</p>
           <h3>{newUsersToday}</h3>
         </div>
-        <div className="card yellow">
-          <p>Total Health Appointment Done</p>
+        <div className="card card-yellow">
+          <p>Cuộc hẹn đã hoàn thành</p>
           <h3>{appointmentsDone}</h3>
         </div>
-        <div className="card red">
-          <p>Total Doctors</p>
+        <div className="card card-pink">
+          <p>Số bác sĩ</p>
           <h3>{totalDoctors}</h3>
         </div>
       </div>
 
-      <div className="charts">
-        <div className="chart-container">
-          <h3>Top 3 doctors with the highest revenue of the year</h3>
+      <div className="chart-section">
+        {/* Biểu đồ cột */}
+        <div className="chart-box">
+          <h3>So sánh Người dùng mới và Số bác sĩ</h3>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={dataDoctors}>
+            <BarChart data={userVsDoctorData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis />
+              <YAxis allowDecimals={false} />
               <Tooltip />
-              <Legend />
-              {/* Bạn có thể tự động tạo các Bar/Line nếu muốn linh động hơn */}
-              <Bar dataKey="CaoKienNguyen" fill="#00C49F" />
-              <Bar dataKey="HuynhQuocCuong" fill="#FFBB28" />
-              <Line type="monotone" dataKey="TrinTuan" stroke="#0088FE" />
+              <Bar dataKey="value" fill="#2196F3" />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="chart-container">
-          <h3>Top 4 VIP patients</h3>
+        {/* Biểu đồ tròn */}
+        <div className="chart-box">
+          <h3>Tỷ lệ Người dùng mới vs Bác sĩ</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-                data={dataPatients}
+                data={userVsDoctorData}
                 dataKey="value"
                 nameKey="name"
-                cx="50%"
-                cy="50%"
                 outerRadius={100}
                 fill="#8884d8"
                 label
               >
-                {dataPatients.map((entry, index) => (
+                {userVsDoctorData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip />
-              <Legend content={renderCustomLegend} />
+              <Legend />
             </PieChart>
           </ResponsiveContainer>
         </div>
