@@ -27,7 +27,8 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
 
   useEffect(() => {
   const userData = JSON.parse(localStorage.getItem("user"));
-  console.log("User loaded:", userData);
+  console.log("user in localStorage:", localStorage.getItem("user"));
+
   if (userData && userData.role === "user") {
     setFormData({
       firstName: userData.firstName || "",

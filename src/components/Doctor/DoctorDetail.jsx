@@ -94,9 +94,11 @@ function DoctorSchedule() {
     fetchSchedule();
   }, [doctorId, selectedDate]);
 
-  const handleTimeClick = (slot) => {
+const handleTimeClick = (slot) => {
   const userData = JSON.parse(localStorage.getItem("user"));
-  if (!userData) {
+
+  // Nếu chưa đăng nhập hoặc không phải role user
+  if (!userData || userData.role !== "user") {
     Swal.fire({
       title: "Bạn chưa đăng ký hoặc đăng nhập!",
       text: "Vui lòng về trang chủ đăng ký hoặc đăng nhập để tiếp tục đặt lịch khám.",
@@ -104,18 +106,19 @@ function DoctorSchedule() {
       confirmButtonText: "Trang chủ"
     }).then((result) => {
       if (result.isConfirmed) {
-        navigate("/"); 
+        navigate("/");
       }
     });
-    return; 
+    return;
   }
 
-  // Nếu đã đăng nhập thì cho đặt lịch
+  // Nếu hợp lệ thì mở modal
   if (availableTimes.includes(slot)) {
     setSelectedTime(slot);
     setShowModal(true);
   }
 };
+
 
   const handleBookingSuccess = () => {
     setShowModal(false);

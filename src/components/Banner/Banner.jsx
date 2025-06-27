@@ -2,8 +2,6 @@ import React from "react";
 import "./Banner.css";
 import { useTranslation } from "react-i18next";
 
-
-
 const Banner = () => {
   const { t } = useTranslation();
   return (
@@ -17,7 +15,6 @@ const Banner = () => {
           <input type="text" placeholder={t("Tìm lý do khám")} />
           </div>
         </div>
-
         <div className="service-section">
           <div className="service-item">
             <i className="fa-solid fa-stethoscope"></i>
@@ -45,7 +42,6 @@ const Banner = () => {
           </div>
         </div>
       </div>
-    
   );
 };
 

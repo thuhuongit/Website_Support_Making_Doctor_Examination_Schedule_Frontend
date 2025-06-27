@@ -36,7 +36,6 @@ const Clinic = () => {
   const [bookingSuccess, setBookingSuccess] = useState(false);
 
 
-
   // Lấy chuyên khoa và bác sĩ
   useEffect(() => {
     const fetchClinicAndDoctors = async () => {
@@ -112,7 +111,6 @@ const Clinic = () => {
     if (doctorSchedules.length === 0) {
       return <p>{t('Chưa có lịch khám cho ngày này.')}</p>;
     }
-  
     return (
       <div className="time-slot-grid">
         {doctorSchedules.map((slot) => {
@@ -156,7 +154,6 @@ const Clinic = () => {
       </div>
     );
   };
-  
 
   return (
     <div className="specialty-container">
@@ -192,7 +189,6 @@ const Clinic = () => {
           />
         )}
       </div>
-
       {/* Danh sách bác sĩ */}
       {doctors.length > 0 ? (
         doctors.map((doctor) => {

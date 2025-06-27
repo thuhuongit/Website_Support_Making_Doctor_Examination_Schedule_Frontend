@@ -23,20 +23,43 @@ const LoginPage = () => {
     });
 
     const data = response.data;
+    console.log("Thông tin user từ backend:", data.user);
 
     if (data && data.errCode === 0 && data.user) {
       const loginToken = Date.now().toString();
-      sessionStorage.setItem("activeLoginToken", loginToken);
-      const fullUser = { ...data.user, loginToken };
+      let role = "";
+      switch (String(data.user.roleId)) {
+        case "1":
+           role = "admin";
+        break;
+        case "2":
+           role = "doctor";
+        break;
+        case "0":
+        default:
+           role = "user";
+        break;
+    }
+
+      const fullUser = { ...data.user, role, loginToken };
+      console.log("Dữ liệu người dùng sau login:", fullUser);
       localStorage.setItem("user", JSON.stringify(fullUser));
       setUser(fullUser);
 
 
-      switch(data.user.roleId) {
-        case "1": navigate("/admin", { replace: true }); break;
-        case "2": navigate("/doctor-dashboard", { replace: true }); break;
-        default: navigate("/", { replace: true }); break;
-      }
+      switch (role) {
+         case "admin":
+            navigate("/admin", { replace: true });
+         break;
+         case "doctor":
+            navigate("/doctor-dashboard", { replace: true });
+         break;
+         case "user":
+         default:
+            navigate("/", { replace: true });
+         break;
+    }
+
     } else {
       alert("Đăng nhập thất bại. Sai email hoặc mật khẩu.");
     }

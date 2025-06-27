@@ -8,23 +8,27 @@ const TopBar = () => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext);
 
-  // Cập nhật khi load trang
-  useEffect(() => {
+useEffect(() => {
   const storedUser = localStorage.getItem("user");
   const activeToken = sessionStorage.getItem("activeLoginToken");
 
-  if (storedUser && activeToken) {
+  if (storedUser) {
     const parsedUser = JSON.parse(storedUser);
 
-    if (parsedUser.loginToken === activeToken) {
-      setUser(parsedUser); 
+    // Nếu chưa có sessionStorage (tab mới mở), thì gán lại luôn từ localStorage
+    if (!activeToken) {
+      sessionStorage.setItem("activeLoginToken", parsedUser.loginToken);
+      setUser(parsedUser);
+    } else if (parsedUser.loginToken === activeToken) {
+      setUser(parsedUser);
     } else {
-      setUser(null); 
+      setUser(null);
     }
   } else {
     setUser(null);
   }
 }, []);
+
 
 
 useEffect(() => {
