@@ -42,44 +42,51 @@ const Specialist = () => {
   const handleDescriptionChange = (value) => setDescription(value);
 
   const handleSubmit = async () => {
-    if (!specialtyName || !description || (!file && !editingSpecialtyId)) {
-      toast.error("Vui lòng nhập đầy đủ thông tin!");
-      return;
+  if (!specialtyName || !description || (!file && !editingSpecialtyId)) {
+    toast.error("Vui lòng nhập đầy đủ thông tin!");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("name", specialtyName);
+  if (file) formData.append("image", file);
+  formData.append("descriptionMarkdown", description);
+  formData.append("descriptionHTML", description);
+
+  let method = "post";
+  let url = "http://localhost:8084/api/create-new-specialty";
+
+  if (editingSpecialtyId) {
+    method = "put";
+    url = "http://localhost:8084/api/edit-specialty";
+    formData.append("id", editingSpecialtyId);
+  }
+
+  try {
+    const res = await axiosInstance({
+      method,
+      url,
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    if (res.data?.errCode === 0) {
+      Swal.fire("Thành công!", editingSpecialtyId ? "Đã cập nhật chuyên khoa!" : "Đã thêm chuyên khoa!", "success");
+      setSpecialtyName("");
+      setFile(null);
+      setDescription("");
+      setEditing(null);
+      setPreviewImage(null);
+      fetchSpecialties();
+    } else {
+      toast.error(res.data.errMessage || "Có lỗi khi thêm chuyên khoa.");
     }
+  } catch (err) {
+    console.error(err);
+    toast.error("Lỗi kết nối đến server!");
+  }
+};
 
-    const formData = new FormData();
-    formData.append("name", specialtyName);
-    if (file) formData.append("image", file);
-    formData.append("descriptionMarkdown", description);
-    formData.append("descriptionHTML", description);
-
-    let url = "http://localhost:8084/api/create-new-specialty";
-    if (editingSpecialtyId) {
-      url = "http://localhost:8084/api/edit-specialty";
-      formData.append("id", editingSpecialtyId);
-    }
-
-    try {
-      const res = await axiosInstance.put(url, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      if (res.data?.errCode === 0) {
-        Swal.fire("Thành công!", editingSpecialtyId ? "Đã cập nhật chuyên khoa!" : "Đã thêm chuyên khoa!", "success");
-        setSpecialtyName("");
-        setFile(null);
-        setDescription("");
-        setEditing(null);
-        setPreviewImage(null);
-        fetchSpecialties();
-      } else {
-        toast.error(res.data.errMessage || "Có lỗi khi thêm chuyên khoa.");
-      }
-    } catch (err) {
-      console.error(err);
-      toast.error("Lỗi kết nối đến server!");
-    }
-  };
 
   const handleEdit = (specialty) => {
     setSpecialtyName(specialty.name);
