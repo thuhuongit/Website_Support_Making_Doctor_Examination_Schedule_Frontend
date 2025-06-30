@@ -96,12 +96,6 @@ const Navbar = () => {
 
         {/* Phần bên phải: Hỗ trợ + Đổi ngôn ngữ */}
         <div className="navbar-right">
-          {/* Nút hỗ trợ */}
-          <div className="navbar-support">
-            <button>
-              <i className="fa-solid fa-phone-volume"></i> {t("Hỗ trợ")}
-            </button>
-          </div>
 
           {/* Chuyển đổi ngôn ngữ */}
           <div className="language-switch">

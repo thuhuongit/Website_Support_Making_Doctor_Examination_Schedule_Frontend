@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import axiosInstance from "../../util/axios";
 import "./Search.css";
+import Footer from '../Footer/Footer';
 import { useNavigate } from "react-router-dom";
 
 const SearchPage = () => {
@@ -191,6 +192,7 @@ const SearchPage = () => {
           </div>
         )}
       </div>
+      <Footer/>
     </div>
   );
 };

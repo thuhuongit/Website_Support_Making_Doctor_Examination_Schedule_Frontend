@@ -15,13 +15,7 @@
   font-size: 28px;
 }
 
-/* Tiêu đề */
-.form-container h2 {
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 30px;
-  font-size: 28px;
-}
+
 
 /* Hàng chứa các input hoặc select */
 .form-row {

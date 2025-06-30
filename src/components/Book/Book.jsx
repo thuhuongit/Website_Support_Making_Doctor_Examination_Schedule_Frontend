@@ -169,6 +169,7 @@ const Clinic = () => {
           <li>{t('Bác sĩ')}<br /><span>{t('Chọn bác sĩ giỏi')}</span></li>
           <li>{t('Gói khám')}<br /><span>{t('Khám sức khỏe tổng quát')}</span></li>
         </ul>
+
       </nav>
 
       {/* Thông tin chuyên khoa */}
