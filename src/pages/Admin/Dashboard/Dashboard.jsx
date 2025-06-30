@@ -48,7 +48,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <h1>Hệ thống quản trị tổng quan</h1>
+      <h2>HỆ THỐNG QUẢN TRỊ TỔNG QUAN</h2>
 
       <div className="summary-cards">
         <div className="card card-green">

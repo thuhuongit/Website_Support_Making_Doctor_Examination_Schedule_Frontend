@@ -4,6 +4,12 @@
   background: #f7f9fc;
   min-height: 100vh;
 }
+.dashboard-container h2{
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 28px;
+}
 
 .summary-cards {
   display: grid;

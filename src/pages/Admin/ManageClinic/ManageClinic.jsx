@@ -134,7 +134,7 @@ const ManageClinic = () => {
       </div>
 
       <div className="form-group">
-        <label>Địa chỉ</label>
+        <label>Địa chỉ phòng khám</label>
         <input type="text" value={address} onChange={handleAddressChange} placeholder="Nhập địa chỉ" />
       </div>
 
@@ -151,11 +151,11 @@ const ManageClinic = () => {
      </div>
 
       <div className="form-group">
-        <label>Mô tả</label>
+        <label>Mô tả phòng khám</label>
         <ReactQuill value={description} onChange={handleDescriptionChange} />
       </div>
 
-      <button className="save-button" onClick={handleSubmit}>{editingClinicId ? 'Cập nhật' : 'Lưu'}</button>
+      <button className="save-button" onClick={handleSubmit}>{editingClinicId ? 'Cập nhật' : 'Lưu thông tin'}</button>
 
       <h3 style={{ marginTop: "40px" }}>Danh sách phòng khám</h3>
       <div className="table-wrapper">
@@ -163,8 +163,8 @@ const ManageClinic = () => {
           <thead>
             <tr>
               <th>STT</th>
-              <th>Tên</th>
-              <th>Ảnh</th>
+              <th>Tên phòng khám</th>
+              <th>Ảnh phòng khám</th>
               <th>Thao tác</th>
             </tr>
           </thead>
@@ -184,12 +184,14 @@ const ManageClinic = () => {
                     ) : "N/A"}
                   </td>
                   <td>
-                    <button className="delete-btn" onClick={() => handleDelete(clinic.id)}>
-                      <i className="fa-solid fa-trash"></i>
-                    </button>
                     <button className="edit-btn" onClick={() => handleEdit(clinic)}>
                       <i className="fa-solid fa-pen-to-square"></i>
                     </button>
+                    
+                    <button className="delete-btn" onClick={() => handleDelete(clinic.id)}>
+                      <i className="fa-solid fa-trash"></i>
+                    </button>
+                    
                   </td>
                 </tr>
               ))

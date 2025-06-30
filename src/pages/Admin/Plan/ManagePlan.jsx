@@ -161,7 +161,7 @@ const handleDeleteTime = async (time) => {
 
   return (
     <div className="schedule-container">
-      <h2 className="title">QUẢN LÝ KẾ HOẠCH KHÁM BỆNH CỦA BÁC SĨ</h2>
+      <h2>QUẢN LÝ KẾ HOẠCH KHÁM BỆNH CỦA BÁC SĨ</h2>
 
       <div className="controls">
         <select
@@ -233,7 +233,7 @@ const handleDeleteTime = async (time) => {
                 <tr key={time}>
                   <td>{time}</td>
                   <td>
-                    <button onClick={() => handleDeleteTime(time)} className="delete-btn">Xoá</button>
+                    <button onClick={() => handleDeleteTime(time)} className="delete-btn"><i className="fa-solid fa-trash"></i></button>
                   </td>
                 </tr>
               ))}

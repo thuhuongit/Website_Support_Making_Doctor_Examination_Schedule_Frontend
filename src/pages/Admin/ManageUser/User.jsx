@@ -187,7 +187,7 @@ const User = () => {
 
   return (
     <div className="user-form-container">
-      <h1 style={{ textAlign: 'center' }}>THÊM BÁC SĨ VÀ ADMIN MỚI</h1>
+      <h2>THÊM BÁC SĨ VÀ ADMIN MỚI</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-row">
           <input type="text" name="email" placeholder="Email"  value={formData.email} onChange={handleChange} />
@@ -237,7 +237,7 @@ const User = () => {
         )}
 
         <button type="submit" className="save-btn" onClick={(e) => e.stopPropagation()}>
-          {editingUserId ? "Cập nhật" : "Lưu user"}
+          {editingUserId ? "Cập nhật" : "Lưu thông tin"}
         </button>
         {editingUserId && (
           <button type="button" className="cancel-btn" onClick={resetForm}>
@@ -254,7 +254,7 @@ const User = () => {
             <th>Họ</th>
             <th>Tên</th>
             <th>Địa chỉ</th>
-            <th>Hành động</th>
+            <th>Thao tác</th>
           </tr>
         </thead>
         <tbody>

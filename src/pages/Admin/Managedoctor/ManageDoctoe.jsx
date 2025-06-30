@@ -387,7 +387,7 @@ function ManageDoctorInfo() {
               <th>Phòng khám</th>
               <th>Giá</th>
               <th>Tỉnh</th>
-              <th>Hành động</th>
+              <th>Thao tác</th>
            </tr>
          </thead>
          <tbody>

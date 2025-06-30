@@ -168,7 +168,7 @@ const Specialist = () => {
       </div>
 
       <button className="save-button" onClick={handleSubmit}>
-        {editingSpecialtyId ? "Cập nhật" : "Lưu"}
+        {editingSpecialtyId ? "Cập nhật" : "Lưu thông tin"}
       </button>
 
       <h3 style={{ marginTop: "40px" }}>Danh sách chuyên khoa</h3>
@@ -198,12 +198,14 @@ const Specialist = () => {
                     ) : "N/A"}
                   </td>
                   <td>
-                    <button className="delete-btn" onClick={() => handleDelete(s.id)}>
-                      <i className="fa-solid fa-trash"></i>
-                    </button>
                     <button className="edit-btn" onClick={() => handleEdit(s)}>
                       <i className="fa-solid fa-pen-to-square"></i>
                     </button>
+
+                    <button className="delete-btn" onClick={() => handleDelete(s.id)}>
+                      <i className="fa-solid fa-trash"></i>
+                    </button>
+                    
                   </td>
                 </tr>
               ))
