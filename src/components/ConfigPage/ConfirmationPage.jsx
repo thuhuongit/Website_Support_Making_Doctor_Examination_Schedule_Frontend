@@ -44,6 +44,21 @@ const ConfirmationPage = () => {
 
   return (
     <div className="confirmation-page">
+      <nav className="navbar" style={{ marginTop: '0px'}}>
+        <div className="logo" onClick={() => window.location.href = "/"}>
+          <img className="logo-img" src="/logo.png" alt="BookingCare" style={{ width: '50px' }} />
+          <span className="logo-text">BookingCare</span>
+        </div>
+        <div className="navbar-right">
+          <div className='hotline'><i className="fa-solid fa-phone-volume"></i> Hotline: 024-7301-2468</div>
+          <div className='email'><i className="fa-solid fa-envelope"></i> Email: support@bookingcare.vn</div>
+          <div className="language-switch">
+            <button className="active-lang">🇻🇳</button>
+            <button>🇺🇸</button>
+          </div>
+        </div>
+      </nav>
+      
       <div className={`confirmation-box ${status}`}>
         <CheckCircle2 size={64} color="#10B981" />
         <h2>{confirmationMessage}</h2>
