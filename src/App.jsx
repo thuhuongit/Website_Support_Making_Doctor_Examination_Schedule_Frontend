@@ -22,6 +22,7 @@ import HospitalPage from "./components/HospitalPage/HospitalPage";
 import BookingPage from "./components/BookingPage/BookingPage";
 import DetailSpecialty from "./components/Detail-Specialty/Detail-Specialty";
 import DetailHospital from "./components/Detail-Hospital/Detail-Hospital";
+import Search from "./components/Search/Search";
 
 // Admin pages
 import AdminLayout from "./pages/Admin/layout/AdminLayout";
@@ -64,6 +65,7 @@ function App() {
           <Route path="/detail-specialty/:id" element={<DetailSpecialty />} />
           <Route path="/verify-booking" element={<ConfirmationPage />} />
           <Route path="/booking/:doctorId" element={<BookingPage />} />
+          <Route path="/search" element={<Search />} />
 
           {/* Doctor Protected */}
           <Route element={<ProtectedRoute allowedRoles={["2"]} user={user} />}>

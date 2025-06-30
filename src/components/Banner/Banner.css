@@ -29,6 +29,7 @@
   color: gray;
   font-size: 16px;
   cursor: pointer;
+  z-index: 10;
 }
 
 .search-box input {
@@ -78,6 +79,7 @@
 
 .overlay {
   position: relative;
+  z-index: 2;
   display: flex;
   top: 50%;
   left: 50%;
