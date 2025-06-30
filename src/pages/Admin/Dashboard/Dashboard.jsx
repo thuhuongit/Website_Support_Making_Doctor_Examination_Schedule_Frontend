@@ -13,7 +13,7 @@ const Dashboard = () => {
   const [totalDoctors, setTotalDoctors] = useState(0);
 
   // Màu sắc tương ứng cho biểu đồ Pie
-  const COLORS = ["#4CAF50", "#FF9800", "#03A9F4"];
+  const COLORS = ["#4CAF50","#03A9F4", "#FF9800", "#E91E63"];
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -39,9 +39,11 @@ const Dashboard = () => {
 
   // Dữ liệu cho biểu đồ
   const dashboardChartData = [
+    { name: "Doanh thu tuần ($)", value: weeklyRevenue },
     { name: "Người dùng mới", value: newUsersToday },
-    { name: "Bác sĩ", value: totalDoctors },
     { name: "Cuộc hẹn đã hoàn thành", value: appointmentsDone },
+    { name: "Bác sĩ", value: totalDoctors },
+    
   ];
 
   return (
@@ -70,22 +72,45 @@ const Dashboard = () => {
       <div className="chart-section">
         {/* Biểu đồ cột */}
         <div className="chart-box">
-          <h3>So sánh Người dùng, Bác sĩ và Cuộc hẹn</h3>
+          <h3>So sánh Doanh thu, Người dùng, Bác sĩ và Cuộc hẹn</h3>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={dashboardChartData}>
+            <BarChart data={dashboardChartData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis allowDecimals={false} />
+              <XAxis
+                dataKey="name"
+                interval={0}
+                height={60}
+                tick={({ x, y, payload }) => {
+                    const lines = payload.value.split(" ");
+                    return (
+                      <g transform={`translate(${x},${y + 10})`}>
+                         {lines.map((line, index) => (
+                           <text
+                              key={index}
+                              x={0}
+                              y={index * 15}
+                              textAnchor="middle"
+                              fontSize={15}
+                              fill="#666"
+                           >
+                           {line}
+                           </text>
+                       ))}
+                  </g>
+              );
+         }}
+       />
+              <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
               <Tooltip />
-              <Legend />
-              <Bar dataKey="value" fill="#2196F3" />
+              <Legend wrapperStyle={{ fontSize: "12px" }} />
+              <Bar dataKey="value" fill="#2196F3" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
         {/* Biểu đồ tròn */}
         <div className="chart-box">
-          <h3>Tỷ lệ Người dùng - Bác sĩ - Cuộc hẹn</h3>
+          <h3>Tỷ lệ Doanh thu - Người dùng - Bác sĩ - Cuộc hẹn</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
