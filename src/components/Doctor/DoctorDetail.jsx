@@ -141,16 +141,6 @@ const handleTimeClick = (slot) => {
           <li>{t("Bác sĩ")}<br /><span>{t("Chọn bác sĩ giỏi")}</span></li>
           <li>{t("Gói khám")}<br /><span>{t("Khám sức khỏe tổng quát")}</span></li>
         </ul>
-        
-        <div className="navbar-right">
-          <div className="navbar-support">
-            <button><i className="fa-solid fa-phone-volume"></i> {t("Hỗ trợ")}</button>
-          </div>
-          <div className="language-switch">
-            <button className="active-lang">🇻🇳</button>
-            <button>🇺🇸</button>
-          </div>
-        </div>
       </nav>
 
       {/* Doctor Info */}

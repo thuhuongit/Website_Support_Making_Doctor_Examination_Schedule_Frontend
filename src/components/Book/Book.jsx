@@ -169,13 +169,6 @@ const Clinic = () => {
           <li>{t('Bác sĩ')}<br /><span>{t('Chọn bác sĩ giỏi')}</span></li>
           <li>{t('Gói khám')}<br /><span>{t('Khám sức khỏe tổng quát')}</span></li>
         </ul>
-        <div className="navbar-right">
-          <button><i className="fa-solid fa-phone-volume"></i> {t('Hỗ trợ')}</button>
-          <div className="language-switch">
-            <button className="active-lang">🇻🇳</button>
-            <button>🇺🇸</button>
-          </div>
-        </div>
       </nav>
 
       {/* Thông tin chuyên khoa */}

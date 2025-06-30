@@ -36,7 +36,7 @@ const Dashboard = () => {
     fetchDashboardData();
   }, []);
 
-  // 👉 Tạo dữ liệu cho biểu đồ
+ 
   const userVsDoctorData = [
     { name: "Người dùng mới", value: newUsersToday },
     { name: "Bác sĩ", value: totalDoctors },
@@ -44,7 +44,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <h2>Hệ thống quản trị tổng quan</h2>
+      <h1>Hệ thống quản trị tổng quan</h1>
 
       <div className="summary-cards">
         <div className="card card-green">
