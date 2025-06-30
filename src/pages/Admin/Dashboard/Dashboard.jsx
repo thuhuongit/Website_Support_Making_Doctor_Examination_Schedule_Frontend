@@ -12,7 +12,8 @@ const Dashboard = () => {
   const [appointmentsDone, setAppointmentsDone] = useState(0);
   const [totalDoctors, setTotalDoctors] = useState(0);
 
-  const COLORS = ["#4CAF50", "#FF9800"];
+  // Màu sắc tương ứng cho biểu đồ Pie
+  const COLORS = ["#4CAF50", "#FF9800", "#03A9F4"];
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -24,7 +25,7 @@ const Dashboard = () => {
         setNewUsersToday(userRes.data?.data?.totalNewUserDay || 0);
 
         const appointmentRes = await axiosInstance.get("/get-total-health-appointment-done");
-        setAppointmentsDone(appointmentRes.data?.data?.totalHealthApointmentDone || 0);
+        setAppointmentsDone(appointmentRes.data?.data?.totalHealthAppointmentDone || 0);
 
         const doctorRes = await axiosInstance.get("/get-total-doctor");
         setTotalDoctors(doctorRes.data?.data?.totalDoctors || 0);
@@ -36,10 +37,11 @@ const Dashboard = () => {
     fetchDashboardData();
   }, []);
 
- 
-  const userVsDoctorData = [
+  // Dữ liệu cho biểu đồ
+  const dashboardChartData = [
     { name: "Người dùng mới", value: newUsersToday },
     { name: "Bác sĩ", value: totalDoctors },
+    { name: "Cuộc hẹn đã hoàn thành", value: appointmentsDone },
   ];
 
   return (
@@ -68,13 +70,14 @@ const Dashboard = () => {
       <div className="chart-section">
         {/* Biểu đồ cột */}
         <div className="chart-box">
-          <h3>So sánh Người dùng mới và Số bác sĩ</h3>
+          <h3>So sánh Người dùng, Bác sĩ và Cuộc hẹn</h3>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={userVsDoctorData}>
+            <BarChart data={dashboardChartData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis allowDecimals={false} />
               <Tooltip />
+              <Legend />
               <Bar dataKey="value" fill="#2196F3" />
             </BarChart>
           </ResponsiveContainer>
@@ -82,18 +85,18 @@ const Dashboard = () => {
 
         {/* Biểu đồ tròn */}
         <div className="chart-box">
-          <h3>Tỷ lệ Người dùng mới vs Bác sĩ</h3>
+          <h3>Tỷ lệ Người dùng - Bác sĩ - Cuộc hẹn</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-                data={userVsDoctorData}
+                data={dashboardChartData}
                 dataKey="value"
                 nameKey="name"
                 outerRadius={100}
                 fill="#8884d8"
                 label
               >
-                {userVsDoctorData.map((entry, index) => (
+                {dashboardChartData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
