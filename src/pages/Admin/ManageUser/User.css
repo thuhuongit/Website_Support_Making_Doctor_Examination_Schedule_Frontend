@@ -8,14 +8,13 @@
   border-radius: 8px;
   background-color: #ffffff;
 }
+
 .user-form-container h2{
   text-align: center;
   color: #2c3e50;
   margin-bottom: 30px;
   font-size: 28px;
 }
-
-
 
 /* Hàng chứa các input hoặc select */
 .form-row {
@@ -37,7 +36,6 @@
   min-width: 100px;
   box-sizing: border-box;
 }
-
 
 /* Input và Select chung */
 .form-row input,
@@ -73,6 +71,7 @@
   border: 1px solid #999;
   border-radius: 6px;
 }
+
 /* Nút lưu */
 .save-btn {
   background-color: #2980b9;

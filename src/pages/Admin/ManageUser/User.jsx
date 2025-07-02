@@ -19,7 +19,6 @@ const User = () => {
     position: "",
     avatar: null,
   });
-
   const [avatarPreview, setAvatarPreview] = useState(null);
   const [users, setUsers] = useState([]);
   const [editingUserId, setEditingUserId] = useState(null);
@@ -28,7 +27,6 @@ const User = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
-
   const fetchUsers = () => {
     axiosInstance
       .get("http://localhost:8084/api/get-all-users?id=all")
@@ -42,7 +40,7 @@ const User = () => {
         });
       });
   };
-
+  
   const handleChange = (e) => {
     setFormData({
       ...formData,

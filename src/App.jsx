@@ -9,7 +9,6 @@ import { AuthContext } from "./context/AuthContext";
 // Pages
 import LoginForm from "./pages/login/login";
 import RegisterPage from "./components/RegisterPage/RegisterPage";
-import Header from "./pages/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import ChatbotPage from "./components/ChatbotPage/ChatbotPage";
 import Hospital from "./components/Hospital/Hospital";
@@ -52,7 +51,6 @@ function App() {
           {/* Public Routes */}
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/header" element={<Header />} />
           <Route path="/chat" element={<ChatbotPage />} />
           <Route path="/" element={<Navbar />} />
           <Route path="/hospital/:id" element={<Hospital />} />

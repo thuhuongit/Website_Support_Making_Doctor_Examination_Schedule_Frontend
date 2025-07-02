@@ -26,7 +26,6 @@ const Clinic = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
-
   const [detail, setDetail] = useState({});
   const [doctors, setDoctors] = useState([]);
   const [schedules, setSchedules] = useState({});
@@ -251,7 +250,6 @@ const Clinic = () => {
       ) : (
         <p>{t('Đang tải thông tin bác sĩ...')}</p>
       )}
-
 
       <Footer />
     </div>

@@ -6,8 +6,6 @@ import { useNavigate } from "react-router-dom";
 const Banner = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
-    // Danh sách placeholder
   const placeholders = [
     t("Tìm chuyên khoa"),
     t("Tìm bác sĩ"),
@@ -17,7 +15,7 @@ const Banner = () => {
   const [index, setIndex] = useState(0); // sử dụng setIndex
   const [isFocused, setIsFocused] = useState(false); 
 
-  // Đổi placeholder mỗi 2.5s
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % placeholders.length);
@@ -26,7 +24,6 @@ const Banner = () => {
     return () => clearInterval(interval);
   }, [placeholders.length]);
 
-  
   const handleClick = () => {
   console.log("Clicked");
   navigate("/search");

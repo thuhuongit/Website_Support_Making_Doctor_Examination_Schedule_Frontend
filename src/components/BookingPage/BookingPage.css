@@ -143,6 +143,6 @@
 .payment-option {
   display: flex;
   align-items: center;
-  gap: 3px; /* tạo khoảng cách giữa radio và text */
+  gap: 3px; 
   margin-bottom: 8px;
 }

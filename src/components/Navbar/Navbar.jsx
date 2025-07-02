@@ -18,13 +18,11 @@ const Navbar = () => {
   const [highlighted, setHighlighted] = useState(null);
   const [user, setUser] = useState(null);
 
-    // Tạo ref cho phần "Chuyên khoa phổ biến"
     const specialtiesRef = useRef(null);
     const hospitalsRef = useRef(null);
     const doctorsRef = useRef(null);
     const packagesRef = useRef(null);
 
-      // Hàm cuộn xuống khi nhấn vào menu "Chuyên khoa"
       const scrollToSection = (ref) => {
         if (ref.current) {
           ref.current.scrollIntoView({ behavior: "smooth" });
@@ -35,8 +33,6 @@ const Navbar = () => {
           }, 1500);
         }
       };
-      
-      
 
   // Hàm đổi ngôn ngữ
   const changeLanguage = (lng) => {
@@ -135,24 +131,24 @@ const Navbar = () => {
 
       <Banner />
         {/* Chuyên khoa phổ biến */}
-<div ref={specialtiesRef} className={`specialties-section ${highlighted === specialtiesRef ? "highlight" : ""}`}>
-  <SpecialtiesSlider type="specialties" />
-</div>
+      <div ref={specialtiesRef} className={`specialties-section ${highlighted === specialtiesRef ? "highlight" : ""}`}>
+          <SpecialtiesSlider type="specialties" />
+      </div>
 
-{/* Cơ sở y tế */}
-<div ref={hospitalsRef} className={`specialties-section ${highlighted === specialtiesRef ? "highlight" : ""}`}>
-  <SpecialtiesSlider type="hospitals" />
-</div>
+        {/* Cơ sở y tế */}
+      <div ref={hospitalsRef} className={`specialties-section ${highlighted === specialtiesRef ? "highlight" : ""}`}>
+          <SpecialtiesSlider type="hospitals" />
+      </div>
 
-{/* Bác sĩ nổi bật */}
-<div ref={doctorsRef} className={`specialties-section ${highlighted === specialtiesRef ? "highlight" : ""}`}>
-  <SpecialtiesSlider type="doctors" />
-</div>
+        {/* Bác sĩ nổi bật */}
+      <div ref={doctorsRef} className={`specialties-section ${highlighted === specialtiesRef ? "highlight" : ""}`}>
+          <SpecialtiesSlider type="doctors" />
+      </div>
 
-{/* Gói khám */}
-<div ref={packagesRef} className={`specialties-section ${highlighted === specialtiesRef ? "highlight" : ""}`}>
-  <SpecialtiesSlider type="healPackage" />
-</div>
+        {/* Gói khám */}
+      <div ref={packagesRef} className={`specialties-section ${highlighted === specialtiesRef ? "highlight" : ""}`}>
+          <SpecialtiesSlider type="healPackage" />
+      </div>
 
       <Media/>
       <Footer/>

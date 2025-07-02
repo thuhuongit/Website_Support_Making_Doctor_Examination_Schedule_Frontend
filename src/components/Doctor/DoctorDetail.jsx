@@ -73,7 +73,6 @@ function DoctorSchedule() {
         setAvailableTimes([]);
         return;
       }
-
       try {
         const res = await axiosInstance.get("http://localhost:8084/api/get-schedule-doctor-by-date", {
           params: { doctorId, date: selectedDate }
@@ -96,8 +95,6 @@ function DoctorSchedule() {
 
 const handleTimeClick = (slot) => {
   const userData = JSON.parse(localStorage.getItem("user"));
-
-  // Nếu chưa đăng nhập hoặc không phải role user
   if (!userData || userData.role !== "user") {
     Swal.fire({
       title: "Bạn chưa đăng ký hoặc đăng nhập!",
@@ -111,14 +108,11 @@ const handleTimeClick = (slot) => {
     });
     return;
   }
-
-  // Nếu hợp lệ thì mở modal
   if (availableTimes.includes(slot)) {
     setSelectedTime(slot);
     setShowModal(true);
   }
 };
-
 
   const handleBookingSuccess = () => {
     setShowModal(false);
@@ -128,13 +122,11 @@ const handleTimeClick = (slot) => {
 
   return (
     <div className="doctor-schedule" style={{ marginTop: "80px" }}>
-      {/* Navbar */}
       <nav className="navbar" style={{ marginTop: '0px'}}>
         <div className="logo" onClick={() => navigate("/")}>
           <img className="logo-img" src="/logo.png" alt="BookingCare" style={{width: '50px'}} />
           <span className="logo-text">BookingCare</span>
         </div>
-
         <ul className={`nav-links ${menuOpen ? "open" : ""}`}>
           <li>{t("Chuyên khoa")}<br /><span>{t("Tìm bác sĩ theo chuyên khoa")}</span></li>
           <li>{t("Cơ sở y tế")}<br /><span>{t("Chọn bệnh viện phòng khám")}</span></li>
@@ -223,7 +215,6 @@ const handleTimeClick = (slot) => {
         />
       )}
 
-      {/* Booking Success Popup */}
       {bookingSuccess && (
         <div className="booking-success-popup">
           <p>{t("Bạn đã đặt lịch thành công - Vui lòng xác nhận email!")}</p>

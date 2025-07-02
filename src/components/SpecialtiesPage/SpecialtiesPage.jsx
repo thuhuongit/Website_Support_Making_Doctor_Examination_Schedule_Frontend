@@ -8,7 +8,6 @@ import axiosInstance from "../../util/axios";
 const SpecialtiesPage = () => {
   const [specialties, setSpecialties] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
-
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -24,9 +23,8 @@ const SpecialtiesPage = () => {
         console.error("Lỗi khi lấy dữ liệu:", error);
       }
     };
-
     fetchData();
-  }, []); // 
+  }, []); 
 
   return (
     <div className="specialties-page">
@@ -42,7 +40,6 @@ const SpecialtiesPage = () => {
           <li>{t("Gói khám")}<br /><span>{t("Khám sức khỏe tổng quát")}</span></li>
         </ul>
       </nav>
-
       <div className="specialties-content">
         <h2>{t("Danh sách chuyên khoa")}</h2>
         <div className="specialties-grid">
@@ -61,7 +58,6 @@ const SpecialtiesPage = () => {
           ))}
         </div>
       </div>
-
       <Footer />
     </div>
   );

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { FaTrash, FaEdit } from "react-icons/fa";
 import axiosInstance from "../../../util/axios";
 import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
@@ -15,8 +16,6 @@ const ManageClinic = () => {
   const [clinics, setClinics] = useState([]);
   const [editingClinicId, setEditingClinicId] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
-
-
   const fetchClinics = useCallback(async () => {
     try {
       const res = await axiosInstance.get("http://localhost:8084/api/get-clinic");
@@ -52,13 +51,11 @@ const ManageClinic = () => {
       });
       return;
     }
-
     const formData = new FormData();
     formData.append("name", clinicName);
     formData.append("address", address);
     formData.append("description", description);
     if (file) formData.append("image", file);
-
     try {
       const url = editingClinicId
         ? `http://localhost:8084/api/edit-clinic`
@@ -71,7 +68,6 @@ const ManageClinic = () => {
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       });
-
       if (response.data?.errCode === 0) {
         Swal.fire("Thành công!", editingClinicId ? "Phòng khám đã được cập nhật!" : "Phòng khám đã được thêm!", "success");
         resetForm();
@@ -84,7 +80,6 @@ const ManageClinic = () => {
       toast.error("Lỗi kết nối đến server!");
     }
   };
-
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
       title: "Bạn có chắc muốn xoá?",
@@ -113,7 +108,6 @@ const ManageClinic = () => {
       toast.error("Lỗi kết nối server khi xoá.");
     }
   };
-
   const handleEdit = (clinic) => {
     setClinicName(clinic.name);
     setAddress(clinic.address);
@@ -185,11 +179,11 @@ const ManageClinic = () => {
                   </td>
                   <td>
                     <button className="edit-btn" onClick={() => handleEdit(clinic)}>
-                      <i className="fa-solid fa-pen-to-square"></i>
+                      <FaEdit />
                     </button>
                     
                     <button className="delete-btn" onClick={() => handleDelete(clinic.id)}>
-                      <i className="fa-solid fa-trash"></i>
+                      <FaTrash />
                     </button>
                     
                   </td>

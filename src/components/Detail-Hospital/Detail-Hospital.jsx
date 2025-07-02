@@ -44,7 +44,6 @@ const HospitalDetail = () => {
         </ul>
       </nav>
 
-      {/* Ảnh nền */}
       <div
         className="hospital-banner"
         style={{
@@ -56,9 +55,7 @@ const HospitalDetail = () => {
         <div className="hospital-overlay"></div>
       </div>
 
-      {/* Nội dung chính */}
       <div className="hospital-content">
-        {/* Thông tin bệnh viện */}
         <div className="hospital-info">
           <img
             src={
@@ -75,7 +72,7 @@ const HospitalDetail = () => {
           </div>
         </div>
 
-        {/* Tabs */}
+      
         <div className="hospital-tabs">
           {["Giới thiệu", "Thế mạnh chuyên môn", "Trang thiết bị", "Quy trình khám"].map(
             (tab, index) => (
@@ -95,7 +92,6 @@ const HospitalDetail = () => {
           )}
         </div>
 
-        {/* Info Box */}
         <div className="info-box yellow">
           BookingCare là Nền tảng Y tế chăm sóc sức khỏe toàn diện hàng đầu Việt Nam kết nối người dùng với trên 200 bệnh viện - phòng khám uy tín, 
           hơn 1,500 bác sĩ chuyên khoa giỏi và hàng nghìn dịch vụ, sản phẩm y tế chất lượng cao.

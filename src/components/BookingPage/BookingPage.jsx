@@ -18,7 +18,6 @@ const BookingForm = () => {
     reason: "",
     gender: ""
   });
-
   const [paymentMethod, setPaymentMethod] = useState("after");
   const searchParams = new URLSearchParams(location.search);
   const timeType = decodeURIComponent(searchParams.get('timeType') || '');
@@ -31,7 +30,6 @@ const BookingForm = () => {
     5: 'Giáo sư',
   };
   const mapIdToPosition = (id) => positionMap[id] || '';
-
   useEffect(() => {
     if (!doctorId) return;
     setLoading(true);
@@ -60,7 +58,6 @@ const BookingForm = () => {
     1: "Nữ",
     2: "Khác",
   };
-
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     console.log("User loaded:", userData);
@@ -76,7 +73,6 @@ const BookingForm = () => {
       });
     }
   }, []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -86,7 +82,6 @@ const BookingForm = () => {
       alert("Vui lòng điền đầy đủ thông tin bắt buộc!");
       return;
     }
-
     const bookingData = {
       doctorId: doctorId,
       timeType: timeType,
@@ -119,7 +114,6 @@ const BookingForm = () => {
   if (loading) return <p>Đang tải thông tin bác sĩ...</p>;
   if (error) return <p>Lỗi: {error}</p>;
   if (!doctor) return <p>Không tìm thấy thông tin bác sĩ</p>;
-
   const info = doctor.Doctor_Infor || {};
   const formattedPrice = info.priceId ? `${info.priceId} VND` : "500.000đ";
 

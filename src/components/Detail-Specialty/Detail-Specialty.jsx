@@ -32,8 +32,6 @@ const Specialty = () => {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [bookingSuccess, setBookingSuccess] = useState(false);
 
-
-
   // Lấy chuyên khoa và bác sĩ
   useEffect(() => {
     const fetchSpecialtyAndDoctors = async () => {
@@ -196,7 +194,6 @@ const Specialty = () => {
                   dangerouslySetInnerHTML={{__html: doctor.Markdown?.description || `<p>${t('Chưa có giới thiệu')}</p>`,
                 }}
                 />
-
                 <div className="doctor-location">
                   <i className="fa-solid fa-location-dot" style={{ marginRight: '6px' }}></i>
                   {doctor.Doctor_Infor?.provinceId 
@@ -237,8 +234,6 @@ const Specialty = () => {
       ) : (
         <p>{t('Đang tải thông tin bác sĩ...')}</p>
       )}
-
-
       <Footer />
     </div>
   );

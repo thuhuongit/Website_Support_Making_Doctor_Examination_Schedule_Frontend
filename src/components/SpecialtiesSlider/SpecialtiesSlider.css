@@ -140,14 +140,12 @@
     background-color: #f9f9f9;
 }
 
-
 .slider-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 10px;
 }
-
 
 .view-more-btn {
     background-color: #DAF3F6; 

@@ -15,7 +15,6 @@ const ChatbotPage = () => {
 
   return (
     <div className="chatbot-container">
-      {/* Sidebar bên trái */}
       <div className="sidebar">
         <div className="logo" onClick={() => navigate("/")} style={{width: '20px'}} >
           <img src="/logo.png" alt="BookingCare" style={{width: '50px'}} />
@@ -70,7 +69,6 @@ const ChatbotPage = () => {
           ))}
         </div>
 
-        {/* Lưu ý */}
         <div className="chat-footer">
           <p>
             - Trợ lý sức khỏe với AI hỗ trợ tìm kiếm các thông tin bệnh viện top đầu như: Bệnh viện Chợ Rẫy, Bệnh viện Việt Đức...

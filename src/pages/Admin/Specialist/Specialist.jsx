@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { FaTrash, FaEdit } from "react-icons/fa";
 import axiosInstance from "../../../util/axios";
 import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
@@ -86,7 +87,6 @@ const Specialist = () => {
     toast.error("Lỗi kết nối đến server!");
   }
 };
-
 
   const handleEdit = (specialty) => {
     setSpecialtyName(specialty.name);
@@ -199,11 +199,11 @@ const Specialist = () => {
                   </td>
                   <td>
                     <button className="edit-btn" onClick={() => handleEdit(s)}>
-                      <i className="fa-solid fa-pen-to-square"></i>
+                      <FaEdit />
                     </button>
 
                     <button className="delete-btn" onClick={() => handleDelete(s.id)}>
-                      <i className="fa-solid fa-trash"></i>
+                      <FaTrash />
                     </button>
                     
                   </td>

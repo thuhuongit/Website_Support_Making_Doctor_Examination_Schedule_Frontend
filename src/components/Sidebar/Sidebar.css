@@ -10,7 +10,6 @@
   font-family: "Segoe UI", sans-serif;
 }
 
-/* User info section */
 .user-info {
   text-align: center;
   margin-bottom: 30px;
@@ -35,7 +34,6 @@
   margin-bottom: 4px;
 }
 
-/* Navigation menu */
 .sidebar ul {
   list-style: none;
   padding: 0;

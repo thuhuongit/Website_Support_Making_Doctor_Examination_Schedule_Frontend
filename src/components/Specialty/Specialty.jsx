@@ -21,7 +21,6 @@ const provinceMap = {
   
 };
 
-
 const Specialty = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -33,7 +32,6 @@ const Specialty = () => {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [bookingSuccess, setBookingSuccess] = useState(false);
-
 
 
   // Lấy chuyên khoa và bác sĩ
@@ -156,7 +154,6 @@ const Specialty = () => {
     );
   };
   
-
   return (
     <div className="specialty-container">
       {/* Navbar */}
@@ -171,7 +168,6 @@ const Specialty = () => {
           <li>{t('Bác sĩ')}<br /><span>{t('Chọn bác sĩ giỏi')}</span></li>
           <li>{t('Gói khám')}<br /><span>{t('Khám sức khỏe tổng quát')}</span></li>
         </ul>
-        
       </nav>
 
       {/* Thông tin chuyên khoa */}
@@ -193,8 +189,7 @@ const Specialty = () => {
           const selectedDate = selectedDates[doctor.id] || new Date().toISOString().split('T')[0];
           const provinceKey = doctor.Doctor_Infor?.provinceId?.toLowerCase().replace(/\s+/g, '') || '';
           const provinceName = provinceMap[provinceKey] || doctor.Doctor_Infor?.provinceId || 'Chưa cập nhật vị trí';
-
-
+          
           return (
             <div key={doctor.id} className="doctor-card">
               <div className="doctor-header">
@@ -213,7 +208,6 @@ const Specialty = () => {
                   dangerouslySetInnerHTML={{__html: doctor.Markdown?.description || `<p>${t('Chưa có giới thiệu')}</p>`,
                 }}
                 />
-
                 <div className="doctor-location">
                   <i className="fa-solid fa-location-dot" style={{ marginRight: '6px' }}></i>
                   {doctor.Doctor_Infor?.provinceId 

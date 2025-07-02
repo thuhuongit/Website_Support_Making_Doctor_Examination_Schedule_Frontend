@@ -5,7 +5,6 @@
     z-index: 10;
 }
 
-/* Dropdown menu */
 .dropdown-menu {
     border: none; 
     position: absolute;
@@ -52,8 +51,6 @@ button {
     background-color: #f0f0f0; 
 }
 
-
-
 .dropdown-menu li a {
     text-decoration: none;
     color: #333;
@@ -87,9 +84,6 @@ button {
     transform: scale(1.1);
 }
 
-
-
-/* Navbar: Dùng flexbox để chia 3 phần */
 .navbar {
     display: flex;
     align-items: center;
@@ -104,9 +98,7 @@ button {
     z-index: 1000;
     margin-top: 30px;
 }
- 
 
-/* Phần logo bên trái */
 .logo {
     display: flex;
     align-items: center;
@@ -114,8 +106,7 @@ button {
     font-weight: bold;
     color: #d82c20;
     font-size: 100px;
-    cursor: pointer;
-    
+    cursor: pointer; 
 }
 
 .logo i {
@@ -130,7 +121,6 @@ button {
     font-size: 30px;
 }
 
-/* Phần menu ở giữa */
 .nav-links {
     display: flex;
     flex-direction: row; 
@@ -141,7 +131,6 @@ button {
     padding: 0;
     margin: 0;
 }
-
 
 .nav-links li {
     font-weight: bold;

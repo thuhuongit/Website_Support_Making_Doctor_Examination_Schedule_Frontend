@@ -1,12 +1,12 @@
 .banner {
   background: url('/.png');
-  background-size: contain;  /* Đảm bảo hiển thị toàn bộ ảnh */
+  background-size: contain;  /* hiển thị toàn bộ ảnh */
   background-position: center center; /* Canh giữa hình */
   background-repeat: no-repeat; /* Không lặp lại */
   height: 800px; /* Tùy chỉnh chiều cao để hình vừa khít */
   width: 100%;
   background-size: cover;
-  position: relative; /* Bắt buộc để ::after hiển thị đúng */
+  position: relative; 
   cursor: pointer;
 }
 

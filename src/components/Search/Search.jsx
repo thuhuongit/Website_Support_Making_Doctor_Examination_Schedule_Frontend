@@ -8,16 +8,12 @@ import { useNavigate } from "react-router-dom";
 const SearchPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   const [searchType, setSearchType] = useState("Tất cả");
   const [searchQuery, setSearchQuery] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
-
   const [specialties, setSpecialties] = useState([]);
   const [clinics, setClinics] = useState([]);
   const [doctors, setDoctors] = useState([]);
-
-
   const searchTypes = ["Tất cả", "Chuyên khoa", "Cơ sở y tế", "Bác sĩ"];
 
 
@@ -30,10 +26,8 @@ const SearchPage = () => {
         axiosInstance.get("http://localhost:8084/api/get-clinic"),
         axiosInstance.get("http://localhost:8084/api/get-all-doctors"),
       ]);
-
       setSpecialties(specialtyRes.data?.data || []);
       setClinics(clinicRes.data?.data || []);
-      
       const processedDoctors = (doctorRes.data?.data || []).map((doc) => {
         if (doc.image && typeof doc.image === "object" && doc.image.type === "Buffer") {
           const buffer = new Uint8Array(doc.image.data);
@@ -41,25 +35,19 @@ const SearchPage = () => {
         }
         return doc;
       });
-
       setDoctors(processedDoctors);
     } catch (err) {
       console.error("Error loading search data", err);
     }
   };
-
   fetchData();
 }, []);
-
-
-  
 
   // Hàm lọc kết quả
   const filterData = (data, key) =>
     data.filter((item) =>
       item[key]?.toLowerCase().includes(searchQuery.toLowerCase())
     );
-
   const filteredSpecialties = filterData(specialties, "name");
   const filteredClinics = filterData(clinics, "name");
   const filteredDoctors = doctors.filter(

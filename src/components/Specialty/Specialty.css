@@ -59,7 +59,6 @@
   align-items: flex-start; 
 }
 
-
 .doctor-header {
   display: flex;
   gap: 20px;
@@ -188,6 +187,7 @@
   color: #000000;
   cursor: not-allowed;
 }
+
 .time-slot.available:hover {
   background-color: gold; 
   color: black;
@@ -198,7 +198,6 @@
   color: black !important;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 }
-
 
 .time-slot,
 .time-button {
@@ -247,6 +246,7 @@
   color: gray;
   margin-bottom: 12px;
 }
+
 .view-profile,
 .book-appointment {
   padding: 0.6rem 1rem;
@@ -264,7 +264,6 @@
   background-color: #28a745;
 }
 
-/* Modal */
 .modal-backdrop {
   position: fixed;
   top: 0;

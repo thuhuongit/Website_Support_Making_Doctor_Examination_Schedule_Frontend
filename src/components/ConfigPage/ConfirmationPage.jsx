@@ -9,7 +9,6 @@ const ConfirmationPage = () => {
   const navigate = useNavigate(); 
   const [confirmationMessage, setConfirmationMessage] = useState("");
   const [status, setStatus] = useState("loading");
-
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get("token");
   const doctorId = queryParams.get("doctorId");
@@ -58,7 +57,6 @@ const ConfirmationPage = () => {
           </div>
         </div>
       </nav>
-      
       <div className={`confirmation-box ${status}`}>
         <CheckCircle2 size={64} color="#10B981" />
         <h2>{confirmationMessage}</h2>

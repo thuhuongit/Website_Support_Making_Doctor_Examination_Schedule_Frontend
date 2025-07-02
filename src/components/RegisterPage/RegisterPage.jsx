@@ -76,7 +76,6 @@ const RegisterPage = () => {
           <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} />
           <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} />
           
-          {/* Khung chọn giới tính */}
           <select name="gender" value={formData.gender} onChange={handleChange} required>
             <option value="">-- Chọn giới tính --</option>
             <option value="0">Nam</option>

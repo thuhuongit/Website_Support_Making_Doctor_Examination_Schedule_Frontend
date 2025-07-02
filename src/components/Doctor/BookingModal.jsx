@@ -40,7 +40,6 @@ function BookingModal({ time, date, onClose, doctorId, onSuccess, doctorInfo }) 
       gender: String(userData.gender),
     });
   }else {
-    // Nếu không phải user => reset form (hoặc đóng modal)
     setFormData({
       firstName: "",
       lastName: "",

@@ -45,7 +45,6 @@ const SpecialtiesSlider = ({ type }) => {
   prevArrow: <SamplePrevArrow />,
 };
 
-
   // Gọi API chuyên khoa
   useEffect(() => {
     const fetchSpecialties = async () => {

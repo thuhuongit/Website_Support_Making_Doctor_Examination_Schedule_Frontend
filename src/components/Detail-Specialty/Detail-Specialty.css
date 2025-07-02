@@ -56,7 +56,7 @@
   border: 1px solid #ddd;
   border-radius: 12px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  align-items: flex-start; /* QUAN TRỌNG: Căn top thay vì center */
+  align-items: flex-start;
 }
 
 .doctor-header {

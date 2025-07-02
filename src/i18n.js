@@ -1,7 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-// Lấy ngôn ngữ từ localStorage, nếu chưa có thì dùng 'vi'
 const savedLanguage = localStorage.getItem("language") || "vi";
 
 const resources = {
@@ -69,7 +68,7 @@ const resources = {
 
 i18n.use(initReactI18next).init({
   resources,
-  lng: savedLanguage, // Set ngôn ngữ từ localStorage
+  lng: savedLanguage, 
   fallbackLng: "vi",
   interpolation: {
     escapeValue: false

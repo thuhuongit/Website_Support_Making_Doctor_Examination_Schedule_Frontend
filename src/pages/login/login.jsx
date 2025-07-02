@@ -119,16 +119,12 @@ const LoginPage = () => {
               <i className={`fa-solid ${showPassword ? "fa-unlock":"fa-lock"} password-toggle`}></i>
             </span>
           </div>
-
           <div className="forgot-password">
             <a href="#">Quên mật khẩu?</a>
           </div>
-
           <button type="submit" className="login-btn">Đăng nhập</button>
         </form>
-
         <div className="login-divider">Hoặc đăng nhập với</div>
-
         <div className="social-login">
           <button className="facebook-btn"> <i class="fa-brands fa-facebook"></i> Facebook</button>
           <button className="google-btn"> <i class="fa-brands fa-google"></i> Google</button>

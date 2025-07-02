@@ -2,14 +2,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState, useContext } from "react";
 import "./Sidebar.css";
 import { FaSignInAlt } from "react-icons/fa";
-import { AuthContext } from "../../context/AuthContext"; // nhớ import context
+import { AuthContext } from "../../context/AuthContext"; 
 
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [adminInfo, setAdminInfo] = useState(null);
-  const { setUser } = useContext(AuthContext); // lấy setUser từ context
-
+  const { setUser } = useContext(AuthContext);
   const isActive = (path) => location.pathname === path;
 
   useEffect(() => {

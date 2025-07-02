@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from 'react';
+import { FaSignInAlt } from "react-icons/fa";
 import './TopBar.css';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -14,19 +15,15 @@ useEffect(() => {
 
   if (storedUser) {
     const parsedUser = JSON.parse(storedUser);
-
-    // Chỉ set user nếu sessionStorage khớp token
     if (parsedUser.loginToken === activeToken) {
       setUser(parsedUser);
     } else {
-      // Không đúng token thì set null, KHÔNG tự gán lại token
       setUser(null);
     }
   } else {
     setUser(null);
   }
 }, []);
-
 
 
 useEffect(() => {
@@ -47,7 +44,6 @@ useEffect(() => {
   window.addEventListener("storage", onStorageChange);
   return () => window.removeEventListener("storage", onStorageChange);
 }, []);
-
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -73,7 +69,7 @@ useEffect(() => {
               Xin Chào, {user.lastName} {user.firstName}
             </span>
             <span style={{ cursor: 'pointer', marginLeft: '10px' }} onClick={handleLogout}>
-              <i className="fa-solid fa-right-to-bracket"></i> Đăng xuất
+              <FaSignInAlt /> Đăng xuất
             </span>
           </>
         ) : (
